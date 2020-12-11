@@ -87,5 +87,5 @@ public class GameContext implements Runnable {
     }
 
     public boolean isRunning() { return this.isRunning; }
-    public int getCurrentFps() { return this.currentFps; }g
+    public int getCurrentFps() { return this.currentFps; }
 }
