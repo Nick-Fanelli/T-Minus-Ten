@@ -1,7 +1,11 @@
 # Gradle Stuff
 .gradle
-/build
 local.properties
+
+# Build Stuff
+/build
+/HarmonyEngine/build
+/T-Minus-Ten/build
 
 # IntelliJ Stuff
 .idea/workspace.xml
