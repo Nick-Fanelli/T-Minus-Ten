@@ -1,11 +1,12 @@
 package com.harmonygames.tMinusTen;
 
-import com.harmonygames.engine.display.DisplayManager;
+import com.harmonygames.engine.GameContext;
 
 public class Launcher {
 
     public static void main(String[] args) {
-        DisplayManager.createDisplay("T Minus Ten");
+        GameContext context = new GameContext("T Minus Ten");
+        context.startGame();
     }
 
 }

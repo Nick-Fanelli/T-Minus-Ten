@@ -6,6 +6,11 @@ public class DisplayManager {
         Window.init(title);
     }
 
+    public static void updateDisplay() {
+        Window context = Window.getContext();
+        if(context != null) context.update();
+    }
+
     public static void closeDisplay() {
 
     }
