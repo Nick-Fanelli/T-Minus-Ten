@@ -34,6 +34,10 @@ public class Vector2f {
         this.y = 0;
     }
 
+    public Vector2f copy() {
+        return new Vector2f(this.x, this.y);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof Vector2f)) {
@@ -43,11 +47,6 @@ public class Vector2f {
 
         Vector2f r = (Vector2f) obj;
         return this.x == r.x && this.y == r.y;
-    }
-
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return new Vector2f(this.x, this.y);
     }
 
     @Override
