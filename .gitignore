@@ -1,0 +1,11 @@
+# Gradle Stuff
+.gradle
+/build
+local.properties
+
+# IntelliJ Stuff
+.idea/workspace.xml
+.idea/tasks.xml
+
+# Mac OS Stuff
+*.DS_Store
