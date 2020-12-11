@@ -17,12 +17,21 @@ public class GameContext implements Runnable {
     public GameContext(String gameTitle) {
         this.contextThread = new Thread(this, "__HarmonyEngine:GameContext__");
         this.gameTitle = gameTitle;
+
+        this.setSystemProperties();
     }
 
-    public void startGame() { this.contextThread.start(); }
+    private void setSystemProperties() {
+        System.setProperty("apple.eawt.quitStrategy", "CLOSE_ALL_WINDOWS");
+    }
+
+    public void start() {
+        if(isRunning || this.contextThread.isAlive()) return;
+        this.contextThread.start();
+    }
 
     private void initialize() {
-        DisplayManager.createDisplay(gameTitle);
+        DisplayManager.createDisplay(this, gameTitle);
     }
 
     @Override
@@ -84,6 +93,15 @@ public class GameContext implements Runnable {
 
     private synchronized void draw() {
 
+    }
+
+    public void stop() {
+        System.out.println("We are closing!");
+        this.isRunning = false;
+
+        DisplayManager.closeDisplay();
+
+        System.exit(0); // Close the java program
     }
 
     public boolean isRunning() { return this.isRunning; }

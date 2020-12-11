@@ -1,7 +1,11 @@
 package com.harmonygames.engine.display;
 
+import com.harmonygames.engine.GameContext;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -15,16 +19,19 @@ public class Window {
     private BufferStrategy bs;
     private Graphics g;
 
-    public static void init(String title) {
+    private GameContext gameContext;
+
+    public static void init(GameContext gameContext, String title) {
         if(context == null) {
-            context = new Window(title);
+            context = new Window(gameContext, title);
         }
     }
 
     public static Window getContext() { return context; }
 
-    private Window(String title) {
+    private Window(GameContext gameContext, String title) {
         if(context != null) return;
+        this.gameContext = gameContext;
 
         Dimension windowSize = new Dimension(1280, 720);
 
@@ -34,7 +41,7 @@ public class Window {
         canvas.setPreferredSize(windowSize);
 
         frame = new JFrame(title);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         frame.setLayout(new BorderLayout());
         frame.add(canvas, BorderLayout.CENTER);
@@ -49,8 +56,19 @@ public class Window {
         bs = canvas.getBufferStrategy();
         g = bs.getDrawGraphics();
 
+        this.catchClose();
+
         frame.setVisible(true);
         frame.requestFocus();
+    }
+
+    private void catchClose() {
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                gameContext.stop();
+            }
+        });
     }
 
     public void update() {
@@ -60,6 +78,14 @@ public class Window {
         } catch (Exception e) {
             System.err.println("BLEH IN THE WINDOW CLASS");
         }
+    }
+
+    public void close() {
+        frame.setVisible(false);
+        image.flush();
+        g.dispose();
+        bs.dispose();
+        frame.dispose();
     }
 
     public Graphics2D getDrawGraphics() {

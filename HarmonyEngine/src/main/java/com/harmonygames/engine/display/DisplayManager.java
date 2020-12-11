@@ -1,9 +1,11 @@
 package com.harmonygames.engine.display;
 
+import com.harmonygames.engine.GameContext;
+
 public class DisplayManager {
 
-    public static void createDisplay(String title) {
-        Window.init(title);
+    public static void createDisplay(GameContext gameContext, String title) {
+        Window.init(gameContext, title);
     }
 
     public static void updateDisplay() {
@@ -12,6 +14,7 @@ public class DisplayManager {
     }
 
     public static void closeDisplay() {
-
+        Window context = Window.getContext();
+        if(context != null) context.close();
     }
 }

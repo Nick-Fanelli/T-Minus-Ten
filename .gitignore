@@ -2,14 +2,21 @@
 .gradle
 local.properties
 
+# Java Class Files
+*.class
+
 # Build Stuff
 /build
 /HarmonyEngine/build
 /T-Minus-Ten/build
 
+# Version Control
+vcs.xml
+
 # IntelliJ Stuff
 .idea/workspace.xml
 .idea/tasks.xml
+.idea/gradle.xml
 
 # Mac OS Stuff
 *.DS_Store
