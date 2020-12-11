@@ -1,6 +1,8 @@
 package com.harmonygames.engine;
 
 import com.harmonygames.engine.display.DisplayManager;
+import com.harmonygames.engine.display.Window;
+import com.harmonygames.engine.scene.SceneManager;
 
 public class GameContext implements Runnable {
 
@@ -9,6 +11,8 @@ public class GameContext implements Runnable {
 
     private final Thread contextThread;
     private final String gameTitle;
+
+    private SceneManager sceneManager;
 
     private int currentFps = 0;
 
@@ -31,6 +35,8 @@ public class GameContext implements Runnable {
     }
 
     private void initialize() {
+        sceneManager = new SceneManager();
+
         DisplayManager.createDisplay(this, gameTitle);
     }
 
@@ -43,7 +49,7 @@ public class GameContext implements Runnable {
 
         double currentUpdateTime;
         double lastUpdateTime = 0;
-        double deltaTime;
+        double deltaTime = 1;
 
         double firstTime, passedTime;
         double lastTime = System.nanoTime() / 1000000000.0;
@@ -88,15 +94,14 @@ public class GameContext implements Runnable {
     }
 
     private synchronized void update(float deltaTime) {
-
+        sceneManager.update(deltaTime);
     }
 
     private synchronized void draw() {
-
+        sceneManager.draw(Window.getContext().getDrawGraphics());
     }
 
     public void stop() {
-        System.out.println("We are closing!");
         this.isRunning = false;
 
         DisplayManager.closeDisplay();
