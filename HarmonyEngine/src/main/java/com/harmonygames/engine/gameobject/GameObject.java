@@ -11,7 +11,7 @@ public abstract class GameObject {
     private final String name;
     public Transform transform;
 
-    protected ArrayList<Component> components = new ArrayList<>();
+    private final ArrayList<Component> components = new ArrayList<>();
 
     public GameObject(String name) {
         this(name, new Transform());
@@ -53,6 +53,8 @@ public abstract class GameObject {
 
         return null;
     }
+
+    public ArrayList<Component> getComponents() { return this.components; }
 
     public String getName() { return this.name; }
 
