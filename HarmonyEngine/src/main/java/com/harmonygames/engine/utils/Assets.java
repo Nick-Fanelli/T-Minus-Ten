@@ -11,6 +11,7 @@ public class Assets {
 
     private static final HashMap<String, BufferedImage> images = new HashMap<>();
     private static final HashMap<String, SpriteSheet> spriteSheets = new HashMap<>();
+    private static final HashMap<String, File> files = new HashMap<>();
 
     public static BufferedImage getImage(String path) {
         if(images.containsKey(path)) return images.get(path);
@@ -44,6 +45,15 @@ public class Assets {
         }
 
         return null;
+    }
+
+    public static File getFile(String path) {
+        if(files.containsKey(path)) return files.get(path);
+
+        File file = new File(path);
+        files.put(path, file);
+
+        return file;
     }
 
 }
