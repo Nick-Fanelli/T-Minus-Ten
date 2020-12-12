@@ -6,7 +6,7 @@ import java.awt.*;
 
 public abstract class Component {
 
-    public GameObject gameObject = null;
+    protected GameObject gameObject = null;
 
     public void setGameObject(GameObject gameObject) {
         this.gameObject = gameObject;

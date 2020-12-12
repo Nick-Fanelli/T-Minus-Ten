@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class SpriteRenderer extends Component {
 
-    public BufferedImage image;
+    private BufferedImage image;
 
     public SpriteRenderer(BufferedImage image) {
         this.image = image;
@@ -22,4 +22,7 @@ public class SpriteRenderer extends Component {
     }
 
     @Override public void update(float deltaTime) {}
+
+    public BufferedImage getImage() { return this.image; }
+    public void setImage(BufferedImage image) { this.image = image; }
 }

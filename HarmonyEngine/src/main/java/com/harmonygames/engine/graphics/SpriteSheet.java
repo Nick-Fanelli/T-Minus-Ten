@@ -8,9 +8,9 @@ public class SpriteSheet {
     private final int spriteWidth, spriteHeight;
     private final int numCols, numRows;
 
-    public SpriteSheet(BufferedImage image, int spriteWidth, int spriteHeight, int numCols, int numRows) {
-        this.spriteWidth = spriteWidth;
-        this.spriteHeight = spriteHeight;
+    public SpriteSheet(BufferedImage image, int numCols, int numRows) {
+        this.spriteWidth = image.getWidth() / numCols;
+        this.spriteHeight = image.getHeight() / numRows;
         this.numCols = numCols;
         this.numRows = numRows;
 

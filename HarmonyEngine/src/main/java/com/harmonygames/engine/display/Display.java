@@ -80,6 +80,9 @@ public class Display {
             bs.show();
         } catch (Exception ignored) {}
 
+        // Clear the screen
+        getDrawGraphics().fillRect(0, 0, frame.getWidth(), frame.getHeight());
+
         frame.requestFocus();
     }
 

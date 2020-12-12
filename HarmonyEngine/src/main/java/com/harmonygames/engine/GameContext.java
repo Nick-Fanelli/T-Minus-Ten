@@ -52,8 +52,8 @@ public class GameContext implements Runnable {
         boolean shouldDraw;
 
         double currentUpdateTime;
-        double lastUpdateTime = 0;
-        double deltaTime = 1;
+        double lastUpdateTime = System.nanoTime() / 1000000000.0;
+        double deltaTime = 0;
 
         double firstTime, passedTime;
         double lastTime = System.nanoTime() / 1000000000.0;
