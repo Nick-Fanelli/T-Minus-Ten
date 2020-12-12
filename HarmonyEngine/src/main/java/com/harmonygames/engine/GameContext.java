@@ -1,7 +1,6 @@
 package com.harmonygames.engine;
 
-import com.harmonygames.engine.display.DisplayManager;
-import com.harmonygames.engine.display.Window;
+import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.scene.SceneManager;
 import com.harmonygames.engine.utils.Input;
 
@@ -13,6 +12,7 @@ public class GameContext implements Runnable {
     private final Thread contextThread;
     private final String gameTitle;
 
+    private Display display;
     private SceneManager sceneManager;
     private Input input;
 
@@ -37,11 +37,11 @@ public class GameContext implements Runnable {
     }
 
     private void initialize() {
+        display = new Display(this, gameTitle);
+
         sceneManager = new SceneManager();
 
-        DisplayManager.createDisplay(this, gameTitle);
-
-        input = new Input();
+        input = new Input(display.getFrame(), display.getCanvas());
     }
 
     @Override
@@ -85,7 +85,7 @@ public class GameContext implements Runnable {
 
             if(shouldDraw) {
                 this.draw();
-                DisplayManager.updateDisplay();
+                display.update();
             } else {
                 try {
                     Thread.sleep(1);
@@ -99,11 +99,12 @@ public class GameContext implements Runnable {
 
     private synchronized void update(float deltaTime) {
         sceneManager.update(deltaTime);
-        this.input.update(); // Must happen last
+
+        this.input.update();
     }
 
     private synchronized void draw() {
-        sceneManager.draw(Window.getContext().getDrawGraphics());
+        sceneManager.draw(display.getDrawGraphics());
     }
 
     public void stop() {
@@ -111,7 +112,7 @@ public class GameContext implements Runnable {
 
         sceneManager.destroy();
 
-        DisplayManager.closeDisplay();
+        display.close();
         System.exit(0); // Close the java program
     }
 

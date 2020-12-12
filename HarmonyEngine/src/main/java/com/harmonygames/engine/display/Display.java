@@ -9,9 +9,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
-public class Window {
-
-    private static Window context;
+public class Display {
 
     private JFrame frame;
     private BufferedImage image;
@@ -21,16 +19,7 @@ public class Window {
 
     private GameContext gameContext;
 
-    public static void init(GameContext gameContext, String title) {
-        if(context == null) {
-            context = new Window(gameContext, title);
-        }
-    }
-
-    public static Window getContext() { return context; }
-
-    private Window(GameContext gameContext, String title) {
-        if(context != null) return;
+    public Display(GameContext gameContext, String title) {
         this.gameContext = gameContext;
 
         Dimension windowSize = new Dimension(1280, 720);
@@ -47,7 +36,6 @@ public class Window {
         frame.add(canvas, BorderLayout.CENTER);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setFocusable(true);
         frame.setResizable(true);
 
         frame.getContentPane().setIgnoreRepaint(true);
@@ -59,7 +47,6 @@ public class Window {
         this.catchClose();
 
         frame.setVisible(true);
-        frame.requestFocus();
     }
 
     private void catchClose() {
@@ -78,6 +65,8 @@ public class Window {
         } catch (Exception e) {
             System.err.println("BLEH IN THE WINDOW CLASS");
         }
+
+        frame.requestFocus();
     }
 
     public void close() {
