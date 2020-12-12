@@ -91,4 +91,7 @@ public class Window {
     public Graphics2D getDrawGraphics() {
         return (Graphics2D) image.getGraphics();
     }
+
+    public JFrame getFrame() { return this.frame; }
+    public Canvas getCanvas() { return this.canvas; }
 }

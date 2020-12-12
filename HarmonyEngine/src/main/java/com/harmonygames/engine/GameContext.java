@@ -3,6 +3,7 @@ package com.harmonygames.engine;
 import com.harmonygames.engine.display.DisplayManager;
 import com.harmonygames.engine.display.Window;
 import com.harmonygames.engine.scene.SceneManager;
+import com.harmonygames.engine.utils.Input;
 
 public class GameContext implements Runnable {
 
@@ -13,6 +14,7 @@ public class GameContext implements Runnable {
     private final String gameTitle;
 
     private SceneManager sceneManager;
+    private Input input;
 
     private int currentFps = 0;
 
@@ -38,6 +40,8 @@ public class GameContext implements Runnable {
         sceneManager = new SceneManager();
 
         DisplayManager.createDisplay(this, gameTitle);
+
+        input = new Input();
     }
 
     @Override
@@ -95,6 +99,7 @@ public class GameContext implements Runnable {
 
     private synchronized void update(float deltaTime) {
         sceneManager.update(deltaTime);
+        this.input.update(); // Must happen last
     }
 
     private synchronized void draw() {

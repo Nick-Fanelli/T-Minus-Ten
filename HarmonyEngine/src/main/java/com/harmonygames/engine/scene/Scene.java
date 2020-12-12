@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public abstract class Scene {
 
-    private ArrayList<GameObject> gameObjects = new ArrayList<>();
+    private final ArrayList<GameObject> gameObjects = new ArrayList<>();
 
     public void onCreate() { }
 
@@ -31,4 +31,6 @@ public abstract class Scene {
         gameObjects.remove(gameObject);
         gameObject.onDestroy();
     }
+
+    public ArrayList<GameObject> getGameObjects() { return this.gameObjects; }
 }
