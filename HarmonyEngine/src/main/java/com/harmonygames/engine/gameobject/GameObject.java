@@ -1,8 +1,9 @@
 package com.harmonygames.engine.gameobject;
 
+import com.harmonygames.engine.gameobject.component.Component;
 import com.harmonygames.engine.utils.Transform;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 public abstract class GameObject {
@@ -22,11 +23,35 @@ public abstract class GameObject {
     }
 
     public void addComponent(Component component) {
+        component.setGameObject(this);
         this.components.add(component);
     }
 
-    public void removeComponent(Component component) {
-        if(components.contains(component)) components.remove(component);
+    public void removeComponent(Component component) { components.remove(component); }
+
+    public <T extends Component> void removeComponent(Class<T> componentClass) {
+        for(int i = 0; i < components.size(); i++) {
+            Component c = components.get(i);
+            if(componentClass.isAssignableFrom(c.getClass())) {
+                components.remove(i);
+                return;
+            }
+        }
+    }
+
+    public <T extends Component> T getComponent(Class<T> componentClass) {
+        for(Component c : components) {
+            if(componentClass.isAssignableFrom(c.getClass())) {
+                try {
+                    return componentClass.cast(c);
+                } catch (ClassCastException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        }
+
+        return null;
     }
 
     public String getName() { return this.name; }

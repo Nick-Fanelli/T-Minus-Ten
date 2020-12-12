@@ -6,9 +6,9 @@ import java.awt.*;
 
 public abstract class Component {
 
-    public final GameObject gameObject;
+    public GameObject gameObject = null;
 
-    public Component(GameObject gameObject) {
+    public void setGameObject(GameObject gameObject) {
         this.gameObject = gameObject;
     }
 
