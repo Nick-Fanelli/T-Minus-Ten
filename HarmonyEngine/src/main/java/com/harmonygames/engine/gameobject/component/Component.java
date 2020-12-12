@@ -12,7 +12,7 @@ public abstract class Component {
         this.gameObject = gameObject;
     }
 
-    public void update(float deltaTime) { }
-    public void draw(Graphics2D g) { }
+    public abstract void update(float deltaTime);
+    public abstract void draw(Graphics2D g);
 
 }

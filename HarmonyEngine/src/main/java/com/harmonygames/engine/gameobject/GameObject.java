@@ -6,7 +6,7 @@ import com.harmonygames.engine.utils.Transform;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-public abstract class GameObject {
+public class GameObject {
 
     private final String name;
     public Transform transform;
@@ -59,8 +59,15 @@ public abstract class GameObject {
     public String getName() { return this.name; }
 
     public void onCreate() { }
-    public void update(float deltaTime) { }
-    public void draw(Graphics2D g) { }
+
+    public void update(float deltaTime) {
+        for(Component c : components) c.update(deltaTime);
+    }
+
+    public void draw(Graphics2D g) {
+        for(Component c : components) c.draw(g);
+    }
+
     public void onDestroy() { }
 
 }

@@ -2,7 +2,7 @@ package com.harmonygames.engine;
 
 import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.scene.SceneManager;
-import com.harmonygames.engine.utils.Input;
+import com.harmonygames.engine.display.Input;
 
 public class GameContext implements Runnable {
 

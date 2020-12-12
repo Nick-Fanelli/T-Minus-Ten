@@ -2,6 +2,7 @@ package com.harmonygames.engine.utils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -13,11 +14,12 @@ public class Assets {
         if(images.containsKey(path)) return images.get(path);
 
         try {
-            BufferedImage image = ImageIO.read(Assets.class.getResourceAsStream(path));
+            BufferedImage image = ImageIO.read(new File(path));
             images.put(path, image);
             return image;
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.err.println("[Harmony Engine (Assets)]: Can not find image at: " + path);
+            System.exit(-1);
         }
 
         return null;

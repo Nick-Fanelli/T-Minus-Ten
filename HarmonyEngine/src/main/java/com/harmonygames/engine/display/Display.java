@@ -4,6 +4,8 @@ import com.harmonygames.engine.GameContext;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
@@ -11,11 +13,11 @@ import java.awt.image.BufferedImage;
 
 public class Display {
 
-    private JFrame frame;
-    private BufferedImage image;
-    private Canvas canvas;
-    private BufferStrategy bs;
-    private Graphics g;
+    private static JFrame frame;
+    private static BufferedImage image;
+    private static Canvas canvas;
+    private static BufferStrategy bs;
+    private static Graphics g;
 
     private GameContext gameContext;
 
@@ -45,6 +47,7 @@ public class Display {
         g = bs.getDrawGraphics();
 
         this.catchClose();
+        this.handleResize();
 
         frame.setVisible(true);
     }
@@ -58,13 +61,24 @@ public class Display {
         });
     }
 
+    private void handleResize() {
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                if(frame.getWidth() <= 0 || frame.getHeight() <= 0) return;
+
+                canvas.createBufferStrategy(2);
+                bs = canvas.getBufferStrategy();
+                g = bs.getDrawGraphics();
+            }
+        });
+    }
+
     public void update() {
         try {
             g.drawImage(image, 0, 0, frame.getWidth(), frame.getHeight(), null);
             bs.show();
-        } catch (Exception e) {
-            System.err.println("BLEH IN THE WINDOW CLASS");
-        }
+        } catch (Exception ignored) {}
 
         frame.requestFocus();
     }
@@ -81,6 +95,6 @@ public class Display {
         return (Graphics2D) image.getGraphics();
     }
 
-    public JFrame getFrame() { return this.frame; }
-    public Canvas getCanvas() { return this.canvas; }
+    public static JFrame getFrame() { return frame; }
+    public static Canvas getCanvas() { return canvas; }
 }

@@ -1,4 +1,6 @@
-package com.harmonygames.engine.utils;
+package com.harmonygames.engine.display;
+
+import com.harmonygames.engine.utils.Vector2f;
 
 import javax.swing.*;
 import java.awt.*;
