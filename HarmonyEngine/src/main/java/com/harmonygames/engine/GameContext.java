@@ -104,8 +104,9 @@ public class GameContext implements Runnable {
     public void stop() {
         this.isRunning = false;
 
-        DisplayManager.closeDisplay();
+        sceneManager.destroy();
 
+        DisplayManager.closeDisplay();
         System.exit(0); // Close the java program
     }
 

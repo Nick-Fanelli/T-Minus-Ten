@@ -8,7 +8,7 @@ public class SceneManager {
 
     public static void setActiveScene(Scene scene) {
         if(activeScene != null) {
-            activeScene.onClose();
+            activeScene.onDestroy();
             activeScene = null;
         }
 
@@ -25,4 +25,11 @@ public class SceneManager {
     }
 
     public static Scene getActiveScene() { return activeScene; }
+
+    public void destroy() {
+        if(activeScene != null) {
+            activeScene.onDestroy();
+            activeScene = null;
+        }
+    }
 }
