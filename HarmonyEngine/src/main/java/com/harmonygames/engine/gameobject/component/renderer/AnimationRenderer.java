@@ -39,6 +39,15 @@ public class AnimationRenderer extends Component {
         this.spriteRenderer.draw(g);
     }
 
+    private long lastTime = 0;
+
+    public void incrementMillis(int millis) {
+        if(System.currentTimeMillis() - lastTime >= millis) {
+            this.nextFrame();
+            this.lastTime = System.currentTimeMillis();
+        }
+    }
+
     public void setCurrentFrame(int value) {
         this.currentFrame = value;
         this.isDirty = true;
