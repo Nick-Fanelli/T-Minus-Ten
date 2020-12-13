@@ -29,7 +29,7 @@ public class Vector2f {
         this.y = r.y;
     }
 
-    public void reset() {
+    public void zero() {
         this.x = 0;
         this.y = 0;
     }
@@ -52,5 +52,77 @@ public class Vector2f {
     @Override
     public String toString() {
         return String.format("[Vector2f: X:%s, Y:%s]", this.x, this.y);
+    }
+
+    public Vector2f add(float x, float y) {
+        this.x += x;
+        this.y += y;
+        return this;
+    }
+
+    public Vector2f sub(float x, float y) {
+        this.x -= x;
+        this.y -= y;
+        return this;
+    }
+
+    public Vector2f mul(float x, float y) {
+        this.x *= x;
+        this.y *= y;
+        return this;
+    }
+
+    public Vector2f div(float x, float y) {
+        this.x /= x;
+        this.y /= y;
+        return this;
+    }
+
+    public Vector2f add(Vector2f r) {
+        this.x += r.x;
+        this.y += r.y;
+        return this;
+    }
+
+    public Vector2f sub(Vector2f r) {
+        this.x -= r.x;
+        this.y -= r.y;
+        return this;
+    }
+
+    public Vector2f mul(Vector2f r) {
+        this.x *= r.x;
+        this.y *= r.y;
+        return this;
+    }
+
+    public Vector2f div(Vector2f r) {
+        this.x /= r.x;
+        this.y /= r.y;
+        return this;
+    }
+
+    public Vector2f add(float r) {
+        this.x += r;
+        this.y += r;
+        return this;
+    }
+
+    public Vector2f sub(float r) {
+        this.x -= r;
+        this.y -= r;
+        return this;
+    }
+
+    public Vector2f mul(float r) {
+        this.x *= r;
+        this.y *= r;
+        return this;
+    }
+
+    public Vector2f div(float r) {
+        this.x /= r;
+        this.y /= r;
+        return this;
     }
 }
