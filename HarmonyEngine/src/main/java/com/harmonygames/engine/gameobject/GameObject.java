@@ -27,6 +27,10 @@ public class GameObject {
         this.components.add(component);
     }
 
+    public <T extends Component> boolean containsComponentType(Class<T> componentClass) {
+        return this.getComponent(componentClass) != null;
+    }
+
     public void removeComponent(Component component) { components.remove(component); }
 
     public <T extends Component> void removeComponent(Class<T> componentClass) {

@@ -24,4 +24,7 @@ public class BoxCollider2D extends Component {
     public void draw(Graphics2D g) {
 
     }
+
+    public Vector2f getOffset() { return this.offset; }
+    public Scale getScale() { return this.scale; }
 }

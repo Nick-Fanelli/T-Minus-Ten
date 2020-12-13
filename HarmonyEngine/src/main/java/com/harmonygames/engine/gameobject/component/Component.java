@@ -15,4 +15,6 @@ public abstract class Component {
     public abstract void update(float deltaTime);
     public abstract void draw(Graphics2D g);
 
+    public GameObject getGameObject() { return this.gameObject; }
+
 }
