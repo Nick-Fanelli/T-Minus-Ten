@@ -22,6 +22,7 @@ public class Assets {
             return image;
         } catch (Exception e) {
             System.err.println("[Harmony Engine (Assets)]: Can not find image at: " + path);
+            e.printStackTrace();
             System.exit(-1);
         }
 

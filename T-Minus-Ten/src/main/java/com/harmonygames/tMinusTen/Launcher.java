@@ -8,10 +8,9 @@ public class Launcher {
 
     public static void main(String[] args) {
         GameContext context = new GameContext("T Minus Ten");
+        context.start();
 
         SceneManager.setActiveScene(new GameScene());
-
-        context.start();
     }
 
 }

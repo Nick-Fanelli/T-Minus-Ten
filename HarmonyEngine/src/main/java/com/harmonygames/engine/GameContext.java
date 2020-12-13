@@ -41,7 +41,7 @@ public class GameContext implements Runnable {
 
         sceneManager = new SceneManager();
 
-        input = new Input(display.getFrame(), display.getCanvas());
+        input = new Input(Display.getFrame(), Display.getCanvas());
     }
 
     @Override
@@ -78,13 +78,13 @@ public class GameContext implements Runnable {
                 deltaTime = currentUpdateTime - lastUpdateTime;
                 lastUpdateTime = currentUpdateTime;
 
-                this.update((float) deltaTime);
+                if(Display.getFrame() != null) this.update((float) deltaTime);
 
                 currentFps = (int) (1.0 / deltaTime);
             }
 
             if(shouldDraw) {
-                this.draw();
+                if(Display.getFrame() != null) this.draw();
                 display.update();
             } else {
                 try {

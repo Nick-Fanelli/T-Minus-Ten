@@ -19,7 +19,7 @@ public class Display {
     private static BufferStrategy bs;
     private static Graphics g;
 
-    private GameContext gameContext;
+    private final GameContext gameContext;
 
     public Display(GameContext gameContext, String title) {
         this.gameContext = gameContext;
