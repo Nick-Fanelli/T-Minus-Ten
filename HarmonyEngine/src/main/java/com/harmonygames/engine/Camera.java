@@ -16,10 +16,12 @@ public class Camera {
     }
 
     public static boolean shouldDraw(float x, float y, int width, int height) {
+//        return x >= Camera.position.x + Display.getFrame().getWidth();
+
         return x + width >= Camera.position.x
-                && x < Camera.position.x + Display.getFrame().getWidth()
+                && x <= Camera.position.x + Display.getFrame().getWidth()
                 && y + height >= Camera.position.y
-                && y < Camera.position.y + Display.getFrame().getHeight();
+                && y <= Camera.position.y + Display.getFrame().getHeight();
     }
 
 }

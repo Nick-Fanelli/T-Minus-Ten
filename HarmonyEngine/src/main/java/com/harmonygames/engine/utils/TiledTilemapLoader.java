@@ -1,6 +1,7 @@
 package com.harmonygames.engine.utils;
 
 import com.harmonygames.engine.graphics.SpriteSheet;
+import com.harmonygames.engine.graphics.Tilemap;
 import com.harmonygames.engine.graphics.Tileset;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -20,7 +21,7 @@ public class TiledTilemapLoader {
         this.tileMapLocation = tileMapLocation;
     }
 
-    public void load() {
+    public Tilemap[] load() {
         int tileWidth, tileHeight;
         int numCols, numRows;
 
@@ -42,7 +43,7 @@ public class TiledTilemapLoader {
             NodeList rootChildren = rootElement.getChildNodes();
 
             ArrayList<Tileset> tilesets = new ArrayList<>();
-            ArrayList<Element> layers = new ArrayList<>();
+            ArrayList<Tilemap> tilemaps = new ArrayList<>();
 
             for(int i = 0; i < rootChildren.getLength(); i++) {
                 Node childNode = rootChildren.item(i);
@@ -60,7 +61,6 @@ public class TiledTilemapLoader {
                     Element imageElement = null;
 
                     for(int j = 0; j < tilesetChildren.getLength(); j++) {
-                        if(tilesetChildren.item(j) == null) continue;
                         Node tilesetChildNode = tilesetChildren.item(j);
                         if(tilesetChildNode.getNodeType() != Node.ELEMENT_NODE) continue;
 
@@ -84,20 +84,43 @@ public class TiledTilemapLoader {
                     SpriteSheet spriteSheet = Assets.addSpriteSheet(spriteSheetName, imageWidth / tilesetTileWidth,
                             imageHeight / tilesetTileHeight);
                     tilesets.add(new Tileset(spriteSheet, startID));
+                } else if(childElement.getTagName().equals("layer")) {
+                    String typeString = childElement.getAttribute("name");
+                    String layerData = null;
+
+                    NodeList layerChildren = childElement.getChildNodes();
+
+                    for(int j = 0; j < layerChildren.getLength(); j++) {
+                        Node layerChildNode = layerChildren.item(j);
+                        if(layerChildNode.getNodeType() != Node.ELEMENT_NODE) continue;
+
+                        if(((Element) layerChildNode).getTagName().equals("data")) {
+                            layerData = layerChildNode.getTextContent();
+                        }
+                    }
+
+                    if(layerData == null) {
+                        System.err.println("[Harmony Engine (TiledTileMapLoader)]: Could not identify the map data data");
+                        System.exit(-1);
+                    }
+
+                    tilemaps.add(new Tilemap(layerData, Tilemap.Type.valueOf(typeString.toUpperCase()), tileWidth, tileHeight, numCols, numRows));
                 }
-
-                else if(childElement.getTagName().equals("layer")) layers.add(childElement);
             }
 
-            for(Tileset tileset : tilesets) {
-                System.out.println(tileset);
+            for(Tilemap tilemap : tilemaps) {
+                tilemap.load(tilesets);
             }
+
+            return tilemaps.toArray(new Tilemap[0]);
 
         } catch (Exception e) {
             System.err.println("[Harmony Engine (TiledTilemapLoader)]: Could not load tile map " + tileMapLocation.getPath());
             e.printStackTrace();
             System.exit(-1);
         }
+
+        return null;
     }
 
 }

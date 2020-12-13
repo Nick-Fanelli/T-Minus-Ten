@@ -18,13 +18,14 @@ public class SpriteSheet {
 
         for(int x = 0; x < numCols; x++) {
             for(int y = 0; y < numRows; y++) {
-                BufferedImage sprite = image.getSubimage(x * spriteWidth, x * spriteHeight, spriteWidth, spriteHeight);
+                BufferedImage sprite = image.getSubimage(x * spriteWidth, y * spriteHeight, spriteWidth, spriteHeight);
                 sprites[x + y * numCols] = sprite;
             }
         }
     }
 
     public BufferedImage getSprite(int x, int y) { return sprites[x + y * numCols]; }
+    public BufferedImage getSprite(int i) { return sprites[i]; }
 
     public BufferedImage[] getSprites() { return this.sprites; }
     public int getSpriteWidth() { return this.spriteWidth; }

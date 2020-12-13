@@ -16,8 +16,8 @@ public class SpriteRenderer extends Component {
     @Override
     public void draw(Graphics2D g) {
         if(Camera.shouldDraw(gameObject.transform.position.x, gameObject.transform.position.y, image.getWidth(), image.getHeight())) {
-            g.drawImage(image, (int) (gameObject.transform.position.x + Camera.position.x),
-                    (int) (gameObject.transform.position.y + Camera.position.y), null);
+            g.drawImage(image, (int) (gameObject.transform.position.x - Camera.position.x),
+                    (int) (gameObject.transform.position.y - Camera.position.y), null);
         }
     }
 

@@ -1,7 +1,5 @@
 package com.harmonygames.engine.graphics;
 
-import java.awt.image.BufferedImage;
-
 public class Tileset {
 
     private SpriteSheet spriteSheet;
@@ -11,5 +9,8 @@ public class Tileset {
         this.spriteSheet = spriteSheet;
         this.startID = startID;
     }
+
+    public int getStartID() { return this.startID; }
+    public SpriteSheet getSpriteSheet() { return this.spriteSheet; }
 
 }
