@@ -16,6 +16,11 @@ public class BoxCollider2D extends Component {
     }
 
     @Override
+    public void onCreate() {
+
+    }
+
+    @Override
     public void update(float deltaTime) {
 
     }

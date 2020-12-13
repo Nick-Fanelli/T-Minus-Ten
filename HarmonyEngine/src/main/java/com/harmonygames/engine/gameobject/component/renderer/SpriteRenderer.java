@@ -1,6 +1,7 @@
-package com.harmonygames.engine.gameobject.component;
+package com.harmonygames.engine.gameobject.component.renderer;
 
 import com.harmonygames.engine.Camera;
+import com.harmonygames.engine.gameobject.component.Component;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,6 +12,11 @@ public class SpriteRenderer extends Component {
 
     public SpriteRenderer(BufferedImage image) {
         this.image = image;
+    }
+
+    @Override
+    public void onCreate() {
+
     }
 
     @Override

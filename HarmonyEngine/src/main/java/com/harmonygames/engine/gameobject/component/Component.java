@@ -12,6 +12,7 @@ public abstract class Component {
         this.gameObject = gameObject;
     }
 
+    public abstract void onCreate();
     public abstract void update(float deltaTime);
     public abstract void draw(Graphics2D g);
 

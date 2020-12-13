@@ -19,6 +19,11 @@ public class Rigidbody2D extends Component {
     }
 
     @Override
+    public void onCreate() {
+
+    }
+
+    @Override
     public void update(float deltaTime) {
         if(!accumulatedForce.isZero()) {
             BoxCollider2D collider = super.gameObject.getComponent(BoxCollider2D.class);

@@ -2,7 +2,7 @@ package com.harmonygames.engine.graphics;
 
 import com.harmonygames.engine.gameobject.Tile;
 import com.harmonygames.engine.gameobject.component.BoxCollider2D;
-import com.harmonygames.engine.gameobject.component.SpriteRenderer;
+import com.harmonygames.engine.gameobject.component.renderer.SpriteRenderer;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Scale;
 import com.harmonygames.engine.utils.Transform;

@@ -28,6 +28,7 @@ public class GameObject {
 
     public void addComponent(Component component) {
         component.setGameObject(this);
+        component.onCreate();
         this.components.add(component);
     }
 
