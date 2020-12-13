@@ -7,7 +7,6 @@ import com.harmonygames.engine.graphics.Tilemap;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.engine.utils.TiledTilemapLoader;
-import com.harmonygames.engine.utils.Vector2f;
 import com.harmonygames.tMinusTen.objects.Player;
 
 import java.awt.*;
@@ -24,26 +23,34 @@ public class GameScene extends Scene {
         TiledTilemapLoader loader = new TiledTilemapLoader(Assets.getFile("assets/maps/space-station.tmx"));
         Tilemap[] tilemaps = loader.load();
 
-        for(Tilemap tilemap : tilemaps) tilemap.addGameObjectsToScene(this);
+        for (Tilemap tilemap : tilemaps) tilemap.addGameObjectsToScene(this);
 
         player = new Player();
         super.addGameObject(player);
 
-//        Camera.position.set(player.transform.position.x - Display.getFrame().getWidth() / 2f, 10);
-
-//
-//        Camera.position.x = player.transform.position.x - Display.getFrame().getWidth();
-//        Camera.position.y = player.transform.position.y - Display.getFrame().getHeight();
+        Camera.position.set(player.transform.position.x - Display.getFrame().getWidth() / 2f, player.transform.position.y - Display.getFrame().getHeight() / 2f);
     }
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
 
-        if(Input.isKey(KeyEvent.VK_RIGHT)) Camera.position.x += 200 * deltaTime;
-        if(Input.isKey(KeyEvent.VK_LEFT)) Camera.position.x -= 200 * deltaTime;
-        if(Input.isKey(KeyEvent.VK_DOWN)) Camera.position.y += 200 * deltaTime;
-        if(Input.isKey(KeyEvent.VK_UP)) Camera.position.y -= 200 * deltaTime;
+        if(Input.isKey(KeyEvent.VK_RIGHT)) {
+            Camera.position.x += 200 * deltaTime;
+            player.transform.position.x += 200 * deltaTime;
+        }
+        if(Input.isKey(KeyEvent.VK_LEFT)) {
+            Camera.position.x -= 200 * deltaTime;
+            player.transform.position.x -= 200 * deltaTime;
+        }
+        if(Input.isKey(KeyEvent.VK_DOWN)) {
+            Camera.position.y += 200 * deltaTime;
+            player.transform.position.y += 200 * deltaTime;
+        }
+        if(Input.isKey(KeyEvent.VK_UP)) {
+            Camera.position.y -= 200 * deltaTime;
+            player.transform.position.y -= 200 * deltaTime;
+        }
 
     }
 

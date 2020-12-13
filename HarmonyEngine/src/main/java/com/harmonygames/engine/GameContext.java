@@ -1,6 +1,7 @@
 package com.harmonygames.engine;
 
 import com.harmonygames.engine.display.Display;
+import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.scene.SceneManager;
 import com.harmonygames.engine.display.Input;
 
@@ -20,9 +21,12 @@ public class GameContext implements Runnable {
 
     private boolean isRunning = false;
 
-    public GameContext(String gameTitle) {
+    private Scene startScene;
+
+    public GameContext(String gameTitle, Scene activeScene) {
         this.contextThread = new Thread(this, "__HarmonyEngine:GameContext__");
         this.gameTitle = gameTitle;
+        this.startScene = activeScene;
 
         this.setSystemProperties();
     }
@@ -42,6 +46,8 @@ public class GameContext implements Runnable {
         sceneManager = new SceneManager();
 
         input = new Input(Display.getFrame(), Display.getCanvas());
+
+        SceneManager.setActiveScene(startScene);
     }
 
     @Override
@@ -78,13 +84,13 @@ public class GameContext implements Runnable {
                 deltaTime = currentUpdateTime - lastUpdateTime;
                 lastUpdateTime = currentUpdateTime;
 
-                if(Display.getFrame() != null) this.update((float) deltaTime);
+                this.update((float) deltaTime);
 
                 currentFps = (int) (1.0 / deltaTime);
             }
 
             if(shouldDraw) {
-                if(Display.getFrame() != null) this.draw();
+                this.draw();
                 display.update();
             } else {
                 try {
