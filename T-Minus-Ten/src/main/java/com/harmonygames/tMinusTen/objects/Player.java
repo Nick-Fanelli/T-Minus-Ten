@@ -45,22 +45,22 @@ public class Player extends GameObject {
 
         boolean isMoving = false;
 
-        if(Input.isKey(KeyEvent.VK_RIGHT)) {
+        if(Input.isKey(KeyEvent.VK_D)) {
             this.renderer.setAnimation(2);
             rigidbody2D.setForceToNonzero(new Vector2f(playerSpeed, 0));
             isMoving = true;
         }
-        if(Input.isKey(KeyEvent.VK_LEFT)) {
+        if(Input.isKey(KeyEvent.VK_A)) {
             this.renderer.setAnimation(1);
             rigidbody2D.setForceToNonzero(new Vector2f(-playerSpeed, 0));
             isMoving = true;
         }
-        if(Input.isKey(KeyEvent.VK_DOWN)) {
+        if(Input.isKey(KeyEvent.VK_S)) {
             this.renderer.setAnimation(0);
             rigidbody2D.setForceToNonzero(new Vector2f(0, playerSpeed));
             isMoving = true;
         }
-        if(Input.isKey(KeyEvent.VK_UP)) {
+        if(Input.isKey(KeyEvent.VK_W)) {
             this.renderer.setAnimation(3);
             rigidbody2D.setForceToNonzero(new Vector2f(0, -playerSpeed));
             isMoving = true;
