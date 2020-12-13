@@ -1,6 +1,7 @@
 package com.harmonygames.engine.graphics;
 
 import com.harmonygames.engine.gameobject.Tile;
+import com.harmonygames.engine.gameobject.component.BoxCollider2D;
 import com.harmonygames.engine.gameobject.component.SpriteRenderer;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Scale;
@@ -52,6 +53,7 @@ public class Tilemap {
 
             Tile tile = new Tile("Tile:" + i, new Transform(new Vector2f(x, y), new Scale(tileWidth, tileHeight)));
             tile.addComponent(new SpriteRenderer(image));
+            if(type == Type.SOLID) tile.addComponent(new BoxCollider2D(new Vector2f(), tile.transform.scale));
 
             tiles.add(tile);
         }

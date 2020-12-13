@@ -3,10 +3,15 @@ package com.harmonygames.tMinusTen.scenes;
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.display.Input;
+import com.harmonygames.engine.gameobject.GameObject;
+import com.harmonygames.engine.gameobject.component.BoxCollider2D;
+import com.harmonygames.engine.gameobject.component.Rigidbody2D;
 import com.harmonygames.engine.graphics.Tilemap;
+import com.harmonygames.engine.physics2D.Collision2D;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.engine.utils.TiledTilemapLoader;
+import com.harmonygames.engine.utils.Vector2f;
 import com.harmonygames.tMinusTen.objects.Player;
 
 import java.awt.*;
@@ -34,24 +39,6 @@ public class GameScene extends Scene {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-
-        if(Input.isKey(KeyEvent.VK_RIGHT)) {
-            Camera.position.x += 200 * deltaTime;
-            player.transform.position.x += 200 * deltaTime;
-        }
-        if(Input.isKey(KeyEvent.VK_LEFT)) {
-            Camera.position.x -= 200 * deltaTime;
-            player.transform.position.x -= 200 * deltaTime;
-        }
-        if(Input.isKey(KeyEvent.VK_DOWN)) {
-            Camera.position.y += 200 * deltaTime;
-            player.transform.position.y += 200 * deltaTime;
-        }
-        if(Input.isKey(KeyEvent.VK_UP)) {
-            Camera.position.y -= 200 * deltaTime;
-            player.transform.position.y -= 200 * deltaTime;
-        }
-
     }
 
     @Override

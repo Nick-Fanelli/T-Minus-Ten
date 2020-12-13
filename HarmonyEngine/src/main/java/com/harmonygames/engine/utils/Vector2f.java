@@ -14,6 +14,11 @@ public class Vector2f {
         this.y = r.y;
     }
 
+    public Vector2f(float r) {
+        this.x = r;
+        this.y = r;
+    }
+
     public Vector2f(float x, float y) {
         this.x = x;
         this.y = y;
@@ -36,6 +41,22 @@ public class Vector2f {
 
     public Vector2f copy() {
         return new Vector2f(this.x, this.y);
+    }
+
+    public Vector2f toZero(float x, float y) {
+        if(this.x > 0) this.x = Math.max(0.0f, this.x - x);
+        else if(this.x < 0) this.x = Math.min(0.0f, this.x + x);
+        if(this.y > 0) this.y = Math.max(0.0f, this.y - y);
+        else if(this.y < 0) this.y = Math.min(0.0f, this.y + y);
+        return this;
+    }
+
+    public Vector2f toZero(float r) {
+        return this.toZero(r, r);
+    }
+
+    public boolean isZero() {
+        return this.x == 0 && this.y == 0;
     }
 
     @Override

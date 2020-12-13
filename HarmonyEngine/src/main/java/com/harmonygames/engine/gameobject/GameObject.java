@@ -1,6 +1,7 @@
 package com.harmonygames.engine.gameobject;
 
 import com.harmonygames.engine.gameobject.component.Component;
+import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Transform;
 
 import java.awt.Graphics2D;
@@ -10,6 +11,9 @@ public class GameObject {
 
     private final String name;
     public Transform transform;
+
+    private float rotation = 0.0f;
+    private Scene scene = null;
 
     private final ArrayList<Component> components = new ArrayList<>();
 
@@ -58,6 +62,9 @@ public class GameObject {
         return null;
     }
 
+    public float getRotation() { return this.rotation; }
+    public void setRotation(float rotation) { this.rotation = rotation; }
+
     public ArrayList<Component> getComponents() { return this.components; }
 
     public String getName() { return this.name; }
@@ -73,5 +80,8 @@ public class GameObject {
     }
 
     public void onDestroy() { }
+
+    public Scene getScene() { return this.scene; }
+    public void setScene(Scene scene) { this.scene = scene; }
 
 }

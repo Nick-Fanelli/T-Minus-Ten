@@ -2,6 +2,8 @@ package com.harmonygames.engine.physics2D;
 
 import com.harmonygames.engine.gameobject.GameObject;
 import com.harmonygames.engine.gameobject.component.BoxCollider2D;
+import com.harmonygames.engine.utils.Scale;
+import com.harmonygames.engine.utils.Vector2f;
 
 public class Collision2D {
 
@@ -24,6 +26,13 @@ public class Collision2D {
         && b1.getGameObject().transform.position.x + b1.getOffset().x <= b2.getGameObject().transform.position.x + b2.getOffset().x + b2.getScale().width
         && b1.getGameObject().transform.position.y + b1.getOffset().y + b1.getScale().height >= b2.getGameObject().transform.position.y + b2.getOffset().y
         && b1.getGameObject().transform.position.y + b1.getOffset().y <= b2.getGameObject().transform.position.y + b2.getOffset().y + b2.getScale().height;
+    }
+
+    public static boolean isColliding(Vector2f p1, Scale s1, Vector2f p2, Scale s2) {
+        return p1.x + s1.width >= p2.x
+                && p1.x <= p2.x + s2.width
+                && p1.y + s1.height >= p2.y
+                && p1.y <= p2.y + s2.height;
     }
 
 }

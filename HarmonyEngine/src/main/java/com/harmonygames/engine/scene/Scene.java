@@ -22,6 +22,7 @@ public abstract class Scene {
     public void onDestroy() { }
 
     public void addGameObject(GameObject gameObject) {
+        gameObject.setScene(this);
         gameObject.onCreate();
         gameObjects.add(gameObject);
     }
@@ -30,6 +31,7 @@ public abstract class Scene {
         if(!gameObjects.contains(gameObject)) return;
         gameObjects.remove(gameObject);
         gameObject.onDestroy();
+        gameObject.setScene(null);
     }
 
     public ArrayList<GameObject> getGameObjects() { return this.gameObjects; }
