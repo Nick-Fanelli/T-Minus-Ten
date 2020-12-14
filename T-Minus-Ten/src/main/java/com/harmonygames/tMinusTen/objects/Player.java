@@ -5,7 +5,6 @@ import com.harmonygames.engine.gameobject.GameObject;
 import com.harmonygames.engine.gameobject.component.BoxCollider2D;
 import com.harmonygames.engine.gameobject.component.Rigidbody2D;
 import com.harmonygames.engine.gameobject.component.renderer.AnimationRenderer;
-import com.harmonygames.engine.gameobject.component.renderer.SpriteRenderer;
 import com.harmonygames.engine.graphics.SpriteSheet;
 import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.engine.utils.Scale;
@@ -72,9 +71,6 @@ public class Player extends GameObject {
     @Override
     public void draw(Graphics2D g) {
         super.draw(g);
-
-//        g.setColor(Color.GREEN);
-//        g.drawRect((int) ((this.transform.position.x + collider2D.getOffset().x) - Camera.position.x), (int) ((this.transform.position.y + collider2D.getOffset().y) - Camera.position.y), collider2D.getScale().width, collider2D.getScale().height);
     }
 
     @Override
