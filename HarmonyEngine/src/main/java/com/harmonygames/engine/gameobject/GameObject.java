@@ -1,6 +1,7 @@
 package com.harmonygames.engine.gameobject;
 
 import com.harmonygames.engine.gameobject.component.Component;
+import com.harmonygames.engine.graphics.RenderBatch;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Transform;
 
@@ -11,9 +12,10 @@ public class GameObject {
 
     private final String name;
     public Transform transform;
+    private int zIndex;
 
-    private float rotation = 0.0f;
     private Scene scene = null;
+    private RenderBatch renderBatch = null;
 
     private final ArrayList<Component> components = new ArrayList<>();
 
@@ -22,8 +24,13 @@ public class GameObject {
     }
 
     public GameObject(String name, Transform transform) {
+        this(name, transform, 0);
+    }
+
+    public GameObject(String name, Transform transform, int zIndex) {
         this.name = name;
         this.transform = transform;
+        this.zIndex = zIndex;
     }
 
     public void addComponent(Component component) {
@@ -63,8 +70,26 @@ public class GameObject {
         return null;
     }
 
-    public float getRotation() { return this.rotation; }
-    public void setRotation(float rotation) { this.rotation = rotation; }
+    public void setZIndex(int value) {
+        boolean isDirty = value != this.zIndex;
+        this.zIndex = value;
+
+        if(isDirty) {
+            RenderBatch batch = this.getRenderBatch();
+            if(batch == null || scene == null) return;
+
+            RenderBatch newBatch = this.scene.getRenderBatches().get(this.zIndex);
+            if(newBatch != null) {
+                batch.reassignGameObject(this, newBatch);
+            } else {
+                newBatch = new RenderBatch(this.zIndex);
+                newBatch.addGameObject(this);
+                this.scene.addRenderBatch(newBatch);
+            }
+        }
+    }
+
+    public int getZIndex() { return this.zIndex; }
 
     public ArrayList<Component> getComponents() { return this.components; }
 
@@ -84,5 +109,8 @@ public class GameObject {
 
     public Scene getScene() { return this.scene; }
     public void setScene(Scene scene) { this.scene = scene; }
+
+    public RenderBatch getRenderBatch() { return this.renderBatch; }
+    public void setRenderBatch(RenderBatch batch) { this.renderBatch = batch; }
 
 }

@@ -1,22 +1,28 @@
 package com.harmonygames.engine.scene;
 
 import com.harmonygames.engine.gameobject.GameObject;
+import com.harmonygames.engine.graphics.RenderBatch;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 public abstract class Scene {
 
-    private final ArrayList<GameObject> gameObjects = new ArrayList<>();
+    private final TreeMap<Integer, RenderBatch> renderBatches = new TreeMap<>();
 
     public void onCreate() { }
 
     public void update(float deltaTime) {
-        for(GameObject gameObject : gameObjects) gameObject.update(deltaTime);
+        for(Map.Entry<Integer, RenderBatch> batch : renderBatches.entrySet()) {
+            batch.getValue().update(deltaTime);
+        }
     }
 
     public void draw(Graphics2D g) {
-        for(GameObject gameObject : gameObjects) gameObject.draw(g);
+        for(Map.Entry<Integer, RenderBatch> batch : renderBatches.entrySet()) {
+            batch.getValue().draw(g);
+        }
     }
 
     public void onDestroy() { }
@@ -24,15 +30,30 @@ public abstract class Scene {
     public void addGameObject(GameObject gameObject) {
         gameObject.setScene(this);
         gameObject.onCreate();
-        gameObjects.add(gameObject);
+
+        RenderBatch renderBatch = renderBatches.get(gameObject.getZIndex());
+
+        if(renderBatch != null) {
+            renderBatch.addGameObject(gameObject);
+        } else {
+            renderBatch = new RenderBatch(gameObject.getZIndex());
+            renderBatch.addGameObject(gameObject);
+            renderBatches.put(renderBatch.zIndex, renderBatch);
+        }
+
     }
 
     public void removeGameObject(GameObject gameObject) {
-        if(!gameObjects.contains(gameObject)) return;
-        gameObjects.remove(gameObject);
+        RenderBatch batch = renderBatches.get(gameObject.getZIndex());
+        batch.removeGameObject(gameObject);
+
         gameObject.onDestroy();
         gameObject.setScene(null);
     }
 
-    public ArrayList<GameObject> getGameObjects() { return this.gameObjects; }
+    public void addRenderBatch(RenderBatch renderBatch) {
+        renderBatches.put(renderBatch.zIndex, renderBatch);
+    }
+
+    public TreeMap<Integer, RenderBatch> getRenderBatches() { return renderBatches; }
 }

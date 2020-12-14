@@ -27,8 +27,8 @@ public class Rigidbody2D extends Component {
     public void update(float deltaTime) {
         if(!accumulatedForce.isZero()) {
             BoxCollider2D collider = super.gameObject.getComponent(BoxCollider2D.class);
-            if(collider != null && super.gameObject.getScene() != null) {
-                ArrayList<GameObject> sceneObjects = super.gameObject.getScene().getGameObjects();
+            if(collider != null && super.gameObject.getScene() != null && super.gameObject.getRenderBatch() != null) {
+                ArrayList<GameObject> sceneObjects = super.gameObject.getRenderBatch().getGameObjects();
 
                 for(GameObject gameObject : sceneObjects) {
                     if(!gameObject.containsComponentType(BoxCollider2D.class) || gameObject == super.gameObject) continue;
