@@ -1,4 +1,4 @@
-package com.harmonygames.engine.utils;
+package com.harmonygames.engine.math;
 
 public class Transform {
 

@@ -1,6 +1,6 @@
 package com.harmonygames.engine.gameobject;
 
-import com.harmonygames.engine.utils.Transform;
+import com.harmonygames.engine.math.Transform;
 
 public class Tile extends GameObject {
 

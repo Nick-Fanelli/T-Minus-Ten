@@ -1,6 +1,4 @@
-package com.harmonygames.engine.utils;
-
-import com.harmonygames.engine.scene.Scene;
+package com.harmonygames.engine.math;
 
 public class Scale {
 

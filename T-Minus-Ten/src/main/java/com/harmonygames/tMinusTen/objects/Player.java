@@ -7,9 +7,9 @@ import com.harmonygames.engine.physics2D.components.Rigidbody2D;
 import com.harmonygames.engine.gameobject.component.renderer.AnimationRenderer;
 import com.harmonygames.engine.graphics.SpriteSheet;
 import com.harmonygames.engine.utils.Assets;
-import com.harmonygames.engine.utils.Scale;
-import com.harmonygames.engine.utils.Transform;
-import com.harmonygames.engine.utils.Vector2f;
+import com.harmonygames.engine.math.Scale;
+import com.harmonygames.engine.math.Transform;
+import com.harmonygames.engine.math.Vector2f;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -21,10 +21,10 @@ public class Player extends GameObject {
     private Rigidbody2D rigidbody2D;
     private BoxCollider2D collider2D;
 
-    private float playerSpeed = 2.5f;
+    private float playerSpeedForce = 3.5f;
 
     public Player() {
-        super("Player", new Transform(new Vector2f(1300f, 913f), new Scale(32, 32)));
+        super("Player", new Transform(new Vector2f(0, 0), new Scale(32, 32)));
     }
 
     @Override
@@ -36,6 +36,9 @@ public class Player extends GameObject {
         super.addComponent(this.renderer = new AnimationRenderer(playerSheet, 0));
         super.addComponent(this.collider2D = new BoxCollider2D(new Vector2f(4f, 52), new Scale(24, 10)));
         super.addComponent(this.rigidbody2D = new Rigidbody2D());
+
+        this.rigidbody2D.setMass(5f);
+        this.rigidbody2D.setHasGravity(true);
     }
 
     @Override
@@ -44,28 +47,19 @@ public class Player extends GameObject {
 
         boolean isMoving = false;
 
-        if(Input.isKey(KeyEvent.VK_D)) {
+        if(Input.isKey(KeyEvent.VK_D) || Input.isKey(KeyEvent.VK_RIGHT)) {
             this.renderer.setAnimation(2);
-            rigidbody2D.setForceToNonzero(new Vector2f(playerSpeed, 0));
-            isMoving = true;
-        }
-        if(Input.isKey(KeyEvent.VK_A)) {
-            this.renderer.setAnimation(1);
-            rigidbody2D.setForceToNonzero(new Vector2f(-playerSpeed, 0));
-            isMoving = true;
-        }
-        if(Input.isKey(KeyEvent.VK_S)) {
-            this.renderer.setAnimation(0);
-            rigidbody2D.setForceToNonzero(new Vector2f(0, playerSpeed));
-            isMoving = true;
-        }
-        if(Input.isKey(KeyEvent.VK_W)) {
-            this.renderer.setAnimation(3);
-            rigidbody2D.setForceToNonzero(new Vector2f(0, -playerSpeed));
+            this.rigidbody2D.setForceToNonzero(new Vector2f(playerSpeedForce, 0));
             isMoving = true;
         }
 
-        if(isMoving) super.getComponent(AnimationRenderer.class).incrementMillis(100);
+        if(Input.isKey(KeyEvent.VK_A) || Input.isKey(KeyEvent.VK_LEFT)) {
+            this.renderer.setAnimation(1);
+            this.rigidbody2D.setForceToNonzero(new Vector2f(-playerSpeedForce, 0));
+            isMoving = true;
+        }
+
+        if(isMoving) renderer.incrementMillis(100);
     }
 
     @Override

@@ -14,6 +14,8 @@ public class GameScene extends Scene {
 
     private Player player;
 
+    public GameScene() { super("Game Scene"); }
+
     @Override
     public void onCreate() {
         super.onCreate();

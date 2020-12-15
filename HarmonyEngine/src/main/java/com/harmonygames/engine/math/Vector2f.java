@@ -1,4 +1,4 @@
-package com.harmonygames.engine.utils;
+package com.harmonygames.engine.math;
 
 public class Vector2f {
 
@@ -144,6 +144,18 @@ public class Vector2f {
     public Vector2f div(float r) {
         this.x /= r;
         this.y /= r;
+        return this;
+    }
+
+    public Vector2f min(Vector2f r) {
+        this.x = Math.min(this.x, r.x);
+        this.y = Math.min(this.y, r.y);
+        return this;
+    }
+
+    public Vector2f max(Vector2f r) {
+        this.x = Math.max(this.x, r.x);
+        this.y = Math.max(this.y, r.y);
         return this;
     }
 }

@@ -4,9 +4,9 @@ import com.harmonygames.engine.gameobject.Tile;
 import com.harmonygames.engine.physics2D.components.BoxCollider2D;
 import com.harmonygames.engine.gameobject.component.renderer.SpriteRenderer;
 import com.harmonygames.engine.scene.Scene;
-import com.harmonygames.engine.utils.Scale;
-import com.harmonygames.engine.utils.Transform;
-import com.harmonygames.engine.utils.Vector2f;
+import com.harmonygames.engine.math.Scale;
+import com.harmonygames.engine.math.Transform;
+import com.harmonygames.engine.math.Vector2f;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

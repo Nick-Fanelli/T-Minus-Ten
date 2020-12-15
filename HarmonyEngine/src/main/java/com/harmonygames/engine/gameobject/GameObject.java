@@ -3,7 +3,7 @@ package com.harmonygames.engine.gameobject;
 import com.harmonygames.engine.gameobject.component.Component;
 import com.harmonygames.engine.graphics.RenderBatch;
 import com.harmonygames.engine.scene.Scene;
-import com.harmonygames.engine.utils.Transform;
+import com.harmonygames.engine.math.Transform;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
 package com.harmonygames.engine;
 
 import com.harmonygames.engine.display.Display;
-import com.harmonygames.engine.utils.Transform;
-import com.harmonygames.engine.utils.Vector2f;
+import com.harmonygames.engine.math.Transform;
+import com.harmonygames.engine.math.Vector2f;
 
 public class Camera {
 

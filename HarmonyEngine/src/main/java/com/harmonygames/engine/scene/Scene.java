@@ -9,7 +9,13 @@ import java.util.TreeMap;
 
 public abstract class Scene {
 
+    public final String sceneName;
+
     private final TreeMap<Integer, RenderBatch> renderBatches = new TreeMap<>();
+
+    public Scene(String sceneName) {
+        this.sceneName = sceneName;
+    }
 
     public void onCreate() { }
 
