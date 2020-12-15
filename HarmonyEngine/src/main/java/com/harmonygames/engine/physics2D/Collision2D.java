@@ -1,7 +1,7 @@
 package com.harmonygames.engine.physics2D;
 
 import com.harmonygames.engine.gameobject.GameObject;
-import com.harmonygames.engine.gameobject.component.BoxCollider2D;
+import com.harmonygames.engine.physics2D.components.BoxCollider2D;
 import com.harmonygames.engine.utils.Scale;
 import com.harmonygames.engine.utils.Vector2f;
 

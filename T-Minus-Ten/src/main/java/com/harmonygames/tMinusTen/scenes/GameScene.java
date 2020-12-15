@@ -2,20 +2,13 @@ package com.harmonygames.tMinusTen.scenes;
 
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
-import com.harmonygames.engine.display.Input;
-import com.harmonygames.engine.gameobject.GameObject;
-import com.harmonygames.engine.gameobject.component.BoxCollider2D;
-import com.harmonygames.engine.gameobject.component.Rigidbody2D;
 import com.harmonygames.engine.graphics.Tilemap;
-import com.harmonygames.engine.physics2D.Collision2D;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.engine.utils.TiledTilemapLoader;
-import com.harmonygames.engine.utils.Vector2f;
 import com.harmonygames.tMinusTen.objects.Player;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class GameScene extends Scene {
 

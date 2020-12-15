@@ -1,5 +1,6 @@
-package com.harmonygames.engine.gameobject.component;
+package com.harmonygames.engine.physics2D.components;
 
+import com.harmonygames.engine.gameobject.component.Component;
 import com.harmonygames.engine.utils.Scale;
 import com.harmonygames.engine.utils.Vector2f;
 

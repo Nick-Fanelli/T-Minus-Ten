@@ -2,8 +2,8 @@ package com.harmonygames.tMinusTen.objects;
 
 import com.harmonygames.engine.display.Input;
 import com.harmonygames.engine.gameobject.GameObject;
-import com.harmonygames.engine.gameobject.component.BoxCollider2D;
-import com.harmonygames.engine.gameobject.component.Rigidbody2D;
+import com.harmonygames.engine.physics2D.components.BoxCollider2D;
+import com.harmonygames.engine.physics2D.components.Rigidbody2D;
 import com.harmonygames.engine.gameobject.component.renderer.AnimationRenderer;
 import com.harmonygames.engine.graphics.SpriteSheet;
 import com.harmonygames.engine.utils.Assets;

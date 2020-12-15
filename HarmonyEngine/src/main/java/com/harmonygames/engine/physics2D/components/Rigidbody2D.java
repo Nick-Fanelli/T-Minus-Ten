@@ -1,6 +1,7 @@
-package com.harmonygames.engine.gameobject.component;
+package com.harmonygames.engine.physics2D.components;
 
 import com.harmonygames.engine.gameobject.GameObject;
+import com.harmonygames.engine.gameobject.component.Component;
 import com.harmonygames.engine.physics2D.Collision2D;
 import com.harmonygames.engine.utils.Vector2f;
 
