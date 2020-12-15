@@ -11,5 +11,4 @@ public class ImageUtils {
         outputImage.getGraphics().drawImage(resultingImage, 0, 0, null);
         return outputImage;
     }
-
 }

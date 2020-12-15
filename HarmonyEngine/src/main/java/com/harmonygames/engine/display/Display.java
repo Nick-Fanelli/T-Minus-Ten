@@ -1,6 +1,7 @@
 package com.harmonygames.engine.display;
 
 import com.harmonygames.engine.GameContext;
+import com.harmonygames.engine.utils.ImageUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,12 +20,18 @@ public class Display {
     private static BufferStrategy bs;
     private static Graphics g;
 
+    private static Dimension aspectRatio;
+    private static Dimension scaledContext;
+
     private final GameContext gameContext;
 
     public Display(GameContext gameContext, String title) {
         this.gameContext = gameContext;
 
-        Dimension windowSize = new Dimension(1280, 720);
+        aspectRatio = new Dimension(1280, 720);
+        scaledContext = new Dimension(aspectRatio.width, aspectRatio.height);
+
+        Dimension windowSize = new Dimension(scaledContext.width, scaledContext.height);
 
         image = new BufferedImage(windowSize.width, windowSize.height, BufferedImage.TYPE_INT_ARGB);
 
@@ -33,6 +40,8 @@ public class Display {
 
         frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        frame.setMinimumSize(new Dimension(scaledContext.width / 2, scaledContext.height / 2));
 
         frame.setLayout(new BorderLayout());
         frame.add(canvas, BorderLayout.CENTER);
@@ -67,6 +76,8 @@ public class Display {
             public void componentResized(ComponentEvent e) {
                 if(frame.getWidth() <= 0 || frame.getHeight() <= 0) return;
 
+                scaledContext = getScaledDisplayContext(canvas.getSize());
+
                 canvas.createBufferStrategy(2);
                 bs = canvas.getBufferStrategy();
                 g = bs.getDrawGraphics();
@@ -76,7 +87,10 @@ public class Display {
 
     public void update() {
         try {
-            g.drawImage(image, 0, 0, frame.getWidth(), frame.getHeight(), null);
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            g.drawImage(image, (canvas.getWidth() - scaledContext.width) / 2, (canvas.getHeight() - scaledContext.height) / 2,
+                    scaledContext.width, scaledContext.height, null);
             bs.show();
         } catch (Exception ignored) {}
 
@@ -92,6 +106,20 @@ public class Display {
         g.dispose();
         bs.dispose();
         frame.dispose();
+    }
+
+    public Dimension getScaledDisplayContext(Dimension frameSize) {
+        Dimension scaledDimension = new Dimension();
+
+        if(frameSize.getWidth() > frameSize.getHeight()) {
+            scaledDimension.height = (int) frameSize.getHeight();
+            scaledDimension.width = (int) ((aspectRatio.getWidth() / aspectRatio.getHeight()) * frameSize.getHeight());
+        } else {
+            scaledDimension.width = (int) frameSize.getWidth();
+            scaledDimension.height = (int) ((aspectRatio.getHeight() / aspectRatio.getWidth()) * frameSize.getWidth());
+        }
+
+        return scaledDimension;
     }
 
     public Graphics2D getDrawGraphics() {
