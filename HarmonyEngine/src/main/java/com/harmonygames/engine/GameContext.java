@@ -1,9 +1,10 @@
 package com.harmonygames.engine;
 
+import com.harmonygames.engine.data.DataUtils;
 import com.harmonygames.engine.display.Display;
+import com.harmonygames.engine.display.Input;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.scene.SceneManager;
-import com.harmonygames.engine.display.Input;
 
 public class GameContext implements Runnable {
 
@@ -24,6 +25,7 @@ public class GameContext implements Runnable {
     private Scene startScene;
 
     public GameContext(String gameTitle, Scene activeScene) {
+        DataUtils.setSaveLocation(gameTitle.toLowerCase().replaceAll(" +", "-"));
         this.contextThread = new Thread(this, "__HarmonyEngine:GameContext__");
         this.gameTitle = gameTitle;
         this.startScene = activeScene;

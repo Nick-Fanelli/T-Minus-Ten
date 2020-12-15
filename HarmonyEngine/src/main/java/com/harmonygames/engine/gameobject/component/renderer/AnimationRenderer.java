@@ -29,6 +29,7 @@ public class AnimationRenderer extends Component {
     public void update(float deltaTime) {
         if(isDirty) {
             spriteRenderer.setImage(spriteSheet.getSprite(currentFrame, animationID));
+            this.isDirty = false;
         }
 
         this.spriteRenderer.update(deltaTime);
