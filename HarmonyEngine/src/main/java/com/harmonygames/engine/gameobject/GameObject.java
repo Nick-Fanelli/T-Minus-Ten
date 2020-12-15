@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 public class GameObject {
 
+    private final ArrayList<Component> components = new ArrayList<>();
+
     private final String name;
     public Transform transform;
     private int zIndex;
@@ -17,7 +19,7 @@ public class GameObject {
     private Scene scene = null;
     private RenderBatch renderBatch = null;
 
-    private final ArrayList<Component> components = new ArrayList<>();
+    private float rotation;
 
     public GameObject(String name) {
         this(name, new Transform());
@@ -27,9 +29,12 @@ public class GameObject {
         this(name, transform, 0);
     }
 
-    public GameObject(String name, Transform transform, int zIndex) {
+    public GameObject(String name, Transform transform, float rotation) { this(name, transform, rotation, 0); }
+
+    public GameObject(String name, Transform transform, float rotation, int zIndex) {
         this.name = name;
         this.transform = transform;
+        this.rotation = rotation;
         this.zIndex = zIndex;
     }
 
@@ -112,5 +117,8 @@ public class GameObject {
 
     public RenderBatch getRenderBatch() { return this.renderBatch; }
     public void setRenderBatch(RenderBatch batch) { this.renderBatch = batch; }
+
+    public float getRotation() { return this.rotation; }
+    public void setRotation(float rotation) { this.rotation = rotation; }
 
 }
