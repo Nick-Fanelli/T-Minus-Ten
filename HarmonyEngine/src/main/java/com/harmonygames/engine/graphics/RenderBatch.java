@@ -1,14 +1,16 @@
 package com.harmonygames.engine.graphics;
 
 import com.harmonygames.engine.gameobject.GameObject;
+import com.harmonygames.engine.scene.Scene;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public class RenderBatch {
+public class RenderBatch implements Comparable<RenderBatch> {
 
     public final int zIndex;
     private ArrayList<GameObject> gameObjects = new ArrayList<>();
+    private Scene scene = null;
 
     public RenderBatch(int zIndex) {
         this.zIndex = zIndex;
@@ -28,6 +30,7 @@ public class RenderBatch {
     public void removeGameObject(GameObject gameObject) {
         gameObjects.remove(gameObject);
         gameObject.setRenderBatch(null);
+        if(scene != null && gameObjects.size() == 0) scene.removeRenderBatch(this);
     }
 
     public void reassignGameObject(GameObject gameObject, RenderBatch renderBatch) {
@@ -45,5 +48,15 @@ public class RenderBatch {
     }
 
     public ArrayList<GameObject> getGameObjects() { return this.gameObjects; }
+
+    public Scene getScene() { return this.scene; }
+    public void setScene(Scene scene) { this.scene = scene; }
+
+
+    @Override
+    public int compareTo(RenderBatch other) {
+        return Integer.compare(zIndex, other.zIndex);
+    }
+
 
 }

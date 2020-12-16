@@ -29,10 +29,10 @@ public class Assets {
         return null;
     }
 
-    public static SpriteSheet addSpriteSheet(String path, int numCols, int numRows) {
+    public static SpriteSheet addSpriteSheet(String path, int tileWidth, int tileHeight) {
         if(spriteSheets.containsKey(path)) return spriteSheets.get(path);
 
-        SpriteSheet spriteSheet = new SpriteSheet(Assets.getImage(path), numCols, numRows);
+        SpriteSheet spriteSheet = new SpriteSheet(Assets.getImage(path), tileWidth, tileHeight);
         spriteSheets.put(path, spriteSheet);
 
         return spriteSheet;

@@ -24,14 +24,14 @@ public class Player extends GameObject {
     private float playerSpeedForce = 3.5f;
 
     public Player() {
-        super("Player", new Transform(new Vector2f(0, 0), new Scale(32, 32)));
+        super("Player", new Transform(new Vector2f(1000, 1000), new Scale(32, 32)));
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        playerSheet = Assets.addSpriteSheet("assets/spritesheets/characters/player-sheet.png", 4, 4);
+        playerSheet = Assets.addSpriteSheet("assets/spritesheets/characters/player-sheet.png", 32, 64);
 
         super.addComponent(this.renderer = new AnimationRenderer(playerSheet, 0));
         super.addComponent(this.collider2D = new BoxCollider2D(new Vector2f(4f, 52), new Scale(24, 10)));
