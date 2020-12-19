@@ -12,9 +12,8 @@ import java.util.Arrays;
 
 public class ChunkLoader implements Runnable {
 
-    private final ArrayList<Chunk> waitingList = new ArrayList<>();
-
     private final Thread thread = new Thread(this, "_TMinusTen:ChunkLoader_");
+    private final ArrayList<Chunk> waitingList = new ArrayList<>();
 
     public void loadChunks(Chunk... chunks) {
         waitingList.addAll(Arrays.asList(chunks));
