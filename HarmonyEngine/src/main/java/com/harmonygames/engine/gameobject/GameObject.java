@@ -19,6 +19,8 @@ public class GameObject {
     private Scene scene = null;
     private RenderBatch renderBatch = null;
 
+    private boolean isEnabled = true;
+
     private float rotation;
 
     public GameObject(String name) {
@@ -103,11 +105,11 @@ public class GameObject {
     public void onCreate() { }
 
     public void update(float deltaTime) {
-        for(Component c : components) c.update(deltaTime);
+        if(isEnabled) for(Component c : components) c.update(deltaTime);
     }
 
     public void draw(Graphics2D g) {
-        for(Component c : components) c.draw(g);
+        if(isEnabled) for(Component c : components) c.draw(g);
     }
 
     public void onDestroy() { }
@@ -121,4 +123,8 @@ public class GameObject {
     public float getRotation() { return this.rotation; }
     public void setRotation(float rotation) { this.rotation = rotation; }
 
+    public boolean isEnabled() { return this.isEnabled; }
+
+    public void enable() { this.isEnabled = true; }
+    public void disable() { this.isEnabled = false; }
 }
