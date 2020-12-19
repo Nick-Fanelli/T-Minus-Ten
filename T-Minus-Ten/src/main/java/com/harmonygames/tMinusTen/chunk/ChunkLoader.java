@@ -47,7 +47,7 @@ public class ChunkLoader implements Runnable {
                             new Vector2f(xPos, yOffset * chunk.tileHeight), new Scale(chunk.tileWidth, chunk.tileHeight)
                     ));
 
-                    gameObject.addComponent(new SpriteRenderer(chunk.spriteSheet.getSprite(chunk.chunkY == 0 ? 0 : 1, chunk.chunkY == 1 ? 0 : 1)));
+                    gameObject.addComponent(new SpriteRenderer(chunk.spriteSheet.getSprite(chunk.chunkY == 0 ? 0 : 1, 1)));
                     gameObject.addComponent(new BoxCollider2D(new Vector2f(), gameObject.transform.scale));
 
                     chunk.gameObjects.add(gameObject);
@@ -58,7 +58,7 @@ public class ChunkLoader implements Runnable {
                         GameObject gameObject1 = new GameObject("Generated_Tile", new Transform(
                                 new Vector2f(xPos, (yOffset + 1 + y) * chunk.tileHeight), new Scale(chunk.tileWidth, chunk.tileHeight)
                         ));
-                        gameObject1.addComponent(new SpriteRenderer(chunk.spriteSheet.getSprite(1, chunk.chunkY == 1 ? 0 : 1)));
+                        gameObject1.addComponent(new SpriteRenderer(chunk.spriteSheet.getSprite(1, 1)));
                         gameObject1.addComponent(new BoxCollider2D(new Vector2f(), gameObject1.transform.scale));
 
                         chunk.gameObjects.add(gameObject1);

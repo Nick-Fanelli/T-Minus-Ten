@@ -1,6 +1,7 @@
 package com.harmonygames.tMinusTen.scenes;
 
 import com.harmonygames.engine.Camera;
+import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.display.Input;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
 import com.harmonygames.engine.graphics.SpriteSheet;
@@ -31,15 +32,15 @@ public class PlanetScene extends Scene {
 //        super.addGameObject(player);
 
         spriteSheet = Assets.addSpriteSheet("assets/spritesheets/ground/grasstileset.png", 30, 30);
-        Chunk chunk = new Chunk(spriteSheet, 0, 0, tileWidth, tileHeight, chunkWidth, chunkHeight);
-        Chunk c2 = new Chunk(spriteSheet, 1, 0, tileWidth, tileHeight, chunkWidth, chunkHeight);
-
-        chunk.load();
-        c2.load();
-
         chunkContainer = new SimilarObjectContainer<>("ChunkContainer", this);
+        Chunk chunk = new Chunk(spriteSheet, chunkContainer,0, 0, tileWidth, tileHeight, chunkWidth, chunkHeight);
+//        Chunk c2 = new Chunk(spriteSheet, 1, 0, tileWidth, tileHeight, chunkWidth, chunkHeight);
+//
+        chunk.load();
+//        c2.load();
+
         chunkContainer.addGameObject(chunk);
-        chunkContainer.addGameObject(c2);
+//        chunkContainer.addGameObject(c2);
 
         super.addGameObject(chunkContainer);
     }
@@ -53,27 +54,6 @@ public class PlanetScene extends Scene {
         if(Input.isKey(KeyEvent.VK_UP)) Camera.position.y -= 100 * deltaTime;
         if(Input.isKey(KeyEvent.VK_DOWN)) Camera.position.y += 100 * deltaTime;
 
-        Vector2f targetChunk = new Vector2f((float) Math.floor(Camera.position.x / (chunkWidth * tileWidth)), (float) Math.floor(Camera.position.y / (chunkHeight * tileHeight)));
-//        System.out.println(targetChunk);
-
-        for(int i = 0; i < chunkContainer.getGameObjects().size(); i++) {
-            Chunk chunk = chunkContainer.getGameObjects().get(i);
-//
-//            if(!targetChunk.equals(chunk.chunkX, chunk.chunkY)) {
-//                chunkContainer.removeGameObject(chunk);
-//
-//                Chunk c = new Chunk(spriteSheet, (int) targetChunk.x, (int) targetChunk.y, tileWidth, tileHeight, chunkWidth, chunkHeight);
-//                c.enable();
-//
-//                chunkContainer.addGameObject(c);
-//                continue;
-//            }
-
-            if(!Camera.shouldDrawTransform(chunk.transform)) {
-                chunkContainer.removeGameObject(chunk);
-                continue;
-            }
-        }
     }
 
     @Override

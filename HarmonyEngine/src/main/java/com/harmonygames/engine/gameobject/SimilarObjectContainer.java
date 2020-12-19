@@ -28,7 +28,7 @@ public class SimilarObjectContainer<T extends GameObject> extends GameObject {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        for(T gameObject : gameObjects) { if(gameObject.isEnabled()) gameObject.update(deltaTime); }
+        for(int i = 0; i < gameObjects.size(); i++) { if(gameObjects.get(i).isEnabled()) gameObjects.get(i).update(deltaTime); }
     }
 
     @Override
