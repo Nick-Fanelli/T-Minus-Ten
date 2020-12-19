@@ -70,6 +70,10 @@ public class Vector2f {
         return this.x == r.x && this.y == r.y;
     }
 
+    public boolean equals(float x, float y) {
+        return this.x == x && this.y == y;
+    }
+
     @Override
     public String toString() {
         return String.format("[Vector2f: X:%s, Y:%s]", this.x, this.y);

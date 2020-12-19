@@ -23,8 +23,6 @@ public class Chunk extends GameObject {
     public ArrayList<GameObject> gameObjects = new ArrayList<>();
     private boolean hasLoaded = false;
 
-    private boolean isEnabled = false;
-
     public Chunk(SpriteSheet spriteSheet, int chunkX, int chunkY, int tileWidth, int tileHeight, int chunkWidth, int chunkHeight) {
         super("Generated_Chunk", new Transform(new Vector2f(chunkX * (tileWidth * chunkWidth), chunkY * (tileHeight * chunkHeight)),
                 new Scale(tileWidth * chunkWidth, tileHeight * chunkHeight)));
@@ -38,30 +36,18 @@ public class Chunk extends GameObject {
     }
 
     public void update(float deltaTime) {
-        if(!isEnabled || !hasLoaded) return;
+        if(!hasLoaded) return;
         for(GameObject gameObject : gameObjects) gameObject.update(deltaTime);
     }
 
     public void draw(Graphics2D g) {
-        if(!isEnabled || !hasLoaded) return;
+        if(!hasLoaded) return;
         for(GameObject gameObject : gameObjects) gameObject.draw(g);
     }
 
     public void load() {
         chunkLoader.loadChunk(this);
     }
-
-    public void enable() {
-        this.isEnabled = true;
-
-        if(!hasLoaded) this.load();
-    }
-
-    public void disable() {
-        this.isEnabled = false;
-    }
-
-    public boolean isEnabled() { return this.isEnabled; }
 
     public void setLoaded(boolean value) { this.hasLoaded = value; }
 }

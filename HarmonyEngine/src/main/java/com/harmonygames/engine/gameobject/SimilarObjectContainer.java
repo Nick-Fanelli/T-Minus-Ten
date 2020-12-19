@@ -34,7 +34,11 @@ public class SimilarObjectContainer<T extends GameObject> extends GameObject {
     @Override
     public void draw(Graphics2D g) {
         super.draw(g);
-        for(T gameObject : gameObjects) { if(gameObject.isEnabled()) gameObject.draw(g); }
+        for(T gameObject : gameObjects) {
+            if(gameObject.isEnabled()) {
+                gameObject.draw(g);
+            }
+        }
     }
 
 }
