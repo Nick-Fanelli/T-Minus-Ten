@@ -32,7 +32,7 @@ public class PlanetScene extends Scene {
 //        player.transform.position.set(0, -100);
 //        super.addGameObject(player);
 
-        spriteSheet = Assets.addSpriteSheet("assets/spritesheets/ground/grasstileset.png", 30, 30);
+        spriteSheet = Assets.addSpriteSheet("/spritesheets/ground/grasstileset.png", 30, 30);
         chunkContainer = new SimilarObjectContainer<>("ChunkContainer", this);
         chunkLoader = new ChunkLoader(this, chunkContainer, spriteSheet, tileWidth, tileHeight, chunkWidth, chunkHeight);
 

@@ -17,7 +17,7 @@ public class Assets {
         if(images.containsKey(path)) return images.get(path);
 
         try {
-            BufferedImage image = ImageIO.read(new File(path));
+            BufferedImage image = ImageIO.read(Assets.class.getResourceAsStream(path));
             images.put(path, image);
             return image;
         } catch (Exception e) {
