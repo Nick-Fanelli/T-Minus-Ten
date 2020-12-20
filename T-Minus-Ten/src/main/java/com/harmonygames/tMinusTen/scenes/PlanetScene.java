@@ -4,6 +4,7 @@ import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Input;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
 import com.harmonygames.engine.graphics.SpriteSheet;
+import com.harmonygames.engine.math.Vector2f;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.tMinusTen.chunk.Chunk;
@@ -46,7 +47,6 @@ public class PlanetScene extends Scene {
         if(Input.isKey(KeyEvent.VK_RIGHT)) Camera.position.x += 100 * deltaTime;
         if(Input.isKey(KeyEvent.VK_UP)) Camera.position.y -= 100 * deltaTime;
         if(Input.isKey(KeyEvent.VK_DOWN)) Camera.position.y += 100 * deltaTime;
-
     }
 
     @Override
