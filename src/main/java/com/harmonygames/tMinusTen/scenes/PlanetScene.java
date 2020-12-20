@@ -1,10 +1,12 @@
 package com.harmonygames.tMinusTen.scenes;
 
 import com.harmonygames.engine.Camera;
+import com.harmonygames.engine.GameContext;
 import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.display.Input;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
 import com.harmonygames.engine.graphics.SpriteSheet;
+import com.harmonygames.engine.physics2D.components.Rigidbody2D;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.tMinusTen.chunk.Chunk;
@@ -31,24 +33,23 @@ public class PlanetScene extends Scene {
         super.onCreate();
 
         Camera.position.set(0, -500);
-        player = new Player();
-        player.transform.position.set(0, -200);
-        super.addGameObject(player);
 
         spriteSheet = Assets.addSpriteSheet("/spritesheets/ground/grasstileset.png", 30, 30);
         chunkContainer = new SimilarObjectContainer<>("ChunkContainer", this);
         chunkLoader = new ChunkLoader(this, chunkContainer, spriteSheet, tileWidth, tileHeight, chunkWidth, chunkHeight);
 
         super.addGameObject(chunkContainer);
-    }
 
-    float fps = 0;
+        player = new Player();
+        player.transform.position.set(0, -100);
+        super.addGameObject(player);
+    }
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
 
-        fps = 1f / deltaTime;
+        System.out.println(1f / deltaTime);
 
 //        if(Input.isKey(KeyEvent.VK_LEFT)) Camera.position.x -= 100 * deltaTime;
 //        if(Input.isKey(KeyEvent.VK_RIGHT)) Camera.position.x += 100 * deltaTime;
@@ -60,9 +61,6 @@ public class PlanetScene extends Scene {
     public void draw(Graphics2D g) {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, Display.getCanvas().getWidth(), Display.getCanvas().getHeight());
-//
-//        g.setColor(Color.WHITE);
-//        g.drawString("FPS: " + fps, 10, 20);
 
         super.draw(g);
     }

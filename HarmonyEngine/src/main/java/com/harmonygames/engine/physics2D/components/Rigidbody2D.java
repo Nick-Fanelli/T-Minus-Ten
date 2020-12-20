@@ -32,7 +32,7 @@ public class Rigidbody2D extends Component {
     @Override
     public void update(float deltaTime) {
         if(hasGravity) {
-            if(this.accumulatedForce.y < this.gravity) this.accumulatedForce.y += Math.max(this.gravity, this.accumulatedForce.y + this.mass);
+            if(this.accumulatedForce.y < this.gravity) this.accumulatedForce.y += Math.max(this.gravity, this.mass);
 //            this.addForce(new Vector2f(this.gravity).min(new Vector2f(this.gravity).mul(mass).sub(this.accumulatedForce)));
         }
 

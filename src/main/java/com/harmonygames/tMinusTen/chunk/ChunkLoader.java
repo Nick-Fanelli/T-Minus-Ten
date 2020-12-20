@@ -24,6 +24,8 @@ public class ChunkLoader implements Runnable {
     private final int chunkWidth, chunkHeight;
     private final int xAnnexation, yAnnexation;
 
+    private boolean hasLoaded = false;
+
     private final Thread thread = new Thread(this, "_TMinusTen:ChunkLoader_");
     private final ArrayList<Chunk> waitingList = new ArrayList<>();
 
@@ -120,6 +122,8 @@ public class ChunkLoader implements Runnable {
                 chunks.addGameObject(chunk);
             }
 
+            if(!hasLoaded) hasLoaded = true;
+
             chunksAddedMap.clear(); // Clear the map
 
             // Free up some processing
@@ -130,5 +134,7 @@ public class ChunkLoader implements Runnable {
             }
         }
     }
+
+    public boolean hasLoaded() { return hasLoaded; }
 
 }
