@@ -5,7 +5,6 @@ import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.display.Input;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
 import com.harmonygames.engine.graphics.SpriteSheet;
-import com.harmonygames.engine.math.Vector2f;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.tMinusTen.chunk.Chunk;
