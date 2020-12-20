@@ -3,6 +3,7 @@ package com.harmonygames.tMinusTen.chunk;
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.gameobject.GameObject;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
+import com.harmonygames.engine.gameobject.component.Component;
 import com.harmonygames.engine.graphics.SpriteSheet;
 import com.harmonygames.engine.math.PerlinNoise;
 import com.harmonygames.engine.math.Scale;
@@ -11,6 +12,7 @@ import com.harmonygames.engine.math.Vector2f;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Chunk extends GameObject {
 
@@ -51,4 +53,15 @@ public class Chunk extends GameObject {
     }
 
     public void setLoaded(boolean value) { this.hasLoaded = value; }
+
+    @Override
+    public <T extends Component> GameObject[] getSelf(Class<T> component) {
+        ArrayList<GameObject> selectedObjects = new ArrayList<>();
+
+        for(GameObject gameObject : gameObjects) {
+            selectedObjects.addAll(Arrays.asList(gameObject.getSelf(component)));
+        }
+
+        return selectedObjects.toArray(new GameObject[0]);
+    }
 }

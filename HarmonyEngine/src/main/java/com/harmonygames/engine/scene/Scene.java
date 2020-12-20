@@ -1,10 +1,14 @@
 package com.harmonygames.engine.scene;
 
 import com.harmonygames.engine.gameobject.GameObject;
+import com.harmonygames.engine.gameobject.GameObjectContainer;
+import com.harmonygames.engine.gameobject.SimilarObjectContainer;
+import com.harmonygames.engine.gameobject.component.Component;
 import com.harmonygames.engine.graphics.RenderBatch;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public abstract class Scene {
@@ -81,4 +85,16 @@ public abstract class Scene {
     }
 
     public ArrayList<RenderBatch> getRenderBatches() { return renderBatches; }
+
+    public <T extends Component> ArrayList<GameObject> getUnwrappedGameObjects(Class<T> componentClass) {
+        ArrayList<GameObject> gameObjects = new ArrayList<>();
+
+        for(RenderBatch renderBatch : renderBatches) {
+            for(GameObject gameObject : renderBatch.getGameObjects()) {
+                gameObjects.addAll(Arrays.asList(gameObject.getSelf(componentClass)));
+            }
+        }
+
+        return gameObjects;
+    }
 }

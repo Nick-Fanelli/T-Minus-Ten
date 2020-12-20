@@ -1,9 +1,11 @@
 package com.harmonygames.engine.gameobject;
 
+import com.harmonygames.engine.gameobject.component.Component;
 import com.harmonygames.engine.scene.Scene;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SimilarObjectContainer<T extends GameObject> extends GameObject {
 
@@ -41,4 +43,14 @@ public class SimilarObjectContainer<T extends GameObject> extends GameObject {
         }
     }
 
+    @Override
+    public <E extends Component> GameObject[] getSelf(Class<E> component) {
+        ArrayList<GameObject> selectedGameObjects = new ArrayList<>();
+
+        for(int i = 0; i < gameObjects.size(); i++) {
+            selectedGameObjects.addAll(Arrays.asList(gameObjects.get(i).getSelf(component)));
+        }
+
+        return selectedGameObjects.toArray(new GameObject[0]);
+    }
 }

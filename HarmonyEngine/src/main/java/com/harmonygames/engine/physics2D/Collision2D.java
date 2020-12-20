@@ -35,4 +35,12 @@ public class Collision2D {
                 && p1.y <= p2.y + s2.height;
     }
 
+    public static boolean xIsColliding(float x1, float x2, float width1, float width2) {
+        return x1 + width1 >= x2 && x1 <= x2 + width2;
+    }
+
+    public static boolean yIsColliding(float y1, float y2, float height1, float height2) {
+        return y1 + height1 >= y2 && y1 <= y2 + height2;
+    }
+
 }

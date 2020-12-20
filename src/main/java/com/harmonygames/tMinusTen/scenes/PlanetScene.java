@@ -9,11 +9,14 @@ import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.tMinusTen.chunk.Chunk;
 import com.harmonygames.tMinusTen.chunk.ChunkLoader;
+import com.harmonygames.tMinusTen.objects.Player;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class PlanetScene extends Scene {
+
+    private Player player;
 
     private SimilarObjectContainer<Chunk> chunkContainer;
     private ChunkLoader chunkLoader;
@@ -28,9 +31,9 @@ public class PlanetScene extends Scene {
         super.onCreate();
 
         Camera.position.set(0, -500);
-//        player = new Player();
-//        player.transform.position.set(0, -100);
-//        super.addGameObject(player);
+        player = new Player();
+        player.transform.position.set(0, -200);
+        super.addGameObject(player);
 
         spriteSheet = Assets.addSpriteSheet("/spritesheets/ground/grasstileset.png", 30, 30);
         chunkContainer = new SimilarObjectContainer<>("ChunkContainer", this);
@@ -43,10 +46,10 @@ public class PlanetScene extends Scene {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
-        if(Input.isKey(KeyEvent.VK_LEFT)) Camera.position.x -= 100 * deltaTime;
-        if(Input.isKey(KeyEvent.VK_RIGHT)) Camera.position.x += 100 * deltaTime;
-        if(Input.isKey(KeyEvent.VK_UP)) Camera.position.y -= 100 * deltaTime;
-        if(Input.isKey(KeyEvent.VK_DOWN)) Camera.position.y += 100 * deltaTime;
+//        if(Input.isKey(KeyEvent.VK_LEFT)) Camera.position.x -= 100 * deltaTime;
+//        if(Input.isKey(KeyEvent.VK_RIGHT)) Camera.position.x += 100 * deltaTime;
+//        if(Input.isKey(KeyEvent.VK_UP)) Camera.position.y -= 100 * deltaTime;
+//        if(Input.isKey(KeyEvent.VK_DOWN)) Camera.position.y += 100 * deltaTime;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.harmonygames.tMinusTen.objects;
 
+import com.harmonygames.engine.Camera;
+import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.display.Input;
 import com.harmonygames.engine.gameobject.GameObject;
 import com.harmonygames.engine.physics2D.components.BoxCollider2D;
@@ -24,20 +26,20 @@ public class Player extends GameObject {
     private float playerSpeedForce = 3.5f;
 
     public Player() {
-        super("Player", new Transform(new Vector2f(1000, 1000), new Scale(32, 32)));
+        super("Player", new Transform(new Vector2f(0, 0), new Scale(32, 32)));
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        playerSheet = Assets.addSpriteSheet("assets/spritesheets/characters/player-sheet.png", 32, 64);
+        playerSheet = Assets.addSpriteSheet("/spritesheets/characters/player-sheet.png", 32, 64);
 
         super.addComponent(this.renderer = new AnimationRenderer(playerSheet, 0));
         super.addComponent(this.collider2D = new BoxCollider2D(new Vector2f(4f, 52), new Scale(24, 10)));
         super.addComponent(this.rigidbody2D = new Rigidbody2D());
 
-        this.rigidbody2D.setMass(5f);
+        this.rigidbody2D.setMass(1f);
         this.rigidbody2D.setHasGravity(true);
     }
 
@@ -58,6 +60,22 @@ public class Player extends GameObject {
             this.rigidbody2D.setForceToNonzero(new Vector2f(-playerSpeedForce, 0));
             isMoving = true;
         }
+
+        if(Input.isKey(KeyEvent.VK_SPACE)) {
+            this.rigidbody2D.setForceToNonzero(new Vector2f(0, -15));
+        }
+
+        if(!rigidbody2D.getAccumulatedForce().isZero()) Camera.position.set(new Vector2f(this.transform.position).sub(Display.getCanvas().getWidth() / 2f, Display.getCanvas().getHeight() / 2f));
+//
+//        if(Input.isKey(KeyEvent.VK_S)) {
+//            this.rigidbody2D.setForceToNonzero(new Vector2f(0, playerSpeedForce));
+//            isMoving = true;
+//        }
+//
+//        if(Input.isKey(KeyEvent.VK_W)) {
+//            this.rigidbody2D.setForceToNonzero(new Vector2f(0, -playerSpeedForce));
+//            isMoving = true;
+//        }
 
         if(isMoving) renderer.incrementMillis(100);
     }

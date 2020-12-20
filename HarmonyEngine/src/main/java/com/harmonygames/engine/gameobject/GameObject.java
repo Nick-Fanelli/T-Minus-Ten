@@ -96,6 +96,10 @@ public class GameObject {
         }
     }
 
+    public <T extends Component> GameObject[] getSelf(Class<T> component) {
+        return this.containsComponentType(component) ? new GameObject[] { this } : new GameObject[0];
+    }
+
     public int getZIndex() { return this.zIndex; }
 
     public ArrayList<Component> getComponents() { return this.components; }
