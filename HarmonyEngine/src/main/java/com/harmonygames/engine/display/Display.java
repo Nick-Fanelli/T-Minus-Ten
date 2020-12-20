@@ -1,7 +1,6 @@
 package com.harmonygames.engine.display;
 
 import com.harmonygames.engine.GameContext;
-import com.harmonygames.engine.utils.ImageUtils;
 
 import javax.swing.*;
 import java.awt.*;

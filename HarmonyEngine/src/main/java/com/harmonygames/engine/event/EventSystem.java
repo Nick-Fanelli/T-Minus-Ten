@@ -2,15 +2,15 @@ package com.harmonygames.engine.event;
 
 import java.util.ArrayList;
 
-public class EventSystem<T extends Event> {
+public class EventSystem {
 
-    private final ArrayList<T> events = new ArrayList<>();
+    private final ArrayList<Event> events = new ArrayList<>();
 
-    public void subscribe(T event) {
+    public void subscribe(Event event) {
         this.events.add(event);
     }
 
-    public void unsubscribe(T event) {
+    public void unsubscribe(Event event) {
         this.events.remove(event);
     }
 
