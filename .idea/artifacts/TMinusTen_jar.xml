@@ -2,6 +2,9 @@
   <artifact type="jar" name="TMinusTen:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/TMinusTen_jar</output-path>
     <root id="archive" name="TMinusTen.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
       <element id="module-output" name="TMinusTen.main" />
       <element id="module-output" name="TMinusTen.HarmonyEngine.main" />
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-commons/1.6.0/b0a75795cf03841d4f9cc54099557baffc11c727/junit-platform-commons-1.6.0.jar" path-in-jar="/" />
