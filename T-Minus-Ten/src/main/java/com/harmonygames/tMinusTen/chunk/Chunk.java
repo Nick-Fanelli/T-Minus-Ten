@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 public class Chunk extends GameObject {
 
-    public static final ChunkLoader chunkLoader = new ChunkLoader();
     public static final PerlinNoise heightNoiseMap = new PerlinNoise(100);
 
     public final int chunkX, chunkY;
@@ -49,10 +48,6 @@ public class Chunk extends GameObject {
     public void draw(Graphics2D g) {
         if(!hasLoaded) return;
         for(GameObject gameObject : gameObjects) gameObject.draw(g);
-    }
-
-    public void load() {
-        chunkLoader.loadChunk(this);
     }
 
     public void setLoaded(boolean value) { this.hasLoaded = value; }

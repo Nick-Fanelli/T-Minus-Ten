@@ -1,35 +1,54 @@
 package com.harmonygames.tMinusTen.chunk;
 
 import com.harmonygames.engine.gameobject.GameObject;
+import com.harmonygames.engine.gameobject.SimilarObjectContainer;
 import com.harmonygames.engine.gameobject.component.renderer.SpriteRenderer;
+import com.harmonygames.engine.graphics.SpriteSheet;
 import com.harmonygames.engine.math.Scale;
 import com.harmonygames.engine.math.Transform;
 import com.harmonygames.engine.math.Vector2f;
 import com.harmonygames.engine.physics2D.components.BoxCollider2D;
+import com.harmonygames.engine.scene.Scene;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class ChunkLoader implements Runnable {
+
+    private final Scene scene;
+    private final SpriteSheet spriteSheet;
+    private final int tileWidth, tileHeight;
+    private final int chunkWidth, chunkHeight;
 
     private final Thread thread = new Thread(this, "_TMinusTen:ChunkLoader_");
     private final ArrayList<Chunk> waitingList = new ArrayList<>();
 
-    public void loadChunks(Chunk... chunks) {
-        waitingList.addAll(Arrays.asList(chunks));
-        if(!thread.isAlive()) thread.start();
-        else thread.interrupt();
+    private SimilarObjectContainer<Chunk> chunks;
+
+    public ChunkLoader(Scene scene, SimilarObjectContainer<Chunk> chunks, SpriteSheet spriteSheet,
+                       int tileWidth, int tileHeight, int chunkWidth, int chunkHeight) {
+        this.scene = scene;
+        this.chunks = chunks;
+        this.spriteSheet = spriteSheet;
+        this.tileWidth = tileWidth;
+        this.tileHeight = tileHeight;
+        this.chunkWidth = chunkWidth;
+        this.chunkHeight = chunkHeight;
+
+        waitingList.add(new Chunk(spriteSheet, chunks, 0, 0, tileWidth, tileHeight, chunkWidth, chunkHeight));
+
+        thread.start();
     }
 
-    public void loadChunk(Chunk chunk) {
-        waitingList.add(chunk);
-        if(!thread.isAlive()) thread.start();
-        else thread.interrupt();
-    }
+    private HashMap<Vector2f, Boolean> chunksAddedMap = new HashMap<>();
 
     @Override
     public void run() {
         while (thread.isAlive()) {
+
+//            chunksAddedMap.put(new Vector2f(()))
+
             for (int i = 0; i < waitingList.size(); i++) {
                 Chunk chunk = waitingList.get(i);
 
@@ -67,10 +86,17 @@ public class ChunkLoader implements Runnable {
 
                 chunk.setLoaded(true);
                 waitingList.remove(chunk);
+                chunks.addGameObject(chunk);
             }
 
-            // Put the thread to sleep until needed!
-            try { synchronized (thread) { thread.wait(); } } catch (InterruptedException ignored) {}
+            chunksAddedMap.clear(); // Clear the map
+
+            // Free up some processing
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
