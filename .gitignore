@@ -9,6 +9,7 @@ local.properties
 /build
 /HarmonyEngine/build
 /T-Minus-Ten/build
+/out
 
 # Version Control
 vcs.xml
