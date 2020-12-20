@@ -1,6 +1,7 @@
 package com.harmonygames.tMinusTen.scenes;
 
 import com.harmonygames.engine.Camera;
+import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.display.Input;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
 import com.harmonygames.engine.graphics.SpriteSheet;
@@ -51,6 +52,9 @@ public class PlanetScene extends Scene {
 
     @Override
     public void draw(Graphics2D g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, Display.getCanvas().getWidth(), Display.getCanvas().getHeight());
+
         super.draw(g);
     }
 
