@@ -8,7 +8,7 @@ import com.harmonygames.engine.scene.SceneManager;
 
 public class GameContext implements Runnable {
 
-    public static final int TARGET_FPS = 60;
+    public static final int TARGET_FPS = 120;
     public static final double UPDATE_CAP = 1.0 / TARGET_FPS;
 
     private final Thread contextThread;

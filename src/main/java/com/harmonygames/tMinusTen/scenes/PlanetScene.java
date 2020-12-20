@@ -42,9 +42,13 @@ public class PlanetScene extends Scene {
         super.addGameObject(chunkContainer);
     }
 
+    float fps = 0;
+
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+
+        fps = 1f / deltaTime;
 
 //        if(Input.isKey(KeyEvent.VK_LEFT)) Camera.position.x -= 100 * deltaTime;
 //        if(Input.isKey(KeyEvent.VK_RIGHT)) Camera.position.x += 100 * deltaTime;
@@ -56,6 +60,9 @@ public class PlanetScene extends Scene {
     public void draw(Graphics2D g) {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, Display.getCanvas().getWidth(), Display.getCanvas().getHeight());
+//
+//        g.setColor(Color.WHITE);
+//        g.drawString("FPS: " + fps, 10, 20);
 
         super.draw(g);
     }

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Rigidbody2D extends Component {
 
     private Vector2f accumulatedForce = new Vector2f();
-    private float gravity = 7f;
+    private float gravity = 9.81f;
 
     private boolean hasGravity = false;
     private float mass = 1.0f;
@@ -35,6 +35,8 @@ public class Rigidbody2D extends Component {
             if(this.accumulatedForce.y < this.gravity) this.accumulatedForce.y += Math.max(this.gravity, this.accumulatedForce.y + this.mass);
 //            this.addForce(new Vector2f(this.gravity).min(new Vector2f(this.gravity).mul(mass).sub(this.accumulatedForce)));
         }
+
+        accumulatedForce.mul(deltaTime).mul(50);
 
         if(!accumulatedForce.isZero()) {
 
