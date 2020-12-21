@@ -1,12 +1,9 @@
 package com.harmonygames.tMinusTen.scenes;
 
 import com.harmonygames.engine.Camera;
-import com.harmonygames.engine.GameContext;
 import com.harmonygames.engine.display.Display;
-import com.harmonygames.engine.display.Input;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
 import com.harmonygames.engine.graphics.SpriteSheet;
-import com.harmonygames.engine.physics2D.components.Rigidbody2D;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.tMinusTen.chunk.Chunk;
@@ -14,7 +11,6 @@ import com.harmonygames.tMinusTen.chunk.ChunkLoader;
 import com.harmonygames.tMinusTen.objects.Player;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class PlanetScene extends Scene {
 
@@ -49,7 +45,7 @@ public class PlanetScene extends Scene {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
-        System.out.println(1f / deltaTime);
+//        System.out.println(1f / deltaTime);
 
 //        if(Input.isKey(KeyEvent.VK_LEFT)) Camera.position.x -= 100 * deltaTime;
 //        if(Input.isKey(KeyEvent.VK_RIGHT)) Camera.position.x += 100 * deltaTime;

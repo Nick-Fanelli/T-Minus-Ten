@@ -79,7 +79,7 @@ public class TiledTilemapLoader {
                     int imageHeight = Integer.parseInt(imageElement.getAttribute("height"));
 
                     String spriteSheetName = imageElement.getAttribute("source").replaceAll("\\.\\./", "");
-                    spriteSheetName = "assets/" + spriteSheetName;
+                    spriteSheetName = File.separator + spriteSheetName;
 
                     SpriteSheet spriteSheet = Assets.addSpriteSheet(spriteSheetName, tilesetTileWidth, tilesetTileHeight);
                     tilesets.add(new Tileset(spriteSheet, startID));

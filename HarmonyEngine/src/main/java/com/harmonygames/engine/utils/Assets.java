@@ -5,6 +5,7 @@ import com.harmonygames.engine.graphics.SpriteSheet;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
 public class Assets {
@@ -51,7 +52,12 @@ public class Assets {
     public static File getFile(String path) {
         if(files.containsKey(path)) return files.get(path);
 
-        File file = new File(path);
+        File file = null;
+        try {
+            file = new File(Assets.class.getResource(path).toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         files.put(path, file);
 
         return file;

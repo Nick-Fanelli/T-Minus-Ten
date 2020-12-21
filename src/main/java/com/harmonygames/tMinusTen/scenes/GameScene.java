@@ -20,7 +20,7 @@ public class GameScene extends Scene {
     public void onCreate() {
         super.onCreate();
 
-        TiledTilemapLoader loader = new TiledTilemapLoader(Assets.getFile("assets/maps/space-station.tmx"));
+        TiledTilemapLoader loader = new TiledTilemapLoader(Assets.getFile("/maps/space-station.tmx"));
         Tilemap[] tilemaps = loader.load();
 
         for (Tilemap tilemap : tilemaps) tilemap.addGameObjectsToScene(this);
@@ -28,7 +28,7 @@ public class GameScene extends Scene {
         player = new Player();
         super.addGameObject(player);
 
-        Camera.position.set(player.transform.position.x - Display.getFrame().getWidth() / 2f, player.transform.position.y - Display.getFrame().getHeight() / 2f);
+        Camera.position.set(player.transform.position.x - (float) Display.getAspectRatio().getWidth() / 2f, player.transform.position.y - (float) Display.getAspectRatio().getHeight() / 2f);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class GameScene extends Scene {
     @Override
     public void draw(Graphics2D g) {
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, Display.getFrame().getWidth(), Display.getFrame().getHeight());
+        g.fillRect(0, 0, (int) Display.getAspectRatio().getWidth(), (int) Display.getAspectRatio().getHeight());
         super.draw(g);
     }
 }

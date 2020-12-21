@@ -127,4 +127,6 @@ public class Display {
 
     public static JFrame getFrame() { return frame; }
     public static Canvas getCanvas() { return canvas; }
+
+    public static Dimension getAspectRatio() { return aspectRatio; }
 }

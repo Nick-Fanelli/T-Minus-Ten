@@ -40,8 +40,8 @@ public class ChunkLoader implements Runnable {
         this.tileHeight = tileHeight;
         this.chunkWidth = chunkWidth;
         this.chunkHeight = chunkHeight;
-        this.xAnnexation = (int) Math.ceil(Display.getFrame().getWidth() / (float) (tileWidth * chunkWidth)) + 1;
-        this.yAnnexation = (int) Math.ceil(Display.getFrame().getHeight() / (float) (tileHeight * chunkHeight)) + 1;
+        this.xAnnexation = (int) Math.ceil(Display.getAspectRatio().getWidth() / (float) (tileWidth * chunkWidth)) + 1;
+        this.yAnnexation = (int) Math.ceil(Display.getAspectRatio().getHeight() / (float) (tileHeight * chunkHeight)) + 1;
 
 //        waitingList.add(new Chunk(spriteSheet, chunks, 0, 0, tileWidth, tileHeight, chunkWidth, chunkHeight));
 

@@ -61,7 +61,7 @@ public class Player extends GameObject {
             isMoving = true;
         }
 
-        if(Input.isKey(KeyEvent.VK_SPACE)) {
+        if(Input.isKey(KeyEvent.VK_SPACE) || Input.isKey(KeyEvent.VK_UP)) {
             this.rigidbody2D.setForceToNonzero(new Vector2f(0, -15));
         }
 
