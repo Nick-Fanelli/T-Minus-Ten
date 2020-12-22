@@ -3,7 +3,6 @@ package com.harmonygames.tMinusTen.scenes;
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.display.Input;
-import com.harmonygames.engine.gameobject.GameObject;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
 import com.harmonygames.engine.gameobject.component.renderer.SpriteRenderer;
 import com.harmonygames.engine.graphics.SpriteSheet;
