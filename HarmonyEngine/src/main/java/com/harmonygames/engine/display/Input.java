@@ -1,6 +1,7 @@
 package com.harmonygames.engine.display;
 
 import com.harmonygames.engine.math.Vector2f;
+import com.studiohartman.jamepad.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +20,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     private static final Vector2f mousePosition = new Vector2f();
     private static int scroll;
 
+    private static ControllerManager controllers = new ControllerManager();
+
     public Input(JFrame frame, Canvas canvas) {
         frame.addKeyListener(this);
         canvas.addMouseListener(this);
@@ -27,11 +30,18 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 
         canvas.setFocusable(true);
         canvas.requestFocus();
+
+        // Handle Controller Stuff
+        controllers.initSDLGamepad();
     }
 
     public void update() {
+        // Handle Keyboard Inputs
         System.arraycopy(keys, 0, keysLast, 0, NUM_KEYS);
         System.arraycopy(buttons, 0, buttonsLast, 0, NUM_BUTTONS);
+
+        // Handle Controller Inputs
+        controllers.update();
     }
 
 //    public static boolean hoverRectangle(Rectangle rectangle) {
@@ -53,11 +63,36 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     public static Vector2f getMousePosition() { return mousePosition; }
     public static int getScroll() { return scroll; }
 
-    @Override public void keyPressed(KeyEvent e) {
+    // Controller
+    public static boolean isControllerButton(ControllerButton button, int controllerID) {
+        try {
+            return controllers.getControllerIndex(controllerID).isButtonPressed(button);
+        } catch (ControllerUnpluggedException ignored) {
+//            System.err.println("[Harmony: (Error)]: Controller was unplugged");
+//            e.printStackTrace();
+        }
 
-        System.out.println(e.getKeyCode());
-        if(e.getKeyCode() <= keys.length) keys[e.getKeyCode()] = true;
+        return false;
     }
+
+    public static boolean isControllerButton(ControllerButton button) { return isControllerButton(button, 0); }
+
+    public static boolean isControllerButtonDown(ControllerButton button, int controllerID) {
+        try {
+            return controllers.getControllerIndex(controllerID).isButtonJustPressed(button);
+        } catch (ControllerUnpluggedException e) {
+            System.err.println("[Harmony: (Error)]: Controller was unplugged");
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public static boolean isControllerButtonDown(ControllerButton button) { return isControllerButtonDown(button, 0); }
+
+    public static boolean isControllerConnected(int controllerID) { return controllers.getControllerIndex(controllerID).isConnected(); }
+
+    @Override public void keyPressed(KeyEvent e) { if(e.getKeyCode() <= keys.length) keys[e.getKeyCode()] = true; }
 
     @Override public void keyReleased(KeyEvent e) { if(e.getKeyCode() <= keys.length) keys[e.getKeyCode()] = false; }
 
