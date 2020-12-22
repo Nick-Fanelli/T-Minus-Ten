@@ -3,13 +3,13 @@ package com.harmonygames.tMinusTen.chunk;
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.gameobject.GameObject;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
-import com.harmonygames.engine.gameobject.Tile;
 import com.harmonygames.engine.gameobject.component.Component;
 import com.harmonygames.engine.graphics.SpriteSheet;
 import com.harmonygames.engine.math.PerlinNoise;
 import com.harmonygames.engine.math.Scale;
 import com.harmonygames.engine.math.Transform;
 import com.harmonygames.engine.math.Vector2f;
+import com.harmonygames.tMinusTen.objects.Block;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class Chunk extends GameObject {
     public final int chunkWidth, chunkHeight;
     public final SpriteSheet spriteSheet;
 
-    public ArrayList<Tile> tiles = new ArrayList<>();
+    public ArrayList<Block> blocks = new ArrayList<>();
     private boolean hasLoaded = false;
 
     private final SimilarObjectContainer<Chunk> objectContainer;
@@ -45,12 +45,12 @@ public class Chunk extends GameObject {
     public void update(float deltaTime) {
         if(!hasLoaded) return;
         if(!Camera.shouldDrawTransform(super.transform)) objectContainer.removeGameObject(this);
-        for(GameObject gameObject : tiles) gameObject.update(deltaTime);
+        for(Block block : blocks) block.update(deltaTime);
     }
 
     public void draw(Graphics2D g) {
         if(!hasLoaded) return;
-        for(GameObject gameObject : tiles) gameObject.draw(g);
+        for(Block block : blocks) block.draw(g);
     }
 
     public void setLoaded(boolean value) { this.hasLoaded = value; }
@@ -59,7 +59,7 @@ public class Chunk extends GameObject {
     public <T extends Component> GameObject[] getSelf(Class<T> component) {
         ArrayList<GameObject> selectedObjects = new ArrayList<>();
 
-        for(GameObject gameObject : tiles) {
+        for(GameObject gameObject : blocks) {
             selectedObjects.addAll(Arrays.asList(gameObject.getSelf(component)));
         }
 

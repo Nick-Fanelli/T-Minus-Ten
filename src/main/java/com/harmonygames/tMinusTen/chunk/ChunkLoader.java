@@ -11,6 +11,7 @@ import com.harmonygames.engine.math.Transform;
 import com.harmonygames.engine.math.Vector2f;
 import com.harmonygames.engine.physics2D.components.BoxCollider2D;
 import com.harmonygames.engine.scene.Scene;
+import com.harmonygames.tMinusTen.objects.Block;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,7 +86,11 @@ public class ChunkLoader implements Runnable {
             for(int i = 0; i < waitingList.size(); i++) {
                 Chunk chunk = waitingList.get(i);
 
-                
+                this.loadChunk(chunk);
+
+                waitingList.remove(chunk);
+                chunks.addGameObject(chunk);
+                chunk.setLoaded(true);
             }
 
             if(!hasLoaded) hasLoaded = true;
@@ -97,6 +102,23 @@ public class ChunkLoader implements Runnable {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    private synchronized void loadChunk(Chunk chunk) {
+        for(int x = 0; x < chunk.chunkWidth; x++) {
+
+            for(int y = 0; y < chunk.chunkHeight; y++) {
+
+                Block.Type type = (y + chunk.chunkY) == 0 ? Block.Type.GRASS : Block.Type.DIRT;
+
+                int heightDiff = chunk.chunkY != 0 ? 0 : (int) Math.round(Chunk.heightNoiseMap.noise((chunk.chunkX * chunk.chunkWidth) + x) * 10f);
+
+                chunk.blocks.add(new Block("Generated_Bloc", new Transform(new Vector2f(
+                        (chunk.chunkWidth * chunk.chunkX * chunk.tileWidth) + (x * tileWidth),
+                        (chunk.chunkHeight * chunk.chunkY * chunk.tileHeight) + (y * tileHeight) + (heightDiff * tileHeight)
+                ), new Scale(chunk.tileWidth, chunk.tileHeight)), chunk.spriteSheet, type));
             }
         }
     }

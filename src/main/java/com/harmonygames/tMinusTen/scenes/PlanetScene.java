@@ -2,6 +2,7 @@ package com.harmonygames.tMinusTen.scenes;
 
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
+import com.harmonygames.engine.display.Input;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
 import com.harmonygames.engine.graphics.SpriteSheet;
 import com.harmonygames.engine.scene.Scene;
@@ -11,6 +12,7 @@ import com.harmonygames.tMinusTen.chunk.ChunkLoader;
 import com.harmonygames.tMinusTen.objects.Player;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class PlanetScene extends Scene {
 
@@ -36,9 +38,9 @@ public class PlanetScene extends Scene {
 
         super.addGameObject(chunkContainer);
 
-        player = new Player();
-        player.transform.position.set(0, -100);
-        super.addGameObject(player);
+//        player = new Player();
+//        player.transform.position.set(0, -100);
+//        super.addGameObject(player);
     }
 
     @Override
@@ -47,10 +49,10 @@ public class PlanetScene extends Scene {
 
 //        System.out.println(1f / deltaTime);
 
-//        if(Input.isKey(KeyEvent.VK_LEFT)) Camera.position.x -= 100 * deltaTime;
-//        if(Input.isKey(KeyEvent.VK_RIGHT)) Camera.position.x += 100 * deltaTime;
-//        if(Input.isKey(KeyEvent.VK_UP)) Camera.position.y -= 100 * deltaTime;
-//        if(Input.isKey(KeyEvent.VK_DOWN)) Camera.position.y += 100 * deltaTime;
+        if(Input.isKey(KeyEvent.VK_LEFT)) Camera.position.x -= 100 * deltaTime;
+        if(Input.isKey(KeyEvent.VK_RIGHT)) Camera.position.x += 100 * deltaTime;
+        if(Input.isKey(KeyEvent.VK_UP)) Camera.position.y -= 100 * deltaTime;
+        if(Input.isKey(KeyEvent.VK_DOWN)) Camera.position.y += 100 * deltaTime;
     }
 
     @Override
