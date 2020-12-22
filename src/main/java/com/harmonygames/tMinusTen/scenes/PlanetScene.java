@@ -52,6 +52,8 @@ public class PlanetScene extends Scene {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
+        if(Input.isControllerButton(com.studiohartman.jamepad.ControllerButton.A)) System.out.println("Hey");
+
 //        System.out.println(1f / deltaTime);
 
         if(Input.isKey(KeyEvent.VK_LEFT)) Camera.position.x -= 100 * deltaTime;
