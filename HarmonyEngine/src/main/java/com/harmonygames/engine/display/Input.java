@@ -54,6 +54,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     public static int getScroll() { return scroll; }
 
     @Override public void keyPressed(KeyEvent e) {
+
+        System.out.println(e.getKeyCode());
         if(e.getKeyCode() <= keys.length) keys[e.getKeyCode()] = true;
     }
 
