@@ -7,10 +7,15 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    // TODO: Grab from the engine module instead of re-writing.
+    jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
     compile project(":HarmonyEngine")
+
+    testCompile project(":HarmonyEngine")
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'

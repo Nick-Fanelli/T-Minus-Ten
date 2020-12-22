@@ -2,6 +2,7 @@ package com.harmonygames.tMinusTen.scenes;
 
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
+import com.harmonygames.engine.display.Input;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
 import com.harmonygames.engine.graphics.SpriteSheet;
 import com.harmonygames.engine.scene.Scene;
@@ -44,6 +45,8 @@ public class PlanetScene extends Scene {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+
+        if(Input.isControllerButton(com.studiohartman.jamepad.ControllerButton.A)) System.out.println("Hey");
 
 //        System.out.println(1f / deltaTime);
 
