@@ -66,8 +66,6 @@ public class ChunkLoader implements Runnable {
                 }
 
                 for (Map.Entry<Vector2f, Boolean> entry : chunksAddedMap.entrySet()) {
-                    if (entry.getKey().y < 0) continue;
-
                     for (int i = 0; i < chunks.getGameObjects().size(); i++) {
                         if (entry.getKey().equals(chunks.getGameObjects().get(i).chunkX, chunks.getGameObjects().get(i).chunkY)) {
                             entry.setValue(true);
@@ -108,19 +106,17 @@ public class ChunkLoader implements Runnable {
 
     private synchronized void loadChunk(Chunk chunk) {
         for(int x = 0; x < chunk.chunkWidth; x++) {
+            int blockX = (chunk.chunkX * chunk.chunkWidth) + x;
+            int columnHeight = (int) Math.round(Chunk.heightNoiseMap.noise(blockX) * Chunk.heightNoiseMap.getMultiplier());
 
             for(int y = 0; y < chunk.chunkHeight; y++) {
+                int blockY = (chunk.chunkY * chunk.chunkHeight) + y;
 
-                Block.Type type = (y + chunk.chunkY) == 0 ? Block.Type.GRASS : Block.Type.DIRT;
-
-                int heightDiff = chunk.chunkY != 0 ? 0 : (int) Math.round(Chunk.heightNoiseMap.noise((chunk.chunkX * chunk.chunkWidth) + x) * 10f);
-
-                chunk.blocks.add(new Block("Generated_Bloc", new Transform(new Vector2f(
-                        (chunk.chunkWidth * chunk.chunkX * chunk.tileWidth) + (x * tileWidth),
-                        (chunk.chunkHeight * chunk.chunkY * chunk.tileHeight) + (y * tileHeight) + (heightDiff * tileHeight)
-                ), new Scale(chunk.tileWidth, chunk.tileHeight)), chunk.spriteSheet, type));
+                if(columnHeight >= blockY) { 
+                }
             }
         }
+
     }
 
     public boolean hasLoaded() { return hasLoaded; }

@@ -4,18 +4,22 @@ import java.util.Random;
 
 public class PerlinNoise {
 
+    private final int multiplier;
+
     private double seed;
     private long default_size;
     private int[] p;
     private int[] permutation;
 
-    public PerlinNoise(double seed) {
+    public PerlinNoise(double seed, int multiplier) {
         this.seed = seed;
+        this.multiplier = multiplier;
         init();
     }
 
-    public PerlinNoise() {
+    public PerlinNoise(int multiplier) {
         this.seed = new Random().nextGaussian() * 255;
+        this.multiplier = multiplier;
         init();
     }
 
@@ -160,4 +164,5 @@ public class PerlinNoise {
         return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
     }
 
+    public int getMultiplier() { return this.multiplier; }
 }
