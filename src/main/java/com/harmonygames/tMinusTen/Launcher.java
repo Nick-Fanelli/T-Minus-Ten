@@ -1,10 +1,7 @@
 package com.harmonygames.tMinusTen;
 
 import com.harmonygames.engine.GameContext;
-import com.harmonygames.tMinusTen.scenes.GameScene;
 import com.harmonygames.tMinusTen.scenes.PlanetScene;
-
-import java.io.File;
 
 public class Launcher {
 

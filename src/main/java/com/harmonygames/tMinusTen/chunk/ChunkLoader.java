@@ -2,14 +2,11 @@ package com.harmonygames.tMinusTen.chunk;
 
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
-import com.harmonygames.engine.gameobject.GameObject;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
-import com.harmonygames.engine.gameobject.component.renderer.SpriteRenderer;
 import com.harmonygames.engine.graphics.SpriteSheet;
 import com.harmonygames.engine.math.Scale;
 import com.harmonygames.engine.math.Transform;
 import com.harmonygames.engine.math.Vector2f;
-import com.harmonygames.engine.physics2D.components.BoxCollider2D;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.tMinusTen.objects.Block;
 
@@ -104,16 +101,30 @@ public class ChunkLoader implements Runnable {
         }
     }
 
+    public boolean hasLoaded() { return hasLoaded; }
+
+    // ===================================================================
+    // Chunk Loading Methods
+    // ===================================================================
+
     private synchronized void loadChunk(Chunk chunk) {
+        if(chunk.chunkY > Chunk.MAX_CHUNK_AMOUNT_HEIGHT) return;
+
         for(int x = 0; x < chunk.chunkWidth; x++) {
             int blockX = (chunk.chunkX * chunk.chunkWidth) + x;
-            int columnHeight = (int) Math.round(Chunk.heightNoiseMap.noise(blockX) * Chunk.heightNoiseMap.getMultiplier());
+            int columnHeight = (int) Math.round(Chunk.heightNoiseMap.noise(blockX));
 
             for(int y = 0; y < chunk.chunkHeight; y++) {
                 int blockY = (chunk.chunkY * chunk.chunkHeight) + y;
 
                 if(blockY >= columnHeight) {
                     Block.Type type = blockY - columnHeight == 0 ? Block.Type.GRASS : Block.Type.DIRT;
+
+                    if(blockY >= 10) {
+                        if(Math.round(Chunk.caveNoiseMap.noise(blockX, blockY)) != 0) {
+                            continue;
+                        }
+                    }
 
                     int absX = (chunk.chunkX * chunk.chunkWidth * chunk.tileWidth) + (x * chunk.tileWidth);
                     int absY = (chunk.chunkY * chunk.chunkHeight * chunk.tileHeight) + (y * chunk.tileHeight);
@@ -123,7 +134,5 @@ public class ChunkLoader implements Runnable {
             }
         }
     }
-
-    public boolean hasLoaded() { return hasLoaded; }
 
 }

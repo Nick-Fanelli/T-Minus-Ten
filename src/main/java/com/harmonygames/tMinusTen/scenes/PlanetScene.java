@@ -52,7 +52,7 @@ public class PlanetScene extends Scene {
         if(Input.isKey(KeyEvent.VK_LEFT)) Camera.position.x -= 100 * deltaTime;
         if(Input.isKey(KeyEvent.VK_RIGHT)) Camera.position.x += 100 * deltaTime;
         if(Input.isKey(KeyEvent.VK_UP)) Camera.position.y -= 100 * deltaTime;
-        if(Input.isKey(KeyEvent.VK_DOWN)) Camera.position.y += 100 * deltaTime;
+        if(Input.isKey(KeyEvent.VK_DOWN)) Camera.position.y += 200 * deltaTime;
     }
 
     @Override

@@ -11,7 +11,8 @@ public class Block extends GameObject {
 
     public enum Type {
         GRASS(0, 1),
-        DIRT(1, 1);
+        DIRT(1, 1),
+        SAMPLE(2, 1);
 
         public final int x, y;
 

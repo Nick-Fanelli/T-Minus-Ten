@@ -17,7 +17,11 @@ import java.util.Arrays;
 
 public class Chunk extends GameObject {
 
-    public static final PerlinNoise heightNoiseMap = new PerlinNoise(100, 10);
+    public static final int MAX_CHUNK_AMOUNT_HEIGHT = 125;
+
+    public static final double NOISE = 100;
+    public static final PerlinNoise heightNoiseMap = new PerlinNoise(Chunk.NOISE, 10);
+    public static final PerlinNoise caveNoiseMap = new PerlinNoise(Chunk.NOISE, 2);
 
     public final int chunkX, chunkY;
     public final int tileWidth, tileHeight;
