@@ -66,16 +66,6 @@ public class Player extends GameObject {
         }
 
         if(!rigidbody2D.getAccumulatedForce().isZero()) Camera.position.set(new Vector2f(this.transform.position).sub(Display.getCanvas().getWidth() / 2f, Display.getCanvas().getHeight() / 2f));
-//
-//        if(Input.isKey(KeyEvent.VK_S)) {
-//            this.rigidbody2D.setForceToNonzero(new Vector2f(0, playerSpeedForce));
-//            isMoving = true;
-//        }
-//
-//        if(Input.isKey(KeyEvent.VK_W)) {
-//            this.rigidbody2D.setForceToNonzero(new Vector2f(0, -playerSpeedForce));
-//            isMoving = true;
-//        }
 
         if(isMoving) renderer.incrementMillis(100);
     }

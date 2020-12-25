@@ -31,8 +31,8 @@ public class SpriteRenderer extends Component {
         }
 
         if(Camera.shouldDraw(gameObject.transform.position.x, gameObject.transform.position.y, image.getWidth(), image.getHeight())) {
-            g.drawImage(adjustedImage, (int) (gameObject.transform.position.x - Camera.position.x),
-                    (int) (gameObject.transform.position.y - Camera.position.y), null);
+            g.drawImage(adjustedImage, (int) (gameObject.transform.position.x - super.gameObject.getCameraOffset().x),
+                    (int) (gameObject.transform.position.y - super.gameObject.getCameraOffset().y), null);
         }
     }
 

@@ -1,7 +1,9 @@
 package com.harmonygames.engine.gameobject;
 
+import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.gameobject.component.Component;
 import com.harmonygames.engine.graphics.RenderBatch;
+import com.harmonygames.engine.math.Vector2f;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.math.Transform;
 
@@ -15,6 +17,7 @@ public class GameObject {
     private final String name;
     public Transform transform;
     private int zIndex;
+    private boolean isStatic = false;
 
     private Scene scene = null;
     private RenderBatch renderBatch = null;
@@ -131,4 +134,12 @@ public class GameObject {
 
     public void enable() { this.isEnabled = true; }
     public void disable() { this.isEnabled = false; }
+
+    public void setStatic(boolean value) { this.isStatic = value; }
+    public boolean isStatic() { return this.isStatic; }
+
+    public Vector2f getCameraOffset() {
+        if(!this.isStatic) { return Camera.position; }
+        else { return Vector2f.ZERO; }
+    }
 }

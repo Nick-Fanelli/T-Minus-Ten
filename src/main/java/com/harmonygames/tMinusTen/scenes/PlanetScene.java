@@ -3,8 +3,13 @@ package com.harmonygames.tMinusTen.scenes;
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.display.Input;
+import com.harmonygames.engine.gameobject.GameObject;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
+import com.harmonygames.engine.gameobject.component.renderer.SpriteRenderer;
 import com.harmonygames.engine.graphics.SpriteSheet;
+import com.harmonygames.engine.math.Scale;
+import com.harmonygames.engine.math.Transform;
+import com.harmonygames.engine.math.Vector2f;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.tMinusTen.chunk.Chunk;
@@ -38,9 +43,9 @@ public class PlanetScene extends Scene {
 
         super.addGameObject(chunkContainer);
 
-//        player = new Player();
-//        player.transform.position.set(0, -100);
-//        super.addGameObject(player);
+        player = new Player();
+        player.transform.position.set(0, -200);
+        super.addGameObject(player);
     }
 
     @Override
@@ -57,8 +62,8 @@ public class PlanetScene extends Scene {
 
     @Override
     public void draw(Graphics2D g) {
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, Display.getCanvas().getWidth(), Display.getCanvas().getHeight());
+        g.setColor(Color.GRAY);
+        g.fillRect(0, 0, Display.getAspectRatio().width, Display.getAspectRatio().height);
 
         super.draw(g);
     }

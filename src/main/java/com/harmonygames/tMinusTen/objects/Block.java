@@ -4,6 +4,8 @@ import com.harmonygames.engine.gameobject.GameObject;
 import com.harmonygames.engine.gameobject.component.renderer.SpriteRenderer;
 import com.harmonygames.engine.graphics.SpriteSheet;
 import com.harmonygames.engine.math.Transform;
+import com.harmonygames.engine.math.Vector2f;
+import com.harmonygames.engine.physics2D.components.BoxCollider2D;
 
 import java.awt.image.BufferedImage;
 
@@ -31,5 +33,6 @@ public class Block extends GameObject {
         this.type = type;
         this.image = spriteSheet.getSprite(this.type.x, this.type.y);
         this.addComponent(new SpriteRenderer(image));
+        this.addComponent(new BoxCollider2D(new Vector2f(), this.transform.scale));
     }
 }
