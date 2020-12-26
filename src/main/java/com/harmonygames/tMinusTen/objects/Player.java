@@ -12,6 +12,8 @@ import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.engine.math.Scale;
 import com.harmonygames.engine.math.Transform;
 import com.harmonygames.engine.math.Vector2f;
+import com.studiohartman.jamepad.ControllerAxis;
+import com.studiohartman.jamepad.ControllerButton;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -49,19 +51,31 @@ public class Player extends GameObject {
 
         boolean isMoving = false;
 
-        if(Input.isKey(KeyEvent.VK_D) || Input.isKey(KeyEvent.VK_RIGHT)) {
-            this.renderer.setAnimation(2);
-            this.rigidbody2D.setForceToNonzero(new Vector2f(playerSpeedForce, 0));
-            isMoving = true;
+        if(Input.isControllerConnected(0)) {
+            float moveForce = Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce;
+
+            if(moveForce != 0) {
+
+               this.rigidbody2D.setForceToNonzero(new Vector2f(Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce, 0));
+                this.renderer.setAnimation(Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce > 0 ? 2 : 1);
+                isMoving = true;
+            }
         }
 
-        if(Input.isKey(KeyEvent.VK_A) || Input.isKey(KeyEvent.VK_LEFT)) {
-            this.renderer.setAnimation(1);
-            this.rigidbody2D.setForceToNonzero(new Vector2f(-playerSpeedForce, 0));
-            isMoving = true;
-        }
 
-        if(Input.isKey(KeyEvent.VK_SPACE) || Input.isKey(KeyEvent.VK_UP)) {
+//        if(Input.isKey(KeyEvent.VK_D) || Input.isKey(KeyEvent.VK_RIGHT)) {
+//            this.renderer.setAnimation(2);
+//            this.rigidbody2D.setForceToNonzero(new Vector2f(playerSpeedForce, 0));
+//            isMoving = true;
+//        }
+//
+//        if(Input.isKey(KeyEvent.VK_A) || Input.isKey(KeyEvent.VK_LEFT)) {
+//            this.renderer.setAnimation(1);
+//            this.rigidbody2D.setForceToNonzero(new Vector2f(-playerSpeedForce, 0));
+//            isMoving = true;
+//        }
+
+        if(Input.isKey(KeyEvent.VK_SPACE) || Input.isKey(KeyEvent.VK_UP) || (Input.isControllerConnected(0) && Input.isControllerButtonDown(ControllerButton.A, 0))) {
             this.rigidbody2D.setForceToNonzero(new Vector2f(0, -15));
         }
 
