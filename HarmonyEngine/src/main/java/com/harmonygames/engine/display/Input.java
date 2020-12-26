@@ -92,6 +92,16 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 
     public static boolean isControllerConnected(int controllerID) { return controllers.getControllerIndex(controllerID).isConnected(); }
 
+    public static float getControllerAxis(ControllerAxis axis) {
+        try {
+            return controllers.getControllerIndex(0).getAxisState(axis);
+        } catch (ControllerUnpluggedException e) {
+            e.printStackTrace();
+        }
+
+        return 0f;
+    }
+
     @Override public void keyPressed(KeyEvent e) { if(e.getKeyCode() <= keys.length) keys[e.getKeyCode()] = true; }
 
     @Override public void keyReleased(KeyEvent e) { if(e.getKeyCode() <= keys.length) keys[e.getKeyCode()] = false; }
