@@ -25,7 +25,7 @@ public class Player extends GameObject {
     private Rigidbody2D rigidbody2D;
     private BoxCollider2D collider2D;
 
-    private float playerSpeedForce = 3.5f;
+    private float playerSpeedForce = 2f;
 
     public Player() {
         super("Player", new Transform(new Vector2f(0, 0), new Scale(32, 32)));
@@ -56,30 +56,35 @@ public class Player extends GameObject {
 
             if(moveForce != 0) {
 
-               this.rigidbody2D.setForceToNonzero(new Vector2f(Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce, 0));
+                this.rigidbody2D.setForceToNonzero(new Vector2f(Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce, 0));
                 this.renderer.setAnimation(Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce > 0 ? 2 : 1);
                 isMoving = true;
             }
         }
 
-
-//        if(Input.isKey(KeyEvent.VK_D) || Input.isKey(KeyEvent.VK_RIGHT)) {
-//            this.renderer.setAnimation(2);
-//            this.rigidbody2D.setForceToNonzero(new Vector2f(playerSpeedForce, 0));
-//            isMoving = true;
-//        }
-//
-//        if(Input.isKey(KeyEvent.VK_A) || Input.isKey(KeyEvent.VK_LEFT)) {
-//            this.renderer.setAnimation(1);
-//            this.rigidbody2D.setForceToNonzero(new Vector2f(-playerSpeedForce, 0));
-//            isMoving = true;
-//        }
-
-        if(Input.isKey(KeyEvent.VK_SPACE) || Input.isKey(KeyEvent.VK_UP) || (Input.isControllerConnected(0) && Input.isControllerButtonDown(ControllerButton.A, 0))) {
-            this.rigidbody2D.setForceToNonzero(new Vector2f(0, -15));
+        if(Input.isKey(KeyEvent.VK_S) || Input.isKey(KeyEvent.VK_DOWN)) {
+            this.renderer.setAnimation(1);
+            this.rigidbody2D.setForceToNonzero(new Vector2f(0, playerSpeedForce));
+            isMoving = true;
         }
 
-        if(!rigidbody2D.getAccumulatedForce().isZero()) Camera.position.set(new Vector2f(this.transform.position).sub(Display.getCanvas().getWidth() / 2f, Display.getCanvas().getHeight() / 2f));
+        if(Input.isKey(KeyEvent.VK_D) || Input.isKey(KeyEvent.VK_RIGHT)) {
+            this.renderer.setAnimation(2);
+            this.rigidbody2D.setForceToNonzero(new Vector2f(playerSpeedForce, 0));
+            isMoving = true;
+        }
+
+        if(Input.isKey(KeyEvent.VK_A) || Input.isKey(KeyEvent.VK_LEFT)) {
+            this.renderer.setAnimation(1);
+            this.rigidbody2D.setForceToNonzero(new Vector2f(-playerSpeedForce, 0));
+            isMoving = true;
+        }
+
+        if(Input.isKeyDown(KeyEvent.VK_SPACE) || Input.isKeyDown(KeyEvent.VK_UP) || (Input.isControllerConnected(0) && Input.isControllerButtonDown(ControllerButton.A, 0))) {
+                this.rigidbody2D.addForce(new Vector2f(0, -25));
+        }
+
+        Camera.position.set(new Vector2f(this.transform.position).sub(Display.getCanvas().getWidth() / 2f, Display.getCanvas().getHeight() / 2f));
 
         if(isMoving) renderer.incrementMillis(100);
     }

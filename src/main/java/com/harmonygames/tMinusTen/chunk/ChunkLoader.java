@@ -89,7 +89,6 @@ public class ChunkLoader implements Runnable {
             }
 
             if(!hasLoaded) hasLoaded = true;
-
             chunksAddedMap.clear(); // Clear the map
 
             // Free up some processing

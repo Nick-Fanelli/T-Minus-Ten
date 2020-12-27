@@ -30,14 +30,14 @@ public class SimilarObjectContainer<T extends GameObject> extends GameObject {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        for(int i = 0; i < gameObjects.size(); i++) { if(gameObjects.get(i).isEnabled()) gameObjects.get(i).update(deltaTime); }
+        for(int i = 0; i < gameObjects.size(); i++) { if(gameObjects.get(i) != null && gameObjects.get(i).isEnabled()) gameObjects.get(i).update(deltaTime); }
     }
 
     @Override
     public void draw(Graphics2D g) {
         super.draw(g);
         for(int i = 0; i < gameObjects.size(); i++) {
-            if(gameObjects.get(i).isEnabled()) {
+            if(gameObjects.get(i) != null && gameObjects.get(i).isEnabled()) {
                 gameObjects.get(i).draw(g);
             }
         }
@@ -48,7 +48,7 @@ public class SimilarObjectContainer<T extends GameObject> extends GameObject {
         ArrayList<GameObject> selectedGameObjects = new ArrayList<>();
 
         for(int i = 0; i < gameObjects.size(); i++) {
-            selectedGameObjects.addAll(Arrays.asList(gameObjects.get(i).getSelf(component)));
+            if(gameObjects.get(i) != null) selectedGameObjects.addAll(Arrays.asList(gameObjects.get(i).getSelf(component)));
         }
 
         return selectedGameObjects.toArray(new GameObject[0]);
