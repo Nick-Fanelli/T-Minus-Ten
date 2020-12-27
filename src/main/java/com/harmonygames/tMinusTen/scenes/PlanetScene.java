@@ -1,5 +1,6 @@
 package com.harmonygames.tMinusTen.scenes;
 
+import com.badlogic.gdx.Game;
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.display.Input;
@@ -9,6 +10,7 @@ import com.harmonygames.engine.graphics.SpriteSheet;
 import com.harmonygames.engine.math.Scale;
 import com.harmonygames.engine.math.Transform;
 import com.harmonygames.engine.math.Vector2f;
+import com.harmonygames.engine.physics2D.components.BoxCollider2D;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.tMinusTen.chunk.Chunk;
@@ -50,15 +52,6 @@ public class PlanetScene extends Scene {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-
-        if(Input.isControllerButton(com.studiohartman.jamepad.ControllerButton.A)) System.out.println("Hey");
-
-//        System.out.println(1f / deltaTime);
-
-        if(Input.isKey(KeyEvent.VK_LEFT)) Camera.position.x -= 100 * deltaTime;
-        if(Input.isKey(KeyEvent.VK_RIGHT)) Camera.position.x += 100 * deltaTime;
-        if(Input.isKey(KeyEvent.VK_UP)) Camera.position.y -= 100 * deltaTime;
-        if(Input.isKey(KeyEvent.VK_DOWN)) Camera.position.y += 200 * deltaTime;
     }
 
     @Override
