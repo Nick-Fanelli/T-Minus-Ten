@@ -81,7 +81,7 @@ public class Player extends GameObject {
         }
 
         if(Input.isKeyDown(KeyEvent.VK_SPACE) || Input.isKeyDown(KeyEvent.VK_UP) || (Input.isControllerConnected(0) && Input.isControllerButtonDown(ControllerButton.A, 0))) {
-                this.rigidbody2D.addForce(new Vector2f(0, -25));
+            if(rigidbody2D.isColliding()) this.rigidbody2D.addForce(new Vector2f(0, -5f));
         }
 
         Camera.position.set(new Vector2f(this.transform.position).sub(Display.getCanvas().getWidth() / 2f, Display.getCanvas().getHeight() / 2f));

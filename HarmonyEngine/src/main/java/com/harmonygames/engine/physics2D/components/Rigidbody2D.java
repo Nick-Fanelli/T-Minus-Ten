@@ -1,24 +1,22 @@
 package com.harmonygames.engine.physics2D.components;
 
 import com.harmonygames.engine.gameobject.GameObject;
-import com.harmonygames.engine.gameobject.SimilarObjectContainer;
 import com.harmonygames.engine.gameobject.component.Component;
-import com.harmonygames.engine.graphics.RenderBatch;
-import com.harmonygames.engine.math.Scale;
 import com.harmonygames.engine.physics2D.Collision2D;
 import com.harmonygames.engine.math.Vector2f;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Rigidbody2D extends Component {
 
     private final Vector2f accumulatedForce = new Vector2f();
     private final Vector2f addForce = new Vector2f();
-    private float gravity = 8f;
+    private float gravityForce = 0f;
+
     private boolean isColliding = false;
 
     private boolean hasGravity = false;
+    private float maxGravity = 3f;
     private float mass = 1.0f;
 
     public Rigidbody2D() { }
@@ -35,16 +33,23 @@ public class Rigidbody2D extends Component {
     @Override
     public void update(float deltaTime) {
         if (this.hasGravity) {
-            this.accumulatedForce.y += mass + (mass / 10);
-            if(this.accumulatedForce.y > gravity) this.accumulatedForce.y = gravity;
+            if(gravityForce < maxGravity) {
+                this.gravityForce = Math.min(maxGravity, this.gravityForce + mass);
+            }
+
+            if(this.addForce.y < 0) this.gravityForce = 0;
         }
 
+        this.accumulatedForce.add(addForce);
+        this.accumulatedForce.y += gravityForce;
 
         BoxCollider2D collider = super.gameObject.getComponent(BoxCollider2D.class);
 
         if (!accumulatedForce.isZero()) {
 
             if (collider != null && super.gameObject.getScene() != null) {
+                boolean colliding = false;
+
                 for (GameObject gameObject : super.gameObject.getScene().getUnwrappedGameObjects(BoxCollider2D.class)) {
                     if (gameObject == super.gameObject) {
                         continue;
@@ -56,6 +61,9 @@ public class Rigidbody2D extends Component {
                     // Check to see if the object is completely colliding
                     if(Collision2D.isColliding(new Vector2f(super.gameObject.transform.position).add(collider.getOffset()).add(accumulatedForce), collider.getScale(),
                             new Vector2f(gameObject.transform.position).add(objectCollider.getOffset()), objectCollider.getScale())) {
+
+                        isColliding = true;
+                        colliding = true;
 
                         // Check for X collisions and scale and adjust if necessary
                         while (Collision2D.xIsColliding(super.gameObject.transform.position.x + collider.getOffset().x + accumulatedForce.x,
@@ -72,30 +80,16 @@ public class Rigidbody2D extends Component {
                                         collider.getScale().width, objectCollider.getScale().width) && accumulatedForce.y != 0) {
                             accumulatedForce.toZero(0, 1); // 1 = one pixel
                         }
+                    } else if(!colliding) {
+                        isColliding = false;
                     }
 
                 }
                 super.gameObject.transform.position.add(accumulatedForce); // Add the adjusted force to the transform of the game object.
-                accumulatedForce.toZero(mass); // Slow down the force depending on the mass of the object.
-            }
-        }
-
-        if (collider != null && super.gameObject.getScene() != null) {
-            for (GameObject gameObject : super.gameObject.getScene().getUnwrappedGameObjects(BoxCollider2D.class)) {
-                if (gameObject == super.gameObject) {
-                    continue;
-                }
-
-                // The target object's box collider
-                BoxCollider2D objectCollider = gameObject.getComponent(BoxCollider2D.class);
-
-                // Check to see if the object is completely colliding
-                if (Collision2D.isColliding(new Vector2f(super.gameObject.transform.position).add(collider.getOffset()).add(accumulatedForce), collider.getScale(),
-                        new Vector2f(gameObject.transform.position).add(objectCollider.getOffset()), objectCollider.getScale())) {
-                    isColliding = true;
-                } else isColliding = false;
+                accumulatedForce.zero(); // Zero the accumulated force.
             }
 
+            addForce.toZero(mass / 10);
         }
     }
 
@@ -119,8 +113,8 @@ public class Rigidbody2D extends Component {
     public void setHasGravity(boolean value) { this.hasGravity = value; }
     public boolean hasGravity() { return this.hasGravity; }
 
-    public void setGravity(float gravity) { this.gravity = gravity; }
-    public float getGravity() { return this.gravity; }
+    public void setMaxGravity(float maxGravity) { this.maxGravity = maxGravity; }
+    public float getMaxGravity() { return this.maxGravity; }
 
     public void setMass(float mass) { this.mass = mass; }
     public float getMass() { return this.mass; }
