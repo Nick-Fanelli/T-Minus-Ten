@@ -16,6 +16,8 @@ import java.util.Map;
 
 public class Input implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 
+    public static final int GAMEPAD_CHECK_SECONDS = 2;
+
     public static final int NUM_KEYS = 256;
     private static final boolean[] keys     = new boolean[NUM_KEYS];
     private static final boolean[] keysLast = new boolean[NUM_KEYS];
@@ -31,7 +33,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     private static final ControllerManager controllers = new ControllerManager();
     private static final EventSystem<ControllerConnectionEvent, ControllerConnectionAction> controllerEventSystem = new EventSystem<>();
 
-    private int gamepadCounter = GameContext.FPS_CAP;
+    private int gamepadCounter = GameContext.FPS_CAP * GAMEPAD_CHECK_SECONDS;
 
     public Input(JFrame frame, Canvas canvas) {
         frame.addKeyListener(this);
@@ -55,7 +57,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
         // Handle Controller Inputs
         controllers.update();
 
-        if(gamepadCounter >= GameContext.FPS_CAP) { // Check the gamepad status every second
+        if(gamepadCounter >= GameContext.FPS_CAP * GAMEPAD_CHECK_SECONDS) { // Check the gamepad status two second
             for (Map.Entry<Integer, Boolean> entry : controllersMap.entrySet()) {
                 boolean start = controllersMap.get(entry.getKey());
                 controllersMap.put(entry.getKey(), Input.isControllerConnected(entry.getKey()));
