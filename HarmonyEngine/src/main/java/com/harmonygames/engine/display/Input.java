@@ -1,5 +1,6 @@
 package com.harmonygames.engine.display;
 
+import com.harmonygames.engine.GameContext;
 import com.harmonygames.engine.event.events.ControllerConnectionAction;
 import com.harmonygames.engine.event.events.ControllerConnectionEvent;
 import com.harmonygames.engine.event.EventSystem;
@@ -9,6 +10,9 @@ import com.studiohartman.jamepad.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Input implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 
@@ -23,8 +27,11 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     private static final Vector2f mousePosition = new Vector2f();
     private static int scroll;
 
+    private static final HashMap<Integer, Boolean> controllersMap = new HashMap<>();
     private static final ControllerManager controllers = new ControllerManager();
     private static final EventSystem<ControllerConnectionEvent, ControllerConnectionAction> controllerEventSystem = new EventSystem<>();
+
+    private int gamepadCounter = GameContext.FPS_CAP;
 
     public Input(JFrame frame, Canvas canvas) {
         frame.addKeyListener(this);
@@ -37,6 +44,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 
         // Handle Controller Stuff
         controllers.initSDLGamepad();
+        controllersMap.put(0, false); // Check for the main controller by default.
     }
 
     public void update() {
@@ -46,6 +54,19 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 
         // Handle Controller Inputs
         controllers.update();
+
+        if(gamepadCounter >= GameContext.FPS_CAP) { // Check the gamepad status every second
+            for (Map.Entry<Integer, Boolean> entry : controllersMap.entrySet()) {
+                boolean start = controllersMap.get(entry.getKey());
+                controllersMap.put(entry.getKey(), Input.isControllerConnected(entry.getKey()));
+                if (start != controllersMap.get(entry.getKey()))
+                    controllerEventSystem.callEvent(new ControllerConnectionAction(entry.getKey(), !start));
+            }
+
+            gamepadCounter = 0;
+        }
+
+        gamepadCounter++;
     }
 
     // Keys
@@ -141,4 +162,14 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     public static void removeControllerConnectionEvent(ControllerConnectionEvent event) {
         Input.controllerEventSystem.unsubscribe(event);
     }
+
+    public static void handleController(int controllerID) {
+        Input.controllersMap.put(controllerID, false);
+    }
+
+    public static void stopHandlingController(int controllerID) {
+        Input.controllersMap.remove(controllerID);
+    }
+
+    public static boolean isHandlingController(int controllerID) { return Input.controllersMap.containsKey(controllerID); }
 }

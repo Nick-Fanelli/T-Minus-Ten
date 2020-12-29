@@ -3,6 +3,8 @@ package com.harmonygames.tMinusTen.objects;
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.display.Input;
+import com.harmonygames.engine.event.events.ControllerConnectionAction;
+import com.harmonygames.engine.event.events.ControllerConnectionEvent;
 import com.harmonygames.engine.gameobject.GameObject;
 import com.harmonygames.engine.gameobject.component.renderer.AnimationRenderer;
 import com.harmonygames.engine.graphics.SpriteSheet;
@@ -43,14 +45,18 @@ public class Player extends GameObject {
 
         this.rigidbody2D.setMass(1f);
         this.rigidbody2D.setHasGravity(true);
+
+        Input.addControllerConnectionEvent(action -> {
+            if(action.controllerID == 0) this.handleGamepad = action.isConnected;
+        });
     }
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
 
-        if(!this.handleGamepad && Input.isControllerConnected(0)) this.handleGamepad = true;
-        else if(this.handleGamepad && !Input.isControllerConnected(0)) this.handleGamepad = false;
+//        if(!this.handleGamepad && Input.isControllerConnected(0)) this.handleGamepad = true;
+//        else if(this.handleGamepad && !Input.isControllerConnected(0)) this.handleGamepad = false;
 
         this.handleMovementInput();
         this.handleBlockInput();
