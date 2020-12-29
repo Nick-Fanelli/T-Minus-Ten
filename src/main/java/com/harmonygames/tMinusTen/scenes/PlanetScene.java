@@ -1,16 +1,9 @@
 package com.harmonygames.tMinusTen.scenes;
 
-import com.badlogic.gdx.Game;
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
-import com.harmonygames.engine.display.Input;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
-import com.harmonygames.engine.gameobject.component.renderer.SpriteRenderer;
 import com.harmonygames.engine.graphics.SpriteSheet;
-import com.harmonygames.engine.math.Scale;
-import com.harmonygames.engine.math.Transform;
-import com.harmonygames.engine.math.Vector2f;
-import com.harmonygames.engine.physics2D.components.BoxCollider2D;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.tMinusTen.chunk.Chunk;
@@ -18,7 +11,6 @@ import com.harmonygames.tMinusTen.chunk.ChunkLoader;
 import com.harmonygames.tMinusTen.objects.Player;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class PlanetScene extends Scene {
 

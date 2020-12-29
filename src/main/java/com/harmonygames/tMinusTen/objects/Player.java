@@ -4,14 +4,14 @@ import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.display.Input;
 import com.harmonygames.engine.gameobject.GameObject;
-import com.harmonygames.engine.physics2D.components.BoxCollider2D;
-import com.harmonygames.engine.physics2D.components.Rigidbody2D;
 import com.harmonygames.engine.gameobject.component.renderer.AnimationRenderer;
 import com.harmonygames.engine.graphics.SpriteSheet;
-import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.engine.math.Scale;
 import com.harmonygames.engine.math.Transform;
 import com.harmonygames.engine.math.Vector2f;
+import com.harmonygames.engine.physics2D.components.BoxCollider2D;
+import com.harmonygames.engine.physics2D.components.Rigidbody2D;
+import com.harmonygames.engine.utils.Assets;
 import com.studiohartman.jamepad.ControllerAxis;
 import com.studiohartman.jamepad.ControllerButton;
 
@@ -29,9 +29,7 @@ public class Player extends GameObject {
 
     private float playerSpeedForce = 2f;
 
-    public Player() {
-        super("Player", new Transform(new Vector2f(0, 0), new Scale(32, 32)));
-    }
+    public Player() { super("Player", new Transform(new Vector2f(0, 0), new Scale(32, 32))); }
 
     @Override
     public void onCreate() {
@@ -51,14 +49,17 @@ public class Player extends GameObject {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
+        this.handleMovementInput();
+        
+
+        Camera.position.set(new Vector2f(this.transform.position).sub(Display.getCanvas().getWidth() / 2f, Display.getCanvas().getHeight() / 2f));
+    }
+
+    public void handleMovementInput() {
         boolean isMoving = false;
 
         if(!this.handleGamepad && Input.isControllerConnected(0)) this.handleGamepad = true;
         else if(this.handleGamepad && !Input.isControllerConnected(0)) this.handleGamepad = false;
-
-        if(Input.isControllerConnected(0)) {
-
-        }
 
         // Desktop Controls
         if(Input.isKey(KeyEvent.VK_S) || Input.isKey(KeyEvent.VK_DOWN)) {
@@ -95,8 +96,8 @@ public class Player extends GameObject {
             if(rigidbody2D.isColliding()) this.rigidbody2D.addForce(new Vector2f(0, -5f));
         }
 
-        Camera.position.set(new Vector2f(this.transform.position).sub(Display.getCanvas().getWidth() / 2f, Display.getCanvas().getHeight() / 2f));
-
+        // If the player is moving, run the animation.
+        // TODO: Based on the current player speed and difference from controller input!
         if(isMoving) renderer.incrementMillis(100);
     }
 
