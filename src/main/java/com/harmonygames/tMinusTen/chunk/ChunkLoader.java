@@ -117,8 +117,6 @@ public class ChunkLoader implements Runnable {
                 int blockY = (chunk.chunkY * chunk.chunkHeight) + y;
 
                 if(blockY >= columnHeight) {
-                    Block.Type type = blockY - columnHeight == 0 ? Block.Type.GRASS : Block.Type.DIRT;
-
                     if(blockY >= 10) {
                         if(Math.round(Chunk.caveNoiseMap.noise(blockX, blockY)) != 0) {
                             continue;
@@ -128,7 +126,7 @@ public class ChunkLoader implements Runnable {
                     int absX = (chunk.chunkX * chunk.chunkWidth * chunk.tileWidth) + (x * chunk.tileWidth);
                     int absY = (chunk.chunkY * chunk.chunkHeight * chunk.tileHeight) + (y * chunk.tileHeight);
                     chunk.blocks.add(new Block("Generated_Block", new Transform(new Vector2f(absX, absY),
-                            new Scale(chunk.tileWidth, chunk.tileHeight)), chunk.spriteSheet, type));
+                            new Scale(chunk.tileWidth, chunk.tileHeight)), chunk.spriteSheet, Block.Type.SOIL));
                 }
             }
         }

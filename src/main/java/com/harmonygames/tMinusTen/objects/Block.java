@@ -13,8 +13,7 @@ import java.awt.image.BufferedImage;
 public class Block extends GameObject {
 
     public enum Type {
-        GRASS(0, 0),
-        DIRT(1, 0),
+        SOIL(0, 0),
         SAMPLE(2, 1);
 
         public final int x, y;
