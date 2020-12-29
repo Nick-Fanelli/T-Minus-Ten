@@ -20,7 +20,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     private static final Vector2f mousePosition = new Vector2f();
     private static int scroll;
 
-    private static ControllerManager controllers = new ControllerManager();
+    private static final ControllerManager controllers = new ControllerManager();
 
     public Input(JFrame frame, Canvas canvas) {
         frame.addKeyListener(this);
@@ -44,11 +44,6 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
         controllers.update();
     }
 
-//    public static boolean hoverRectangle(Rectangle rectangle) {
-//        return mouse.x >= rectangle.x && mouse.x <= rectangle.x + rectangle.width &&
-//                mouse.y >= rectangle.y && mouse.y <= rectangle.y + rectangle.height;
-//    }
-
     // Keys
     public static boolean isKey(int keycode) { return keys[keycode]; }
     public static boolean isKeyUp(int keycode) { return !keys[keycode] && keysLast[keycode]; }
@@ -66,11 +61,12 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     // Controller
     public static boolean isControllerButton(ControllerButton button, int controllerID) {
         try {
+            if(!isControllerConnected(controllerID)) {
+                System.err.println("***Harmony (Input): Controller '" + controllerID + "' not connected.***");
+                return false;
+            }
             return controllers.getControllerIndex(controllerID).isButtonPressed(button);
-        } catch (ControllerUnpluggedException ignored) {
-//            System.err.println("[Harmony: (Error)]: Controller was unplugged");
-//            e.printStackTrace();
-        }
+        } catch (ControllerUnpluggedException ignored) { }
 
         return false;
     }
@@ -79,11 +75,12 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 
     public static boolean isControllerButtonDown(ControllerButton button, int controllerID) {
         try {
+            if(!isControllerConnected(controllerID)) {
+                System.err.println("***Harmony (Input): Controller '" + controllerID + "' not connected.***");
+                return false;
+            }
             return controllers.getControllerIndex(controllerID).isButtonJustPressed(button);
-        } catch (ControllerUnpluggedException e) {
-            System.err.println("[Harmony: (Error)]: Controller was unplugged");
-            e.printStackTrace();
-        }
+        } catch (ControllerUnpluggedException ignored) { }
 
         return false;
     }
@@ -93,8 +90,15 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     public static boolean isControllerConnected(int controllerID) { return controllers.getControllerIndex(controllerID).isConnected(); }
 
     public static float getControllerAxis(ControllerAxis axis) {
+        return Input.getControllerAxis(axis, 0);
+    }
+    public static float getControllerAxis(ControllerAxis axis, int controllerID) {
         try {
-            return controllers.getControllerIndex(0).getAxisState(axis);
+            if(!isControllerConnected(controllerID)) {
+                System.err.println("***Harmony (Input): Controller '" + controllerID + "' not connected.***");
+                return 0f;
+            }
+            return controllers.getControllerIndex(controllerID).getAxisState(axis);
         } catch (ControllerUnpluggedException e) {
             e.printStackTrace();
         }
