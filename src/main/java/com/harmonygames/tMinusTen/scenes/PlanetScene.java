@@ -14,6 +14,7 @@ import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.tMinusTen.chunk.Chunk;
 import com.harmonygames.tMinusTen.chunk.ChunkLoader;
 import com.harmonygames.tMinusTen.objects.Player;
+import com.harmonygames.tMinusTen.objects.SelectionBox;
 
 import java.awt.*;
 
@@ -24,7 +25,7 @@ public class PlanetScene extends Scene {
     private SimilarObjectContainer<Chunk> chunkContainer;
     private ChunkLoader chunkLoader;
     private SpriteSheet spriteSheet;
-    private Box selectionBox = new Box("Selection Box", new Transform(new Vector2f(0, 0), new Scale(tileWidth, tileHeight)));
+    private SelectionBox selectionBox = new SelectionBox(new Scale(tileWidth, tileHeight));
 
     public PlanetScene() { super("Planet Scene"); }
 
@@ -46,22 +47,18 @@ public class PlanetScene extends Scene {
         player.transform.position.set(0, -200);
         super.addGameObject(player);
 
-        selectionBox.setType(Box.Type.STROKED);
-        selectionBox.setStatic(true);
         super.addGameObject(selectionBox);
     }
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-
-        selectionBox.transform.position = Input.getMousePosition();
     }
 
     @Override
     public void draw(Graphics2D g) {
-        g.setColor(Color.GRAY);
-        g.fillRect(0, 0, Display.getAspectRatio().width, Display.getAspectRatio().height);
+//        g.setColor(Color.GRAY);
+//        g.fillRect(0, 0, Display.getAspectRatio().width, Display.getAspectRatio().height);
 
         super.draw(g);
     }

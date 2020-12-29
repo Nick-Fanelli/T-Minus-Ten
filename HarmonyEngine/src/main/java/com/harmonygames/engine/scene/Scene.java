@@ -52,8 +52,9 @@ public abstract class Scene {
             renderBatch.addGameObject(gameObject);
             renderBatches.add(renderBatch);
 
-            this.sortRenderBatches();
         }
+
+        this.sortRenderBatches();
     }
 
     public void removeGameObject(GameObject gameObject) {

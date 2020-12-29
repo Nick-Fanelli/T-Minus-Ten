@@ -55,8 +55,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
 
     @Override
     public int compareTo(RenderBatch other) {
-        return Integer.compare(zIndex, other.zIndex);
+        return Integer.compare(this.zIndex, other.zIndex);
     }
-
 
 }
