@@ -75,7 +75,7 @@ public class Player extends GameObject {
             isMoving = true;
         }
 
-        if(Input.isKey(KeyEvent.VK_W) || Input.isKey(KeyEvent.VK_UP) || Input.isKey(KeyEvent.VK_SPACE)) {
+        if(Input.isKeyDown(KeyEvent.VK_W) || Input.isKeyDown(KeyEvent.VK_UP) || Input.isKeyDown(KeyEvent.VK_SPACE)) {
             if(rigidbody2D.isColliding()) this.rigidbody2D.addForce(new Vector2f(0, -5f));
         }
 

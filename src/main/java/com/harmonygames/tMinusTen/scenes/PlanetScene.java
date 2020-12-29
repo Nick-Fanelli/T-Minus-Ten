@@ -2,8 +2,13 @@ package com.harmonygames.tMinusTen.scenes;
 
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
+import com.harmonygames.engine.display.Input;
+import com.harmonygames.engine.gameobject.Box;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
 import com.harmonygames.engine.graphics.SpriteSheet;
+import com.harmonygames.engine.math.Scale;
+import com.harmonygames.engine.math.Transform;
+import com.harmonygames.engine.math.Vector2f;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.utils.Assets;
 import com.harmonygames.tMinusTen.chunk.Chunk;
@@ -19,6 +24,7 @@ public class PlanetScene extends Scene {
     private SimilarObjectContainer<Chunk> chunkContainer;
     private ChunkLoader chunkLoader;
     private SpriteSheet spriteSheet;
+    private Box selectionBox = new Box("Selection Box", new Transform(new Vector2f(0, 0), new Scale(tileWidth, tileHeight)));
 
     public PlanetScene() { super("Planet Scene"); }
 
@@ -39,11 +45,17 @@ public class PlanetScene extends Scene {
         player = new Player();
         player.transform.position.set(0, -200);
         super.addGameObject(player);
+
+        selectionBox.setType(Box.Type.STROKED);
+        selectionBox.setStatic(true);
+        super.addGameObject(selectionBox);
     }
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+
+        selectionBox.transform.position = Input.getMousePosition();
     }
 
     @Override

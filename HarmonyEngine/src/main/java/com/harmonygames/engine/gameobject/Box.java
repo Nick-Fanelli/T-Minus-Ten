@@ -38,9 +38,11 @@ public class Box extends GameObject {
 
         Vector2f offset = this.getCameraOffset();
 
-        g.setColor(fillColor);
-        g.fillRect((int) (this.transform.position.x + offset.x), (int) (this.transform.position.y + offset.y),
-                this.transform.scale.width, this.transform.scale.height);
+        if(type != Type.STROKED) {
+            g.setColor(fillColor);
+            g.fillRect((int) (this.transform.position.x + offset.x), (int) (this.transform.position.y + offset.y),
+                    this.transform.scale.width, this.transform.scale.height);
+        }
 
         if(type == Type.STROKED || type == Type.STROKED_AND_FILLED) {
             g.setColor(strokeColor);
