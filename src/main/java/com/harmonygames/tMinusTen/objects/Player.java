@@ -25,6 +25,8 @@ public class Player extends GameObject {
     private Rigidbody2D rigidbody2D;
     private BoxCollider2D collider2D;
 
+    private boolean handleGamepad = false;
+
     private float playerSpeedForce = 2f;
 
     public Player() {
@@ -51,17 +53,14 @@ public class Player extends GameObject {
 
         boolean isMoving = false;
 
+        if(!this.handleGamepad && Input.isControllerConnected(0)) this.handleGamepad = true;
+        else if(this.handleGamepad && !Input.isControllerConnected(0)) this.handleGamepad = false;
+
         if(Input.isControllerConnected(0)) {
-            float moveForce = Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce;
 
-            if(moveForce != 0) {
-
-                this.rigidbody2D.setForceToNonzero(new Vector2f(Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce, 0));
-                this.renderer.setAnimation(Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce > 0 ? 2 : 1);
-                isMoving = true;
-            }
         }
 
+        // Desktop Controls
         if(Input.isKey(KeyEvent.VK_S) || Input.isKey(KeyEvent.VK_DOWN)) {
             this.renderer.setAnimation(1);
             this.rigidbody2D.setForceToNonzero(new Vector2f(0, playerSpeedForce));
@@ -80,7 +79,19 @@ public class Player extends GameObject {
             isMoving = true;
         }
 
-        if(Input.isKeyDown(KeyEvent.VK_SPACE) || Input.isKeyDown(KeyEvent.VK_UP) || (Input.isControllerConnected(0) && Input.isControllerButtonDown(ControllerButton.A, 0))) {
+        // Gamepad controls for moving
+        if(this.handleGamepad) {
+            double moveForce = Math.round((Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce) * 10D) / 10D;
+
+            if(moveForce != 0) {
+                this.rigidbody2D.setForceToNonzero(new Vector2f(Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce, 0));
+                this.renderer.setAnimation(Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce > 0 ? 2 : 1);
+                isMoving = true;
+            }
+        }
+
+        // Desktop and Gamepad controls for jumping
+        if(Input.isKeyDown(KeyEvent.VK_SPACE) || Input.isKeyDown(KeyEvent.VK_UP) || (this.handleGamepad && Input.isControllerButtonDown(ControllerButton.A, 0))) {
             if(rigidbody2D.isColliding()) this.rigidbody2D.addForce(new Vector2f(0, -5f));
         }
 
