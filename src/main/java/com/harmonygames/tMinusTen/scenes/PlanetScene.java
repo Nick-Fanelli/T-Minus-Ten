@@ -38,7 +38,7 @@ public class PlanetScene extends Scene {
 
         Camera.position.set(0, -500);
 
-        spriteSheet = Assets.addSpriteSheet("/spritesheets/ground/grasstileset.png", 30, 30);
+        spriteSheet = Assets.addSpriteSheet("/spritesheets/planet/mars/mars-tileset.png", 512, 512);
         chunkContainer = new SimilarObjectContainer<>("ChunkContainer", this);
         chunkLoader = new ChunkLoader(this, chunkContainer, spriteSheet, tileWidth, tileHeight, chunkWidth, chunkHeight);
 
