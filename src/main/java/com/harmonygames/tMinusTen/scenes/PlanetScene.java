@@ -25,7 +25,7 @@ public class PlanetScene extends Scene {
     private SimilarObjectContainer<Chunk> chunkContainer;
     private ChunkLoader chunkLoader;
     private SpriteSheet spriteSheet;
-    private SelectionBox selectionBox = new SelectionBox(new Scale(tileWidth, tileHeight));
+    private SelectionBox selectionBox;
 
     public PlanetScene() { super("Planet Scene"); }
 
@@ -47,6 +47,7 @@ public class PlanetScene extends Scene {
         player.transform.position.set(0, -200);
         super.addGameObject(player);
 
+        selectionBox = new SelectionBox(player.getRigidbody2D(), new Scale(tileWidth, tileHeight));
         super.addGameObject(selectionBox);
     }
 

@@ -3,8 +3,6 @@ package com.harmonygames.tMinusTen.objects;
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.display.Input;
-import com.harmonygames.engine.event.events.ControllerConnectionAction;
-import com.harmonygames.engine.event.events.ControllerConnectionEvent;
 import com.harmonygames.engine.gameobject.GameObject;
 import com.harmonygames.engine.gameobject.component.renderer.AnimationRenderer;
 import com.harmonygames.engine.graphics.SpriteSheet;
@@ -22,12 +20,12 @@ import java.awt.event.KeyEvent;
 
 public class Player extends GameObject {
 
+    public static final int TARGET_CONTROLLER_ID = 0;
+
     private SpriteSheet playerSheet = null;
     private AnimationRenderer renderer;
     private Rigidbody2D rigidbody2D;
     private BoxCollider2D collider2D;
-
-    private boolean handleGamepad = false;
 
     private float playerSpeedForce = 2f;
 
@@ -37,6 +35,8 @@ public class Player extends GameObject {
     public void onCreate() {
         super.onCreate();
 
+        Input.handleController(Player.TARGET_CONTROLLER_ID); // Enable controller 0
+
         playerSheet = Assets.addSpriteSheet("/spritesheets/characters/player-sheet.png", 32, 64);
 
         super.addComponent(this.renderer = new AnimationRenderer(playerSheet, 0));
@@ -45,8 +45,6 @@ public class Player extends GameObject {
 
         this.rigidbody2D.setMass(1f);
         this.rigidbody2D.setHasGravity(true);
-
-        Input.addControllerConnectionEvent(action -> { if(action.controllerID == 0) this.handleGamepad = action.isConnected; });
     }
 
     @Override
@@ -80,19 +78,19 @@ public class Player extends GameObject {
         }
 
         // Gamepad controls for moving
-        if(this.handleGamepad) {
+        if(Input.isControllerConnected(Player.TARGET_CONTROLLER_ID)) {
 
             // Gamepad move controls
-            double moveForce = Math.round((Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce) * 10D) / 10D;
+            double moveForce = Math.round((Input.getControllerAxis(ControllerAxis.LEFTX, Player.TARGET_CONTROLLER_ID) * playerSpeedForce) * 10D) / 10D;
 
             if(moveForce != 0) {
                 this.rigidbody2D.setForceToNonzero(new Vector2f(Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce, 0));
-                this.renderer.setAnimation(Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce > 0 ? 2 : 1);
+                this.renderer.setAnimation(Input.getControllerAxis(ControllerAxis.LEFTX, Player.TARGET_CONTROLLER_ID) * playerSpeedForce > 0 ? 2 : 1);
                 isMoving = true;
             }
 
             // Gamepad Jump Control
-            if(Input.isControllerButtonDown(ControllerButton.A, 0) && rigidbody2D.isColliding())
+            if(Input.isControllerButtonDown(ControllerButton.A, Player.TARGET_CONTROLLER_ID) && rigidbody2D.isColliding())
                 this.rigidbody2D.addForce(new Vector2f(0, -5f));
         }
 
@@ -114,4 +112,7 @@ public class Player extends GameObject {
     public void onDestroy() {
         super.onDestroy();
     }
+
+    // TODO: Give a rigidbody listener instead!
+    public Rigidbody2D getRigidbody2D() { return rigidbody2D; }
 }

@@ -26,14 +26,16 @@ public class Vector2f {
         this.y = y;
     }
 
-    public void set(float x, float y) {
+    public Vector2f set(float x, float y) {
         this.x = x;
         this.y = y;
+        return this;
     }
 
-    public void set(Vector2f r) {
+    public Vector2f set(Vector2f r) {
         this.x = r.x;
         this.y = r.y;
+        return this;
     }
 
     public void zero() {
@@ -79,6 +81,12 @@ public class Vector2f {
     @Override
     public String toString() {
         return String.format("[Vector2f: X:%s, Y:%s]", this.x, this.y);
+    }
+
+    public Vector2f round() {
+        this.x = Math.round(this.x);
+        this.y = Math.round(this.y);
+        return this;
     }
 
     public Vector2f add(float x, float y) {

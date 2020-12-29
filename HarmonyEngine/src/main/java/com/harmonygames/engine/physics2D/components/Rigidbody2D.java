@@ -14,6 +14,7 @@ public class Rigidbody2D extends Component {
     private float gravityForce = 0f;
 
     private boolean isColliding = false;
+    private boolean isMoving = false;
 
     private boolean hasGravity = false;
     private float maxGravity = 3f;
@@ -46,6 +47,7 @@ public class Rigidbody2D extends Component {
         BoxCollider2D collider = super.gameObject.getComponent(BoxCollider2D.class);
 
         if (!accumulatedForce.isZero()) {
+            isMoving = true;
 
             if (collider != null && super.gameObject.getScene() != null) {
                 boolean colliding = false;
@@ -90,7 +92,7 @@ public class Rigidbody2D extends Component {
             }
 
             addForce.toZero(mass / 10);
-        }
+        } else isMoving = false;
     }
 
     @Override
@@ -122,6 +124,7 @@ public class Rigidbody2D extends Component {
     public Vector2f getAccumulatedForce() { return this.accumulatedForce; }
 
     public boolean isColliding() {
-        return isColliding;
+        return this.isColliding;
     }
+    public boolean isMoving() { return this.isMoving; }
 }

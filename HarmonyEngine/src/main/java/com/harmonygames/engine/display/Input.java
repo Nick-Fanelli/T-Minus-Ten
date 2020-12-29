@@ -10,7 +10,6 @@ import com.studiohartman.jamepad.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +45,6 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 
         // Handle Controller Stuff
         controllers.initSDLGamepad();
-        controllersMap.put(0, false); // Check for the main controller by default.
     }
 
     public void update() {
@@ -60,7 +58,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
         if(gamepadCounter >= GameContext.FPS_CAP * GAMEPAD_CHECK_SECONDS) { // Check the gamepad status two second
             for (Map.Entry<Integer, Boolean> entry : controllersMap.entrySet()) {
                 boolean start = controllersMap.get(entry.getKey());
-                controllersMap.put(entry.getKey(), Input.isControllerConnected(entry.getKey()));
+                controllersMap.put(entry.getKey(), Input.forceIsControllerConnected(entry.getKey()));
                 if (start != controllersMap.get(entry.getKey()))
                     controllerEventSystem.callEvent(new ControllerConnectionAction(entry.getKey(), !start));
             }
@@ -82,13 +80,13 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     public static boolean isMouseButtonDown(int button) { return buttons[button] && !buttonsLast[button]; }
 
     // Mouse
-    public static Vector2f getMousePosition() { return mousePosition; }
+    public static Vector2f getMousePosition() { return new Vector2f(mousePosition); }
     public static int getScroll() { return scroll; }
 
     // Controller
     public static boolean isControllerButton(ControllerButton button, int controllerID) {
         try {
-            if(!isControllerConnected(controllerID)) {
+            if(!forceIsControllerConnected(controllerID)) {
                 System.err.println("***Harmony (Input): Controller '" + controllerID + "' not connected.***");
                 return false;
             }
@@ -102,7 +100,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 
     public static boolean isControllerButtonDown(ControllerButton button, int controllerID) {
         try {
-            if(!isControllerConnected(controllerID)) {
+            if(!forceIsControllerConnected(controllerID)) {
                 System.err.println("***Harmony (Input): Controller '" + controllerID + "' not connected.***");
                 return false;
             }
@@ -114,14 +112,16 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 
     public static boolean isControllerButtonDown(ControllerButton button) { return isControllerButtonDown(button, 0); }
 
-    public static boolean isControllerConnected(int controllerID) { return controllers.getControllerIndex(controllerID).isConnected(); }
+    private static boolean forceIsControllerConnected(int controllerID) { return controllers.getControllerIndex(controllerID).isConnected(); }
+
+    public static boolean isControllerConnected(int controllerID) { return controllersMap.getOrDefault(controllerID, false); }
 
     public static float getControllerAxis(ControllerAxis axis) {
         return Input.getControllerAxis(axis, 0);
     }
     public static float getControllerAxis(ControllerAxis axis, int controllerID) {
         try {
-            if(!isControllerConnected(controllerID)) {
+            if(!forceIsControllerConnected(controllerID)) {
                 System.err.println("***Harmony (Input): Controller '" + controllerID + "' not connected.***");
                 return 0f;
             }
