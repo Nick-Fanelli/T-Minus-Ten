@@ -1,7 +1,7 @@
 package com.harmonygames.engine.event;
 
-public interface Event {
+public interface Event<T extends EventAction> {
 
-    void onEvent();
+    void onEvent(T action);
 
 }

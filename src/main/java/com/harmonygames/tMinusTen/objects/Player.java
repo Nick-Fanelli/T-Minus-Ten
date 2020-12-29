@@ -49,17 +49,17 @@ public class Player extends GameObject {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
+        if(!this.handleGamepad && Input.isControllerConnected(0)) this.handleGamepad = true;
+        else if(this.handleGamepad && !Input.isControllerConnected(0)) this.handleGamepad = false;
+
         this.handleMovementInput();
-        
+        this.handleBlockInput();
 
         Camera.position.set(new Vector2f(this.transform.position).sub(Display.getCanvas().getWidth() / 2f, Display.getCanvas().getHeight() / 2f));
     }
 
     public void handleMovementInput() {
         boolean isMoving = false;
-
-        if(!this.handleGamepad && Input.isControllerConnected(0)) this.handleGamepad = true;
-        else if(this.handleGamepad && !Input.isControllerConnected(0)) this.handleGamepad = false;
 
         // Desktop Controls
         if(Input.isKey(KeyEvent.VK_S) || Input.isKey(KeyEvent.VK_DOWN)) {
@@ -99,6 +99,10 @@ public class Player extends GameObject {
         // If the player is moving, run the animation.
         // TODO: Based on the current player speed and difference from controller input!
         if(isMoving) renderer.incrementMillis(100);
+    }
+
+    public void handleBlockInput() {
+
     }
 
     @Override

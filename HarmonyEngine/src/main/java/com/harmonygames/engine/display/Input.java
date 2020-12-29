@@ -1,5 +1,8 @@
 package com.harmonygames.engine.display;
 
+import com.harmonygames.engine.event.events.ControllerConnectionAction;
+import com.harmonygames.engine.event.events.ControllerConnectionEvent;
+import com.harmonygames.engine.event.EventSystem;
 import com.harmonygames.engine.math.Vector2f;
 import com.studiohartman.jamepad.*;
 
@@ -21,6 +24,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     private static int scroll;
 
     private static final ControllerManager controllers = new ControllerManager();
+    private static final EventSystem<ControllerConnectionEvent, ControllerConnectionAction> controllerEventSystem = new EventSystem<>();
 
     public Input(JFrame frame, Canvas canvas) {
         frame.addKeyListener(this);
@@ -129,4 +133,12 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     @Deprecated @Override public void mouseClicked(MouseEvent e) {}
     @Deprecated @Override public void mouseEntered(MouseEvent e) {}
     @Deprecated @Override public void mouseExited(MouseEvent e) {}
+
+    public static void addControllerConnectionEvent(ControllerConnectionEvent event) {
+        Input.controllerEventSystem.subscribe(event);
+    }
+
+    public static void removeControllerConnectionEvent(ControllerConnectionEvent event) {
+        Input.controllerEventSystem.unsubscribe(event);
+    }
 }
