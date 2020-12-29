@@ -46,10 +46,7 @@ public class Player extends GameObject {
         this.rigidbody2D.setMass(1f);
         this.rigidbody2D.setHasGravity(true);
 
-        Input.addControllerConnectionEvent(action -> {
-            if(action.controllerID == 0) this.handleGamepad = action.isConnected;
-            System.out.println(action.isConnected);
-        });
+        Input.addControllerConnectionEvent(action -> { if(action.controllerID == 0) this.handleGamepad = action.isConnected; });
     }
 
     @Override
