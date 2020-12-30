@@ -64,6 +64,7 @@ public class ChunkLoader implements Runnable {
 
                 for (Map.Entry<Vector2f, Boolean> entry : chunksAddedMap.entrySet()) {
                     for (int i = 0; i < chunks.getGameObjects().size(); i++) {
+                        if(chunks.getGameObjects().get(i) == null) continue;
                         if (entry.getKey().equals(chunks.getGameObjects().get(i).chunkX, chunks.getGameObjects().get(i).chunkY)) {
                             entry.setValue(true);
                             break;
