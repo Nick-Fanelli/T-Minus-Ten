@@ -89,6 +89,20 @@ public class Vector2f {
         return this;
     }
 
+    public Vector2f clip(float xMin, float xMax, float yMin, float yMax) {
+        if(this.x < xMin) this.x = xMin;
+        else if(this.x > xMax) this.x = xMax;
+
+        if(this.y < yMin) this.y = yMin;
+        else if(this.y > yMax) this.y = yMax;
+
+        return this;
+    }
+
+    public Vector2f clip(float min, float max) {
+        return this.clip(min, max, min, max);
+    }
+
     public Vector2f add(float x, float y) {
         this.x += x;
         this.y += y;

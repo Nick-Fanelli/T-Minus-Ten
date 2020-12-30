@@ -19,10 +19,15 @@ public class SelectionBox extends Box {
     private final Vector2f lastMousePos = new Vector2f();
     private final Vector2f absPosition = new Vector2f(Display.getAspectRatio().width / 2f, Display.getAspectRatio().height / 2f);
 
+    private final int xMax, yMax;
+
     public SelectionBox(Scale scale) {
         super("Selection Box", new Transform(new Vector2f(), scale), Color.BLACK, Color.BLACK, Type.STROKED);
         super.setStatic(true);
         super.setZIndex(1);
+
+        this.xMax = Display.getAspectRatio().width - this.transform.scale.width;
+        this.yMax = Display.getAspectRatio().height - this.transform.scale.height;
     }
 
     @Override
@@ -52,6 +57,8 @@ public class SelectionBox extends Box {
     }
 
     public void updatePosition() {
+        this.absPosition.clip(0, xMax, 0, yMax);
+
         Vector2f cameraDifference = new Vector2f(Camera.position).
                 sub(new Vector2f(Camera.position).
                         div(this.transform.scale.width, this.transform.scale.height).
