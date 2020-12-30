@@ -1,6 +1,7 @@
 package com.harmonygames.tMinusTen.objects;
 
 import com.harmonygames.engine.Camera;
+import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.display.Input;
 import com.harmonygames.engine.gameobject.Box;
 import com.harmonygames.engine.math.Scale;
@@ -16,18 +17,16 @@ public class SelectionBox extends Box {
     public static final float MOVEMENT_MULTIPLIER = 2.5f;
 
     private final Vector2f lastMousePos = new Vector2f();
-    private final Vector2f absPosition = new Vector2f();
+    private final Vector2f absPosition = new Vector2f(Display.getAspectRatio().width / 2f, Display.getAspectRatio().height / 2f);
 
-    private boolean updatedPosition = false;
+    private final Rigidbody2D rigidbody2D;
 
-    public SelectionBox(Player player, Scale scale) {
+    public SelectionBox(Rigidbody2D rigidbody2D, Scale scale) {
         super("Selection Box", new Transform(new Vector2f(), scale), Color.BLACK, Color.BLACK, Type.STROKED);
         super.setStatic(true);
         super.setZIndex(1);
 
-        player.subscribeMovementListener(action -> {
-            if(!updatedPosition) this.updatePosition();
-        });
+        this.rigidbody2D = rigidbody2D;
     }
 
     @Override
@@ -35,6 +34,7 @@ public class SelectionBox extends Box {
         super.update(deltaTime);
 
         boolean controllerUpdated = false;
+        boolean updatedPosition = false;
 
         if(Input.isControllerConnected(Player.TARGET_CONTROLLER_ID)) {
 
@@ -53,6 +53,10 @@ public class SelectionBox extends Box {
             this.absPosition.set(Input.getMousePosition().sub(this.transform.scale.width / 2f, this.transform.scale.height / 2f));
             this.updatePosition();
             updatedPosition = true;
+        }
+
+        if(!updatedPosition && rigidbody2D.isMoving()) {
+            this.updatePosition();
         }
 
         this.lastMousePos.set(Input.getMousePosition());
