@@ -1,8 +1,10 @@
 package com.harmonygames.engine.utils;
 
+import com.harmonygames.engine.audio.AudioClip;
 import com.harmonygames.engine.graphics.SpriteSheet;
 
 import javax.imageio.ImageIO;
+import java.awt.desktop.AboutHandler;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URISyntaxException;
@@ -13,6 +15,7 @@ public class Assets {
     private static final HashMap<String, BufferedImage> images = new HashMap<>();
     private static final HashMap<String, SpriteSheet> spriteSheets = new HashMap<>();
     private static final HashMap<String, File> files = new HashMap<>();
+    private static final HashMap<String, AudioClip> audioClips = new HashMap<>();
 
     public static BufferedImage getImage(String path) {
         if(images.containsKey(path)) return images.get(path);
@@ -61,6 +64,15 @@ public class Assets {
         files.put(path, file);
 
         return file;
+    }
+
+    public static AudioClip getAudioClip(String path) {
+        if(audioClips.containsKey(path)) return audioClips.get(path).copy();
+
+        AudioClip clip = new AudioClip(path);
+        audioClips.put(path, clip);
+
+        return clip;
     }
 
 }

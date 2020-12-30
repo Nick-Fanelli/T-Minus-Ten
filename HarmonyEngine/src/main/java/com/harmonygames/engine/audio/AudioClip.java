@@ -8,6 +8,7 @@ import java.io.InputStream;
 public class AudioClip {
 
     private Clip clip;
+    private AudioInputStream decodedAudioStream;
 
     public AudioClip(String path) {
         try {
@@ -18,13 +19,24 @@ public class AudioClip {
             AudioFormat decodeFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
                     baseAudioFormat.getSampleRate(), 16, baseAudioFormat.getChannels(),
                     baseAudioFormat.getChannels() * 2, baseAudioFormat.getSampleRate(), false);
-            AudioInputStream decodedAudioStream = AudioSystem.getAudioInputStream(decodeFormat, audioInputStream);
+            decodedAudioStream = AudioSystem.getAudioInputStream(decodeFormat, audioInputStream);
 
             clip = AudioSystem.getClip();
             clip.open(decodedAudioStream);
         } catch(UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             System.err.println("[Harmony Engine (Audio Clip): ] Error loading audio clip '" + path + "'");
             e.printStackTrace();
+        }
+    }
+
+    public AudioClip(AudioInputStream decodedAudioStream) {
+        try {
+            this.clip = AudioSystem.getClip();
+            this.clip.open(decodedAudioStream);
+        } catch (LineUnavailableException | IOException e) {
+            System.err.println("[Harmony Engine (Audio Clip): ] Error loading audio clip from decoded stream '" + decodedAudioStream + "'");
+            e.printStackTrace();
+            System.exit(-1);
         }
     }
 
@@ -62,6 +74,10 @@ public class AudioClip {
     public void startLoop() {
         this.clip.loop(Clip.LOOP_CONTINUOUSLY);
         this.play();
+    }
+
+    public AudioClip copy() {
+        return new AudioClip(decodedAudioStream);
     }
 
 }
