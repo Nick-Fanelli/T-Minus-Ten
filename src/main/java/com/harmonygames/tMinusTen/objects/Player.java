@@ -57,7 +57,7 @@ public class Player extends GameObject {
         this.handleMovementInput();
         this.handleBlockInput();
 
-        Camera.position.set(new Vector2f(this.transform.position).sub(Display.getCanvas().getWidth() / 2f, Display.getCanvas().getHeight() / 2f));
+        Camera.position.set(new Vector2f(this.transform.position).sub(Display.getResolution().width / 2f, Display.getResolution().height / 2f));
     }
 
     public void handleMovementInput() {

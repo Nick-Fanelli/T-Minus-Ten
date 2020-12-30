@@ -19,7 +19,7 @@ public class Display {
     private static BufferStrategy bs;
     private static Graphics g;
 
-    private static Dimension aspectRatio;
+    private static Dimension resolution;
     private static Dimension scaledContext;
 
     private final GameContext gameContext;
@@ -27,8 +27,8 @@ public class Display {
     public Display(GameContext gameContext, String title) {
         this.gameContext = gameContext;
 
-        aspectRatio = new Dimension(1280, 720);
-        scaledContext = new Dimension(aspectRatio.width, aspectRatio.height);
+        resolution = new Dimension(1280, 720);
+        scaledContext = new Dimension(resolution.width, resolution.height);
 
         Dimension windowSize = new Dimension(scaledContext.width, scaledContext.height);
 
@@ -112,10 +112,10 @@ public class Display {
 
         if(frameSize.getWidth() > frameSize.getHeight()) {
             scaledDimension.height = (int) frameSize.getHeight();
-            scaledDimension.width = (int) ((aspectRatio.getWidth() / aspectRatio.getHeight()) * frameSize.getHeight());
+            scaledDimension.width = (int) ((resolution.getWidth() / resolution.getHeight()) * frameSize.getHeight());
         } else {
             scaledDimension.width = (int) frameSize.getWidth();
-            scaledDimension.height = (int) ((aspectRatio.getHeight() / aspectRatio.getWidth()) * frameSize.getWidth());
+            scaledDimension.height = (int) ((resolution.getHeight() / resolution.getWidth()) * frameSize.getWidth());
         }
 
         return scaledDimension;
@@ -128,5 +128,5 @@ public class Display {
     public static JFrame getFrame() { return frame; }
     public static Canvas getCanvas() { return canvas; }
 
-    public static Dimension getAspectRatio() { return aspectRatio; }
+    public static Dimension getResolution() { return resolution; }
 }

@@ -28,7 +28,7 @@ public class GameScene extends Scene {
         player = new Player();
         super.addGameObject(player);
 
-        Camera.position.set(player.transform.position.x - (float) Display.getAspectRatio().getWidth() / 2f, player.transform.position.y - (float) Display.getAspectRatio().getHeight() / 2f);
+        Camera.position.set(player.transform.position.x - (float) Display.getResolution().getWidth() / 2f, player.transform.position.y - (float) Display.getResolution().getHeight() / 2f);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class GameScene extends Scene {
     @Override
     public void draw(Graphics2D g) {
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, (int) Display.getAspectRatio().getWidth(), (int) Display.getAspectRatio().getHeight());
+        g.fillRect(0, 0, (int) Display.getResolution().getWidth(), (int) Display.getResolution().getHeight());
         super.draw(g);
     }
 }

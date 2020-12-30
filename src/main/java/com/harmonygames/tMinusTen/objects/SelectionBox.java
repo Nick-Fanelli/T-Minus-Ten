@@ -7,7 +7,6 @@ import com.harmonygames.engine.gameobject.Box;
 import com.harmonygames.engine.math.Scale;
 import com.harmonygames.engine.math.Transform;
 import com.harmonygames.engine.math.Vector2f;
-import com.harmonygames.engine.physics2D.components.Rigidbody2D;
 import com.studiohartman.jamepad.ControllerAxis;
 
 import java.awt.*;
@@ -17,7 +16,7 @@ public class SelectionBox extends Box {
     public static final float MOVEMENT_MULTIPLIER = 2.5f;
 
     private final Vector2f lastMousePos = new Vector2f();
-    private final Vector2f absPosition = new Vector2f(Display.getAspectRatio().width / 2f, Display.getAspectRatio().height / 2f);
+    private final Vector2f absPosition = new Vector2f(Display.getResolution().width / 2f, Display.getResolution().height / 2f);
 
     private final int xMax, yMax;
 
@@ -26,8 +25,8 @@ public class SelectionBox extends Box {
         super.setStatic(true);
         super.setZIndex(1);
 
-        this.xMax = Display.getAspectRatio().width - this.transform.scale.width;
-        this.yMax = Display.getAspectRatio().height - this.transform.scale.height;
+        this.xMax = Display.getResolution().width - this.transform.scale.width;
+        this.yMax = Display.getResolution().height - this.transform.scale.height;
     }
 
     @Override
