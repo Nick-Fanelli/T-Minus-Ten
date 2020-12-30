@@ -19,14 +19,10 @@ public class SelectionBox extends Box {
     private final Vector2f lastMousePos = new Vector2f();
     private final Vector2f absPosition = new Vector2f(Display.getAspectRatio().width / 2f, Display.getAspectRatio().height / 2f);
 
-    private final Rigidbody2D rigidbody2D;
-
-    public SelectionBox(Rigidbody2D rigidbody2D, Scale scale) {
+    public SelectionBox(Scale scale) {
         super("Selection Box", new Transform(new Vector2f(), scale), Color.BLACK, Color.BLACK, Type.STROKED);
         super.setStatic(true);
         super.setZIndex(1);
-
-        this.rigidbody2D = rigidbody2D;
     }
 
     @Override
@@ -34,7 +30,6 @@ public class SelectionBox extends Box {
         super.update(deltaTime);
 
         boolean controllerUpdated = false;
-        boolean updatedPosition = false;
 
         if(Input.isControllerConnected(Player.TARGET_CONTROLLER_ID)) {
 
@@ -44,22 +39,16 @@ public class SelectionBox extends Box {
             if(rightX != 0 || rightY != 0) {
                 this.absPosition.add((float) rightX * MOVEMENT_MULTIPLIER, (float) -rightY * MOVEMENT_MULTIPLIER);
                 this.updatePosition();
-                updatedPosition = true;
                 controllerUpdated = true;
             }
         }
 
         if(!controllerUpdated && !this.lastMousePos.equals(Input.getMousePosition())) {
             this.absPosition.set(Input.getMousePosition().sub(this.transform.scale.width / 2f, this.transform.scale.height / 2f));
-            this.updatePosition();
-            updatedPosition = true;
-        }
-
-        if(!updatedPosition && rigidbody2D.isMoving()) {
-            this.updatePosition();
         }
 
         this.lastMousePos.set(Input.getMousePosition());
+        this.updatePosition();
     }
 
     public void updatePosition() {

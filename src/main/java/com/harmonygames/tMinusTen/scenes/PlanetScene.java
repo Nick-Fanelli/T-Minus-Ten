@@ -51,7 +51,7 @@ public class PlanetScene extends Scene {
         player.transform.position.set(0, -200);
         super.addGameObject(player);
 
-        selectionBox = new SelectionBox(player.getComponent(Rigidbody2D.class), new Scale(tileWidth, tileHeight));
+        selectionBox = new SelectionBox(new Scale(tileWidth, tileHeight));
         super.addGameObject(selectionBox);
     }
 
