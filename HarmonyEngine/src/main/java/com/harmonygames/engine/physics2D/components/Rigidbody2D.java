@@ -55,7 +55,7 @@ public class Rigidbody2D extends Component {
             isMoving = true;
             this.eventSystem.callEvent(new GameObjectMovementAction(super.gameObject.getName(), accumulatedForce.copy()));
 
-            if (collider != null && super.gameObject.getScene() != null) {
+            if (collider != null && super.gameObject.getScene() != null && collider.isCollidable()) {
                 boolean colliding = false;
 
                 for (GameObject gameObject : super.gameObject.getScene().getUnwrappedGameObjects(BoxCollider2D.class)) {
@@ -65,6 +65,7 @@ public class Rigidbody2D extends Component {
 
                     // The target object's box collider
                     BoxCollider2D objectCollider = gameObject.getComponent(BoxCollider2D.class);
+                    if(!objectCollider.isCollidable()) continue; // If the object's box collider can't collide, skip
 
                     // Check to see if the object is completely colliding
                     if(Collision2D.isColliding(new Vector2f(super.gameObject.transform.position).add(collider.getOffset()).add(accumulatedForce), collider.getScale(),

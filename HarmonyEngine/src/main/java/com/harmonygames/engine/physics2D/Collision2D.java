@@ -22,10 +22,24 @@ public class Collision2D {
             return false;
         }
 
+        if(!b1.isCollidable() || !b2.isCollidable()) return false;
+
         return b1.getGameObject().transform.position.x + b1.getOffset().x + b1.getScale().width >= b2.getGameObject().transform.position.x + b2.getOffset().x
         && b1.getGameObject().transform.position.x + b1.getOffset().x <= b2.getGameObject().transform.position.x + b2.getOffset().x + b2.getScale().width
         && b1.getGameObject().transform.position.y + b1.getOffset().y + b1.getScale().height >= b2.getGameObject().transform.position.y + b2.getOffset().y
         && b1.getGameObject().transform.position.y + b1.getOffset().y <= b2.getGameObject().transform.position.y + b2.getOffset().y + b2.getScale().height;
+    }
+
+    public static boolean forceBoxColliderWithBoxCollider(BoxCollider2D b1, BoxCollider2D b2) {
+        if(b1.getGameObject() == null || b2.getGameObject() == null) {
+            System.err.println("[Harmony Engine (Collision2D)]: Could not find the game objects of box colliders.");
+            return false;
+        }
+
+        return b1.getGameObject().transform.position.x + b1.getOffset().x + b1.getScale().width >= b2.getGameObject().transform.position.x + b2.getOffset().x
+                && b1.getGameObject().transform.position.x + b1.getOffset().x <= b2.getGameObject().transform.position.x + b2.getOffset().x + b2.getScale().width
+                && b1.getGameObject().transform.position.y + b1.getOffset().y + b1.getScale().height >= b2.getGameObject().transform.position.y + b2.getOffset().y
+                && b1.getGameObject().transform.position.y + b1.getOffset().y <= b2.getGameObject().transform.position.y + b2.getOffset().y + b2.getScale().height;
     }
 
     public static boolean isColliding(Vector2f p1, Scale s1, Vector2f p2, Scale s2) {
