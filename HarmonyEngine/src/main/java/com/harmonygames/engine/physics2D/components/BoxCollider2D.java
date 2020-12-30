@@ -11,6 +11,8 @@ public class BoxCollider2D extends Component {
     private Vector2f offset;
     private Scale scale;
 
+    private boolean isCollidable = true;
+
     public BoxCollider2D(Vector2f offset, Scale scale) {
         this.offset = offset;
         this.scale = scale;
@@ -33,4 +35,10 @@ public class BoxCollider2D extends Component {
 
     public Vector2f getOffset() { return this.offset; }
     public Scale getScale() { return this.scale; }
+
+    public void setOffset(Vector2f offset) { this.offset = offset; }
+    public void setScale(Scale scale) { this.scale = scale; }
+
+    public boolean isCollidable() { return this.isCollidable; }
+    public void setCollidable(boolean isCollidable) { this.isCollidable = isCollidable; }
 }
