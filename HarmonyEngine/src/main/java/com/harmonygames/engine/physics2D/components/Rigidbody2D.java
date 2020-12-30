@@ -1,5 +1,8 @@
 package com.harmonygames.engine.physics2D.components;
 
+import com.harmonygames.engine.event.EventSystem;
+import com.harmonygames.engine.event.events.GameObjectMovementAction;
+import com.harmonygames.engine.event.events.GameObjectMovementEvent;
 import com.harmonygames.engine.gameobject.GameObject;
 import com.harmonygames.engine.gameobject.component.Component;
 import com.harmonygames.engine.physics2D.Collision2D;
@@ -8,6 +11,8 @@ import com.harmonygames.engine.math.Vector2f;
 import java.awt.*;
 
 public class Rigidbody2D extends Component {
+
+    private final EventSystem<GameObjectMovementEvent, GameObjectMovementAction> eventSystem = new EventSystem<>();
 
     private final Vector2f accumulatedForce = new Vector2f();
     private final Vector2f addForce = new Vector2f();
@@ -48,6 +53,7 @@ public class Rigidbody2D extends Component {
 
         if (!accumulatedForce.isZero()) {
             isMoving = true;
+            this.eventSystem.callEvent(new GameObjectMovementAction(super.gameObject.getName(), accumulatedForce.copy()));
 
             if (collider != null && super.gameObject.getScene() != null) {
                 boolean colliding = false;
@@ -127,4 +133,12 @@ public class Rigidbody2D extends Component {
         return this.isColliding;
     }
     public boolean isMoving() { return this.isMoving; }
+
+    public void addMovementListener(GameObjectMovementEvent event) {
+        this.eventSystem.subscribe(event);
+    }
+
+    public void removeMovementListener(GameObjectMovementEvent event) {
+        this.eventSystem.unsubscribe(event);
+    }
 }

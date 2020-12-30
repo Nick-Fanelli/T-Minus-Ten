@@ -17,21 +17,23 @@ public class SelectionBox extends Box {
 
     private final Vector2f lastMousePos = new Vector2f();
     private final Vector2f absPosition = new Vector2f();
-    private final Rigidbody2D playerRigidbody;
 
-    public SelectionBox(Rigidbody2D playerRigidbody, Scale scale) {
+    private boolean updatedPosition = false;
+
+    public SelectionBox(Player player, Scale scale) {
         super("Selection Box", new Transform(new Vector2f(), scale), Color.BLACK, Color.BLACK, Type.STROKED);
         super.setStatic(true);
         super.setZIndex(1);
 
-        this.playerRigidbody = playerRigidbody;
+        player.subscribeMovementListener(action -> {
+            if(!updatedPosition) this.updatePosition();
+        });
     }
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
 
-        boolean updatedPosition = false;
         boolean controllerUpdated = false;
 
         if(Input.isControllerConnected(Player.TARGET_CONTROLLER_ID)) {
@@ -53,7 +55,6 @@ public class SelectionBox extends Box {
             updatedPosition = true;
         }
 
-        if(playerRigidbody.isMoving() && !updatedPosition) this.updatePosition();
         this.lastMousePos.set(Input.getMousePosition());
     }
 

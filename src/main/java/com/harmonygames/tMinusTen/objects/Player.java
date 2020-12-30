@@ -3,6 +3,7 @@ package com.harmonygames.tMinusTen.objects;
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
 import com.harmonygames.engine.display.Input;
+import com.harmonygames.engine.event.events.GameObjectMovementEvent;
 import com.harmonygames.engine.gameobject.GameObject;
 import com.harmonygames.engine.gameobject.component.renderer.AnimationRenderer;
 import com.harmonygames.engine.graphics.SpriteSheet;
@@ -29,7 +30,9 @@ public class Player extends GameObject {
 
     private float playerSpeedForce = 2f;
 
-    public Player() { super("Player", new Transform(new Vector2f(0, 0), new Scale(32, 32))); }
+    public Player() {
+        super("Player", new Transform(new Vector2f(0, 0), new Scale(32, 32)));
+    }
 
     @Override
     public void onCreate() {
@@ -61,42 +64,42 @@ public class Player extends GameObject {
         boolean isMoving = false;
 
         // Desktop Controls
-        if(Input.isKey(KeyEvent.VK_D) || Input.isKey(KeyEvent.VK_RIGHT)) {
+        if (Input.isKey(KeyEvent.VK_D) || Input.isKey(KeyEvent.VK_RIGHT)) {
             this.renderer.setAnimation(2);
             this.rigidbody2D.setForceToNonzero(new Vector2f(playerSpeedForce, 0));
             isMoving = true;
         }
 
-        if(Input.isKey(KeyEvent.VK_A) || Input.isKey(KeyEvent.VK_LEFT)) {
+        if (Input.isKey(KeyEvent.VK_A) || Input.isKey(KeyEvent.VK_LEFT)) {
             this.renderer.setAnimation(1);
             this.rigidbody2D.setForceToNonzero(new Vector2f(-playerSpeedForce, 0));
             isMoving = true;
         }
 
-        if(Input.isKeyDown(KeyEvent.VK_W) || Input.isKeyDown(KeyEvent.VK_UP) || Input.isKeyDown(KeyEvent.VK_SPACE)) {
-            if(rigidbody2D.isColliding()) this.rigidbody2D.addForce(new Vector2f(0, -5f));
+        if (Input.isKeyDown(KeyEvent.VK_W) || Input.isKeyDown(KeyEvent.VK_UP) || Input.isKeyDown(KeyEvent.VK_SPACE)) {
+            if (rigidbody2D.isColliding()) this.rigidbody2D.addForce(new Vector2f(0, -5f));
         }
 
         // Gamepad controls for moving
-        if(Input.isControllerConnected(Player.TARGET_CONTROLLER_ID)) {
+        if (Input.isControllerConnected(Player.TARGET_CONTROLLER_ID)) {
 
             // Gamepad move controls
             double moveForce = Math.round((Input.getControllerAxis(ControllerAxis.LEFTX, Player.TARGET_CONTROLLER_ID) * playerSpeedForce) * 10D) / 10D;
 
-            if(moveForce != 0) {
+            if (moveForce != 0) {
                 this.rigidbody2D.setForceToNonzero(new Vector2f(Input.getControllerAxis(ControllerAxis.LEFTX) * playerSpeedForce, 0));
                 this.renderer.setAnimation(Input.getControllerAxis(ControllerAxis.LEFTX, Player.TARGET_CONTROLLER_ID) * playerSpeedForce > 0 ? 2 : 1);
                 isMoving = true;
             }
 
             // Gamepad Jump Control
-            if(Input.isControllerButtonDown(ControllerButton.A, Player.TARGET_CONTROLLER_ID) && rigidbody2D.isColliding())
+            if (Input.isControllerButtonDown(ControllerButton.A, Player.TARGET_CONTROLLER_ID) && rigidbody2D.isColliding())
                 this.rigidbody2D.addForce(new Vector2f(0, -5f));
         }
 
         // If the player is moving, run the animation.
         // TODO: Based on the current player speed and difference from controller input!
-        if(isMoving) renderer.incrementMillis(100);
+        if (isMoving) renderer.incrementMillis(100);
     }
 
     public void handleBlockInput() {
@@ -113,6 +116,7 @@ public class Player extends GameObject {
         super.onDestroy();
     }
 
-    // TODO: Give a rigidbody listener instead!
-    public Rigidbody2D getRigidbody2D() { return rigidbody2D; }
+    public void subscribeMovementListener(GameObjectMovementEvent event) {
+        this.rigidbody2D.addMovementListener(event);
+    }
 }
