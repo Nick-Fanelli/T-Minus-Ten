@@ -21,3 +21,6 @@ vcs.xml
 
 # Mac OS Stuff
 *.DS_Store
+
+# Custom Developer Scripts
+./PushToServer
