@@ -9,6 +9,7 @@ import com.harmonygames.engine.math.PerlinNoise;
 import com.harmonygames.engine.math.Scale;
 import com.harmonygames.engine.math.Transform;
 import com.harmonygames.engine.math.Vector2f;
+import com.harmonygames.engine.physics2D.components.BoxCollider2D;
 import com.harmonygames.tMinusTen.objects.Block;
 
 import java.awt.*;
@@ -44,6 +45,11 @@ public class Chunk extends GameObject {
         this.tileHeight = tileHeight;
         this.chunkWidth = chunkWidth;
         this.chunkHeight = chunkHeight;
+
+        BoxCollider2D collider2D = new BoxCollider2D(new Vector2f(), transform.scale);
+        collider2D.setCollidable(false);
+
+        super.addComponent(collider2D);
     }
 
     public void update(float deltaTime) {
