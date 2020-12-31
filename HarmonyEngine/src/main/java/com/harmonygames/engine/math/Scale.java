@@ -29,6 +29,12 @@ public class Scale {
         return this;
     }
 
+    public Scale sub(int width, int height) {
+        this.width -= width;
+        this.height -= height;
+        return this;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof Scale)) {

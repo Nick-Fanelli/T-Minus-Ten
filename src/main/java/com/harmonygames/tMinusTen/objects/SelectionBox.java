@@ -24,12 +24,11 @@ public class SelectionBox extends Box {
 
     private final Vector2f lastMousePos = new Vector2f();
     private final Vector2f absPosition = new Vector2f(Display.getResolution().width / 2f, Display.getResolution().height / 2f);
-    private final Vector2f lastAbsPosition = new Vector2f();
+    private final Vector2f lastPosition = new Vector2f();
 
     private final int xMax, yMax;
 
     private Block selectedBlock = null;
-    private Chunk selectedChunk = null;
 
     public SelectionBox(PlanetScene scene, Scale scale) {
         super("Selection Box", new Transform(new Vector2f(), scale), Color.BLACK, Color.BLACK, Type.STROKED);
@@ -82,56 +81,62 @@ public class SelectionBox extends Box {
     private void handleSelectionInput() {
         ChangeType type = ChangeType.NONE;
 
-        if(Input.isMouseButton(1)) type = ChangeType.DELETE;
-        else if(Input.isMouseButton(3)) type = ChangeType.ADD;
+        if(Input.isMouseButtonDown(1)) type = ChangeType.DELETE;
+        else if(Input.isMouseButtonDown(3)) type = ChangeType.ADD;
 
         if(type == ChangeType.NONE && Input.isControllerConnected(Player.TARGET_CONTROLLER_ID)) {
             if(Input.getControllerAxis(ControllerAxis.TRIGGERLEFT, Player.TARGET_CONTROLLER_ID) != 0) type = ChangeType.DELETE;
             else if(Input.getControllerAxis(ControllerAxis.TRIGGERRIGHT, Player.TARGET_CONTROLLER_ID) != 0) type = ChangeType.ADD;
         }
 
-        if(type != ChangeType.NONE) {
-//            if(!this.absPosition.equals(this.lastAbsPosition)) {
-                // Determine which chunk it's in
+        // Determine Current Selected Block
+        if(!lastPosition.equals(this.transform.position)) {
             boolean blockSelected = false;
 
-            for(int i = 0; i < planetScene.getChunkContainer().getGameObjects().size(); i++) {
-                    Chunk chunk = planetScene.getChunkContainer().getGameObjects().get(i);
-                    if(chunk == null) {
-                        System.err.println("Skipping because chunk is null");
-                        continue;
-                    }
+            for (int i = 0; i < planetScene.getChunkContainer().getGameObjects().size(); i++) {
+                Chunk chunk = planetScene.getChunkContainer().getGameObjects().get(i);
+                if (chunk == null) {
+                    System.err.println("Skipping because chunk is null");
+                    continue;
+                }
 
-                    BoxCollider2D chunkCollider = chunk.getComponent(BoxCollider2D.class);
-                    if(chunkCollider == null) {
-                        System.err.println("[T Minus Ten (SelectionBox)]: Couldn't find the chunk collider for the chunk");
-                        continue;
-                    }
+                BoxCollider2D chunkCollider = chunk.getComponent(BoxCollider2D.class);
+                if (chunkCollider == null) {
+                    System.err.println("[T Minus Ten (SelectionBox)]: Couldn't find the chunk collider for the chunk");
+                    continue;
+                }
 
 
-                    if(Collision2D.isColliding(this.transform.position, this.transform.scale, chunk.transform.position.copy().sub(Camera.position),
-                            chunk.transform.scale)) {
-                        for(Block block : chunk.blocks) {
-                            if(Collision2D.isColliding(this.transform.position, this.transform.scale, block.transform.position.copy().sub(Camera.position),
-                                    block.transform.scale)) {
-                                blockSelected = true;
-                                selectedBlock = block;
-                            }
+                if (Collision2D.isColliding(this.transform.position.copy().add(1, 1), this.transform.scale.copy().sub(2, 2), chunk.transform.position.copy().sub(chunk.getCameraOffset()),
+                        chunk.transform.scale)) {
+                    for (Block block : chunk.blocks) {
+                        if (Collision2D.isColliding(this.transform.position.copy().add(1, 1), this.transform.scale.copy().sub(2, 2), block.transform.position.copy().sub(block.getCameraOffset()),
+                                block.transform.scale)) {
+                            blockSelected = true;
+                            selectedBlock = block;
+                            break;
                         }
                     }
 
-
+                    if (blockSelected) break;
                 }
+            }
 
             if(!blockSelected) selectedBlock = null;
-
-//            }
-
-
-            System.out.println(selectedBlock);
         }
 
-        this.lastAbsPosition.set(absPosition);
+        if(type != ChangeType.NONE) {
+
+            switch (type) {
+                case DELETE:
+                    if(selectedBlock != null) selectedBlock.delete();
+                    selectedBlock = null;
+                    break;
+            }
+
+        }
+
+        this.lastPosition.set(this.transform.position);
     }
 
     public void updatePosition() {
