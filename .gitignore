@@ -23,4 +23,4 @@ vcs.xml
 *.DS_Store
 
 # Custom Developer Scripts
-PushToServer.sh
+PushToServer
