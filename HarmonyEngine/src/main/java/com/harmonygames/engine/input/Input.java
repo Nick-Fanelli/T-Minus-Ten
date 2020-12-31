@@ -1,4 +1,4 @@
-package com.harmonygames.engine.display;
+package com.harmonygames.engine.input;
 
 import com.harmonygames.engine.GameContext;
 import com.harmonygames.engine.event.events.ControllerConnectionAction;

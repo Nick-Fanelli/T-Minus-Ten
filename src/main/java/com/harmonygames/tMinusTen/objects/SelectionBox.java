@@ -2,7 +2,7 @@ package com.harmonygames.tMinusTen.objects;
 
 import com.harmonygames.engine.Camera;
 import com.harmonygames.engine.display.Display;
-import com.harmonygames.engine.display.Input;
+import com.harmonygames.engine.input.Input;
 import com.harmonygames.engine.gameobject.Box;
 import com.harmonygames.engine.math.Scale;
 import com.harmonygames.engine.math.Transform;

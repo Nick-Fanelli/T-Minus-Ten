@@ -2,7 +2,7 @@ package com.harmonygames.engine;
 
 import com.harmonygames.engine.data.DataUtils;
 import com.harmonygames.engine.display.Display;
-import com.harmonygames.engine.display.Input;
+import com.harmonygames.engine.input.Input;
 import com.harmonygames.engine.scene.Scene;
 import com.harmonygames.engine.scene.SceneManager;
 
