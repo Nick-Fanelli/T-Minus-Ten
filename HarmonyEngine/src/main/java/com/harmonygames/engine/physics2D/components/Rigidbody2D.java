@@ -16,6 +16,10 @@ public class Rigidbody2D extends Component {
 
     private final Vector2f accumulatedForce = new Vector2f();
     private final Vector2f addForce = new Vector2f();
+
+    private final Vector2f minForce = new Vector2f(Float.MIN_VALUE);
+    private final Vector2f maxForce = new Vector2f(Float.MAX_VALUE);
+
     private float gravityForce = 0f;
 
     private boolean isColliding = false;
@@ -48,6 +52,13 @@ public class Rigidbody2D extends Component {
 
         this.accumulatedForce.add(addForce);
         this.accumulatedForce.y += gravityForce;
+
+        // FIXME Make the Vector2f method work!!!
+        if(!this.minForce.equals(Float.MIN_VALUE) || !this.maxForce.equals(Float.MAX_VALUE)) {
+//            this.accumulatedForce.clip(this.minForce, this.maxForce);
+            if(this.accumulatedForce.y < this.minForce.y) { this.accumulatedForce.y = this.minForce.y; }
+            if(this.addForce.y < this.minForce.y) { this.addForce.y = this.minForce.y; }
+        }
 
         BoxCollider2D collider = super.gameObject.getComponent(BoxCollider2D.class);
 
@@ -134,6 +145,12 @@ public class Rigidbody2D extends Component {
         return this.isColliding;
     }
     public boolean isMoving() { return this.isMoving; }
+
+    public Vector2f getMinForce() { return this.minForce; }
+    public Vector2f getMaxForce() { return this.maxForce; }
+
+    public void setMinForce(Vector2f minForce) { this.minForce.set(minForce); }
+    public void setMaxForce(Vector2f maxForce) { this.maxForce.set(maxForce); }
 
     public void addMovementListener(GameObjectMovementEvent event) {
         this.eventSystem.subscribe(event);

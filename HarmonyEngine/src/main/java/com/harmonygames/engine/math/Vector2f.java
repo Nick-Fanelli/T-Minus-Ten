@@ -78,6 +78,8 @@ public class Vector2f {
         return this.x == x && this.y == y;
     }
 
+    public boolean equals(float value) { return this.x == value && this.y == value; }
+
     @Override
     public String toString() {
         return String.format("[Vector2f: X:%s, Y:%s]", this.x, this.y);
@@ -87,6 +89,10 @@ public class Vector2f {
         this.x = Math.round(this.x);
         this.y = Math.round(this.y);
         return this;
+    }
+
+    public Vector2f clip(Vector2f min, Vector2f max) {
+        return this.clip(min.x, max.x, min.y, max.y);
     }
 
     public Vector2f clip(float xMin, float xMax, float yMin, float yMax) {

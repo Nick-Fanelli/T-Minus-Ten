@@ -48,6 +48,7 @@ public class Player extends GameObject {
 
         this.rigidbody2D.setMass(1f);
         this.rigidbody2D.setHasGravity(true);
+        this.rigidbody2D.setMinForce(new Vector2f(Float.MIN_VALUE, -5f))    ;
     }
 
     @Override
@@ -114,9 +115,5 @@ public class Player extends GameObject {
     @Override
     public void onDestroy() {
         super.onDestroy();
-    }
-
-    public void subscribeMovementListener(GameObjectMovementEvent event) {
-        this.rigidbody2D.addMovementListener(event);
     }
 }
