@@ -61,8 +61,8 @@ public class Chunk extends GameObject {
     public void draw(Graphics2D g) {
         if(!hasLoaded) return;
         for(Block block : blocks) block.draw(g);
-        g.setColor(Color.GREEN);
-        g.drawRect((int) (this.transform.position.x - super.getCameraOffset().x), (int) (this.transform.position.y - super.getCameraOffset().y), this.transform.scale.width, this.transform.scale.height);
+//        g.setColor(Color.GREEN);
+//        g.drawRect((int) (this.transform.position.x - super.getCameraOffset().x), (int) (this.transform.position.y - super.getCameraOffset().y), this.transform.scale.width, this.transform.scale.height);
     }
 
     public void setLoaded(boolean value) { this.hasLoaded = value; }

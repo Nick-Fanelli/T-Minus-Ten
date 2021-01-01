@@ -81,8 +81,8 @@ public class SelectionBox extends Box {
     private void handleSelectionInput() {
         ChangeType type = ChangeType.NONE;
 
-        if(Input.isMouseButtonDown(1)) type = ChangeType.DELETE;
-        else if(Input.isMouseButtonDown(3)) type = ChangeType.ADD;
+        if(Input.isMouseButton(1)) type = ChangeType.DELETE;
+        else if(Input.isMouseButton(3)) type = ChangeType.ADD;
 
         if(type == ChangeType.NONE && Input.isControllerConnected(Player.TARGET_CONTROLLER_ID)) {
             if(Input.getControllerAxis(ControllerAxis.TRIGGERLEFT, Player.TARGET_CONTROLLER_ID) != 0) type = ChangeType.DELETE;
@@ -96,7 +96,6 @@ public class SelectionBox extends Box {
             for (int i = 0; i < planetScene.getChunkContainer().getGameObjects().size(); i++) {
                 Chunk chunk = planetScene.getChunkContainer().getGameObjects().get(i);
                 if (chunk == null) {
-                    System.err.println("Skipping because chunk is null");
                     continue;
                 }
 
