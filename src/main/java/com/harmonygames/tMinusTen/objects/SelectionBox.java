@@ -29,6 +29,7 @@ public class SelectionBox extends Box {
     private final int xMax, yMax;
 
     private Block selectedBlock = null;
+    private Chunk selectedChunk = null;
 
     public SelectionBox(PlanetScene scene, Scale scale) {
         super("Selection Box", new Transform(new Vector2f(), scale), Color.BLACK, Color.BLACK, Type.STROKED);
@@ -108,6 +109,9 @@ public class SelectionBox extends Box {
 
                 if (Collision2D.isColliding(this.transform.position.copy().add(1, 1), this.transform.scale.copy().sub(2, 2), chunk.transform.position.copy().sub(chunk.getCameraOffset()),
                         chunk.transform.scale)) {
+
+                    selectedChunk = chunk;
+
                     for (Block block : chunk.blocks) {
                         if (Collision2D.isColliding(this.transform.position.copy().add(1, 1), this.transform.scale.copy().sub(2, 2), block.transform.position.copy().sub(block.getCameraOffset()),
                                 block.transform.scale)) {
@@ -125,11 +129,22 @@ public class SelectionBox extends Box {
         }
 
         if(type != ChangeType.NONE) {
-
             switch (type) {
                 case DELETE:
                     if(selectedBlock != null) selectedBlock.delete();
                     selectedBlock = null;
+                    break;
+                case ADD:
+                    if(selectedBlock == null && selectedChunk != null) {
+                        // TODO: Use the selected block from the player
+                        Transform blockTransform = this.transform.copy();
+                        blockTransform.position.add(Camera.position);
+
+                        Block block = new Block("Player_Generated_Block", blockTransform, selectedChunk.spriteSheet,
+                                Block.Type.SOIL, selectedChunk);
+                        selectedChunk.addNewBlock(block);
+                        this.selectedBlock = block;
+                    }
                     break;
             }
 

@@ -77,4 +77,12 @@ public class Chunk extends GameObject {
 
         return selectedObjects.toArray(new GameObject[0]);
     }
+
+    public void addNewBlock(Block block) {
+        this.blocks.add(block);
+    }
+
+    public void removeBlock(Block block) {
+        this.blocks.remove(block);
+    }
 }

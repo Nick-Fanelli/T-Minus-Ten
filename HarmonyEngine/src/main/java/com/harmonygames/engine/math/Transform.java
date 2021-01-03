@@ -9,6 +9,10 @@ public class Transform {
         this(new Vector2f(), new Scale());
     }
 
+    public Transform(Transform transform) {
+        this(transform.position.copy(), transform.scale.copy());
+    }
+
     public Transform(Vector2f position) {
         this(position, new Scale());
     }
@@ -17,6 +21,8 @@ public class Transform {
         this.position = position;
         this.scale = scale;
     }
+
+    public Transform copy() { return new Transform(this); }
 
     @Override
     public boolean equals(Object obj) {

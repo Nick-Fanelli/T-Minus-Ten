@@ -44,6 +44,6 @@ public class Block extends GameObject {
     }
 
     public void delete() {
-        this.chunk.blocks.remove(this);
+        this.chunk.removeBlock(this);
     }
 }
