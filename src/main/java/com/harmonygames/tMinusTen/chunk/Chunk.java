@@ -32,6 +32,8 @@ public class Chunk extends GameObject {
     public ArrayList<Block> blocks = new ArrayList<>();
     private boolean hasLoaded = false;
 
+    private ArrayList<ChunkChange> changes = new ArrayList<>();
+
     private final SimilarObjectContainer<Chunk> objectContainer;
 
     public Chunk(SpriteSheet spriteSheet, SimilarObjectContainer<Chunk> objectContainer, int chunkX, int chunkY, int tileWidth, int tileHeight, int chunkWidth, int chunkHeight) {
@@ -77,10 +79,14 @@ public class Chunk extends GameObject {
     }
 
     public void addNewBlock(Block block) {
+        this.changes.add(new ChunkChange.NewBlockChange(block));
         this.blocks.add(block);
     }
 
     public void removeBlock(Block block) {
+        this.changes.remove(new ChunkChange.RemoveBlockChange(block));
         this.blocks.remove(block);
     }
+
+    public ChunkChange[] getChanges() { return changes.toArray(new ChunkChange[0]); }
 }
