@@ -79,12 +79,26 @@ public class Chunk extends GameObject {
     }
 
     public void addNewBlock(Block block) {
-        this.changes.add(new ChunkChange.NewBlockChange(block));
+        ChunkChange.NewBlockChange change = new ChunkChange.NewBlockChange();
+        change.setStoredBlock(block);
+
+        for(int i = 0; i < changes.size(); i++) {
+            if(changes.get(i).equals(change)) changes.remove(changes.get(i));
+        }
+
+        this.changes.add(change);
         this.blocks.add(block);
     }
 
     public void removeBlock(Block block) {
-        this.changes.remove(new ChunkChange.RemoveBlockChange(block));
+        ChunkChange.RemoveBlockChange change = new ChunkChange.RemoveBlockChange();
+        change.setStoredBlock(block);
+
+        for(int i = 0; i < changes.size(); i++) {
+            if(changes.get(i).equals(change)) changes.remove(changes.get(i));
+        }
+
+        this.changes.add(change);
         this.blocks.remove(block);
     }
 
