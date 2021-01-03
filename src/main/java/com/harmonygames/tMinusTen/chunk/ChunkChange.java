@@ -8,33 +8,41 @@ public abstract class ChunkChange {
     protected Block storedBlock;
 
     // Abstract Chunk Change Constructor
-    public ChunkChange(Block block) {
-        this.storedBlock = block;
-    }
+    public ChunkChange() { } // No Arg-Constructor for GSON Serialization
+
+    public void setStoredBlock(Block block) { this.storedBlock = block; }
 
     // Abstract Method to Override
     public abstract void applyChange(Chunk chunk);
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof ChunkChange)) return false;
+        return ((ChunkChange) obj).storedBlock.transform.equals(this.storedBlock.transform);
+    }
 
     // ==================================================================================
     // Nested Chunk Change Classes
     // ==================================================================================
 
     public static class NewBlockChange extends ChunkChange {
-
-        public NewBlockChange(Block block) { super(block); }
-
         @Override
         public void applyChange(Chunk chunk) {
+            if(storedBlock == null) {
+                System.err.println("Stored Block is null");
+                return;
+            }
             chunk.blocks.add(storedBlock);
         }
     }
 
     public static class RemoveBlockChange extends ChunkChange {
-
-        public RemoveBlockChange(Block block) { super(block); }
-
         @Override
         public void applyChange(Chunk chunk) {
+            if(storedBlock == null) {
+                System.err.println("Stored Block is null");
+                return;
+            }
             chunk.removeBlock(storedBlock);
         }
     }
