@@ -12,6 +12,8 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.google.code.gson:gson:2.8.6'
+
     compile 'com.github.WilliamAHartman:Jamepad:1.4.0'
     compile 'uk.co.electronstudio.sdl2gdx:sdl2gdx:1.0.4'
 
