@@ -131,6 +131,14 @@ public class ChunkLoader implements Runnable {
                 }
             }
         }
+
+        ChunkChange[] changes = ChunkChangeData.getChunkChanges(new Vector2f(chunk.chunkX, chunk.chunkY));
+        if(changes == null) return;
+
+        for(ChunkChange chunkChange : changes) {
+            chunkChange.applyChange(chunk);
+        }
+
     }
 
 }

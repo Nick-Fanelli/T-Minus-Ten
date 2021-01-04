@@ -14,13 +14,22 @@ public class ChunkChangeData {
 
         for(Map.Entry<Vector2f, ChunkChange[]> entry : modifiedChunks.entrySet()) {
             if(entry.getKey().equals(position)) {
-                System.out.println("Hey");
                 modifiedChunks.remove(entry.getKey());
                 break;
             }
         }
 
         modifiedChunks.put(position, chunk.getChanges());
+    }
+
+    public static synchronized ChunkChange[] getChunkChanges(Vector2f position) {
+        for(Map.Entry<Vector2f, ChunkChange[]> entry : modifiedChunks.entrySet()) {
+            if(entry.getKey().equals(position)) {
+                return entry.getValue();
+            }
+        }
+
+        return null;
     }
 
 }
