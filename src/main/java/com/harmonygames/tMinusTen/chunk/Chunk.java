@@ -1,6 +1,7 @@
 package com.harmonygames.tMinusTen.chunk;
 
 import com.harmonygames.engine.Camera;
+import com.harmonygames.engine.data.Serializer;
 import com.harmonygames.engine.gameobject.GameObject;
 import com.harmonygames.engine.gameobject.SimilarObjectContainer;
 import com.harmonygames.engine.gameobject.component.Component;
@@ -32,7 +33,7 @@ public class Chunk extends GameObject {
     public ArrayList<Block> blocks = new ArrayList<>();
     private boolean hasLoaded = false;
 
-    private ArrayList<ChunkChange> changes = new ArrayList<>();
+    private final ArrayList<ChunkChange> changes = new ArrayList<>();
 
     private final SimilarObjectContainer<Chunk> objectContainer;
 
@@ -57,12 +58,12 @@ public class Chunk extends GameObject {
     public void update(float deltaTime) {
         if(!hasLoaded) return;
         if(!Camera.shouldDrawTransform(super.transform)) objectContainer.removeGameObject(this);
-        for(Block block : blocks) block.update(deltaTime);
+        for(int i = 0; i < blocks.size(); i++) blocks.get(i).update(deltaTime);
     }
 
     public void draw(Graphics2D g) {
         if(!hasLoaded) return;
-        for(Block block : blocks) block.draw(g);
+        for(int i = 0; i < blocks.size(); i++) blocks.get(i).draw(g);
     }
 
     public void setLoaded(boolean value) { this.hasLoaded = value; }
@@ -71,11 +72,24 @@ public class Chunk extends GameObject {
     public <T extends Component> GameObject[] getSelf(Class<T> component) {
         ArrayList<GameObject> selectedObjects = new ArrayList<>();
 
-        for(GameObject gameObject : blocks) {
-            selectedObjects.addAll(Arrays.asList(gameObject.getSelf(component)));
+        for(int i = 0; i < blocks.size(); i++) {
+            selectedObjects.addAll(Arrays.asList(blocks.get(i).getSelf(component)));
         }
 
         return selectedObjects.toArray(new GameObject[0]);
+    }
+
+    @Override
+    public void onDestroy() {
+        if(changes.size() > 0) {
+            ChunkChangeData.addChunk(this);
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Chunk)) return false;
+        return ((Chunk) obj).chunkX == this.chunkX && ((Chunk) obj).chunkY == this.chunkY;
     }
 
     public void addNewBlock(Block block) {
@@ -103,4 +117,5 @@ public class Chunk extends GameObject {
     }
 
     public ChunkChange[] getChanges() { return changes.toArray(new ChunkChange[0]); }
+
 }

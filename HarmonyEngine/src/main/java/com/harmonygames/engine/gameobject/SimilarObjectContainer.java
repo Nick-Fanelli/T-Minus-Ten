@@ -18,11 +18,13 @@ public class SimilarObjectContainer<T extends GameObject> extends GameObject {
     }
 
     public void addGameObject(T gameObject) {
+        gameObject.onCreate();
         gameObjects.add(gameObject);
     }
 
     public void removeGameObject(T gameObject) {
         gameObjects.remove(gameObject);
+        gameObject.onDestroy();
     }
 
     public ArrayList<T> getGameObjects() { return this.gameObjects; }

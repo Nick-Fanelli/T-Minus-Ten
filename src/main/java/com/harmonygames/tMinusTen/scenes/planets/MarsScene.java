@@ -5,6 +5,8 @@ import com.harmonygames.tMinusTen.scenes.PlanetScene;
 
 public class MarsScene extends PlanetScene {
 
-    public MarsScene() { super("Planet Mars", Assets.addSpriteSheet("/spritesheets/planet/mars/mars-tileset.png", 512, 512)); }
+    public MarsScene() {
+        super("Planet Mars", Assets.addSpriteSheet("/spritesheets/planet/mars/mars-tileset.png", 512, 512));
+    }
 
 }
